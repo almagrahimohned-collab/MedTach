@@ -1,12 +1,13 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { StyleSheet, Text, View, TextInput, Pressable, ScrollView, Modal, KeyboardAvoidingView, Platform, FlatList } from 'react-native';
 import { useStore } from '../../src/store';
+import { dummyCases } from '../../src/utils/dummyCases';
 
 const medicalMenus: any = {
   history: ['Past Medical History (PMH)', 'Family History', 'Surgical History', 'Drug & Allergy History', 'Social & Occupational History', 'Systemic Review'],
   examination: ['Vital Signs', 'General Physical Examination', 'Cardiovascular Examination', 'Respiratory Examination', 'Abdominal / GI Examination', 'Neurological Examination'],
-  labs: ['Complete Blood Count (CBC)', 'Renal Profile (U&E / KFT)', 'Liver Function Test (LFT)', 'Arterial Blood Gas (ABG)', 'Cardiac Enzymes (Troponin I/T)', 'Coagulation Profile (PT/aPTT/INR)', 'Inflammatory Markers (CRP/ESR)'],
-  imaging: ['Chest X-Ray (PA/AP)', 'CT Head (Non-Contrast)', 'CT Chest (PE Protocol)', 'Ultrasound Abdomen & Pelvis', 'Echocardiogram (TTE)', 'MRI Brain']
+  labs: ['Complete Blood Count (CBC)', 'Renal Profile (U&E / KFT)', 'Liver Function Test (LFT)', 'Arterial Blood Gas (ABG)', 'Cardiac Enzymes (Troponin I/T)', 'Complete Metabolic Panel (CMP)'],
+  imaging: ['Chest X-Ray (PA/AP)', 'CT Head (Non-Contrast)', 'CT Chest (PE Protocol)', 'Ultrasound Abdomen & Pelvis', 'Echocardiogram (TTE)', 'ECG']
 };
 
 export default function DiagnosticRoom() {
@@ -18,24 +19,29 @@ export default function DiagnosticRoom() {
   const [finalDiagnosis, setFinalDiagnosis] = useState('');
   const scrollViewRef = useRef<ScrollView>(null);
 
+  // Load Case Data
+  const currentCase = dummyCases[subCategory || 'Cardiology']?.[difficulty || 'Beginner']?.[0] || dummyCases['Cardiology']['Beginner'][0];
+
   const handleSendRequest = (text: string) => {
     if (!text.trim()) return;
     
-    // 1. خصم نقطتين مع كل طلب طبي (عقوبة طلب الفحوصات)
-    deductPoints(2);
+    deductPoints(2); // خصم النقاط
 
     const newRequest = { id: Date.now().toString(), type: 'request' as const, text };
     setInteractions((prev) => [...prev, newRequest]);
     setInputText('');
     setActiveMenu(null);
 
+    // Hybrid System Logic: Fetch specific result or return default
     setTimeout(() => {
+      const result = currentCase.data[text] || `Results for ${text} are within normal limits, or data is unavailable at this facility.`;
+      
       setInteractions((prev) => [...prev, {
         id: (Date.now() + 1).toString(),
         type: 'response',
-        text: `Pending results for: ${text}...`
+        text: result
       }]);
-    }, 1000);
+    }, 800); // محاكاة وقت انتظار بسيط لواقعية التطبيق
   };
 
   const handleContentSizeChange = () => scrollViewRef.current?.scrollToEnd({ animated: true });
@@ -43,13 +49,12 @@ export default function DiagnosticRoom() {
   return (
     <KeyboardAvoidingView style={styles.container} behavior={Platform.OS === 'ios' ? 'padding' : undefined} keyboardVerticalOffset={90}>
       
-      {/* 1. Case Header Connected to Store */}
       <View style={styles.caseHeader}>
         <View style={styles.headerTopRow}>
-          <Text style={styles.patientInfo}>Dept: {subCategory} | {difficulty}</Text>
+          <Text style={styles.patientInfo}>{currentCase.patientInfo}</Text>
           <Text style={[styles.scoreBadge, score < 50 && styles.scoreWarning]}>Score: {score}</Text>
         </View>
-        <Text style={styles.chiefComplaint}>CC: Shortness of breath (SOB) starting 2 hours ago, accompanied by chest tightness.</Text>
+        <Text style={styles.chiefComplaint}>{currentCase.chiefComplaint}</Text>
       </View>
 
       <ScrollView ref={scrollViewRef} style={styles.chatArea} contentContainerStyle={styles.chatContent} onContentSizeChange={handleContentSizeChange}>
@@ -97,7 +102,7 @@ export default function DiagnosticRoom() {
             <TextInput style={styles.diagnosisInput} placeholder="Enter your final diagnosis here..." placeholderTextColor="#64748B" multiline value={finalDiagnosis} onChangeText={setFinalDiagnosis} />
             <View style={styles.diagnosisActionRow}>
               <Pressable style={styles.cancelBtn} onPress={() => setDiagnosisModalVisible(false)}><Text style={styles.cancelBtnText}>Cancel</Text></Pressable>
-              <Pressable style={styles.submitBtn} onPress={() => { setDiagnosisModalVisible(false); alert(`Case Ended! Final Score: ${score}`); }}><Text style={styles.submitBtnText}>Submit</Text></Pressable>
+              <Pressable style={styles.submitBtn} onPress={() => { setDiagnosisModalVisible(false); alert(`Case Ended! Score: ${score}\nActual Diagnosis: ${currentCase.correctDiagnosis}`); }}><Text style={styles.submitBtnText}>Submit</Text></Pressable>
             </View>
           </View>
         </View>
@@ -112,7 +117,7 @@ const styles = StyleSheet.create({
   headerTopRow: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginBottom: 8 },
   patientInfo: { color: '#38BDF8', fontSize: 14, fontWeight: 'bold' },
   scoreBadge: { backgroundColor: '#10B981', color: '#0F172A', paddingHorizontal: 10, paddingVertical: 4, borderRadius: 12, fontWeight: 'bold', overflow: 'hidden' },
-  scoreWarning: { backgroundColor: '#EF4444', color: '#F8FAFC' }, // يتحول لأحمر إذا قلت النقاط
+  scoreWarning: { backgroundColor: '#EF4444', color: '#F8FAFC' },
   chiefComplaint: { color: '#F8FAFC', fontSize: 16, lineHeight: 24 },
   chatArea: { flex: 1 }, chatContent: { padding: 16, paddingBottom: 20 },
   messageBubble: { maxWidth: '85%', padding: 14, borderRadius: 12, marginBottom: 12 }, requestBubble: { backgroundColor: '#0284C7', alignSelf: 'flex-end', borderBottomRightRadius: 2 }, responseBubble: { backgroundColor: '#334155', alignSelf: 'flex-start', borderBottomLeftRadius: 2 }, messageText: { color: '#F8FAFC', fontSize: 15, lineHeight: 22 },
