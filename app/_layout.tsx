@@ -19,7 +19,8 @@ export default function RootLayout() {
         <Stack.Screen name="specialties/index" options={{ title: 'Specialties' }} />
         <Stack.Screen name="cases/index" options={{ title: 'Diagnostic Room' }} />
         <Stack.Screen name="settings/index" options={{ title: 'Settings' }} />
-      </Stack>
+<Stack.Screen name="specialties/details" options={{ title: 'Configure Session' }} />     
+ </Stack>
     </SafeAreaProvider>
   );
 }
