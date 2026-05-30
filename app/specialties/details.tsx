@@ -1,6 +1,7 @@
 import { StyleSheet, Text, View, Pressable, ScrollView } from 'react-native';
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import { useState } from 'react';
+import { useStore } from '../../src/store';
 
 const specialtyData: any = {
   internal: ['Cardiology', 'Respiratory', 'Gastroenterology', 'Endocrinology'],
@@ -12,13 +13,21 @@ const specialtyData: any = {
 export default function SpecialtyDetails() {
   const { id } = useLocalSearchParams();
   const router = useRouter();
-  const [sub, setSub] = useState(specialtyData[id as string][0]);
+  const setSessionConfig = useStore((state) => state.setSessionConfig);
+  
+  const [sub, setSub] = useState(specialtyData[id as string]?.[0] || '');
   const [level, setLevel] = useState('Beginner');
+
+  const handleStartSession = () => {
+    // حفظ الإعدادات في Zustand
+    setSessionConfig(id as string, sub, level);
+    router.push('/cases');
+  };
 
   return (
     <ScrollView style={styles.container}>
       <Text style={styles.label}>Select Sub-Category</Text>
-      {specialtyData[id as string].map((item: string) => (
+      {specialtyData[id as string]?.map((item: string) => (
         <Pressable key={item} style={[styles.card, sub === item && styles.selected]} onPress={() => setSub(item)}>
           <Text style={styles.cardText}>{item}</Text>
         </Pressable>
@@ -31,7 +40,7 @@ export default function SpecialtyDetails() {
         </Pressable>
       ))}
 
-      <Pressable style={styles.nextButton} onPress={() => router.push('/cases')}>
+      <Pressable style={styles.nextButton} onPress={handleStartSession}>
         <Text style={styles.nextButtonText}>Start Diagnostic Session</Text>
       </Pressable>
     </ScrollView>
