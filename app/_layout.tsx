@@ -17,10 +17,11 @@ export default function RootLayout() {
         <Stack.Screen name="index" options={{ headerShown: false }} />
         <Stack.Screen name="auth/index" options={{ title: 'Login' }} />
         <Stack.Screen name="specialties/index" options={{ title: 'Specialties' }} />
+        <Stack.Screen name="specialties/details" options={{ title: 'Configure Session' }} />
         <Stack.Screen name="cases/index" options={{ title: 'Diagnostic Room' }} />
-        <Stack.Screen name="settings/index" options={{ title: 'Settings' }} />
-<Stack.Screen name="specialties/details" options={{ title: 'Configure Session' }} />     
- </Stack>
+        <Stack.Screen name="profile/index" options={{ title: 'My Profile' }} />
+        <Stack.Screen name="leaderboard/index" options={{ title: 'Leaderboard' }} />
+      </Stack>
     </SafeAreaProvider>
   );
 }
