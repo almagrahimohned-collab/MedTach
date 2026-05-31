@@ -137,7 +137,6 @@ export default function DiagnosticRoom() {
         )}
       </ScrollView>
 
-      {/* شاشة الانتظار أثناء التقييم */}
       {isEvaluating && (
         <View style={styles.evaluatingOverlay}>
           <ActivityIndicator size="large" color="#10B981" />
@@ -152,6 +151,7 @@ export default function DiagnosticRoom() {
         <Pressable style={styles.actionBtn} onPress={() => setActiveMenu('imaging')}><Text style={styles.actionBtnText}>Imaging</Text></Pressable>
       </View>
 
+      {/* تم إضافة Padding من الأسفل هنا لرفع الأزرار عن خيارات الهاتف */}
       <View style={styles.inputContainer}>
         <Pressable style={styles.finalDiagnosisBtn} onPress={() => setDiagnosisModalVisible(true)} disabled={isEvaluating}>
           <Text style={styles.finalDiagnosisText}>Final Diagnosis</Text>
@@ -164,7 +164,6 @@ export default function DiagnosticRoom() {
         </View>
       </View>
 
-      {/* مودال الفحوصات والتاريخ المرضي */}
       <Modal visible={!!activeMenu} transparent={true} animationType="slide">
         <View style={styles.modalOverlay}>
           <View style={styles.menuContainer}>
@@ -177,7 +176,6 @@ export default function DiagnosticRoom() {
         </View>
       </Modal>
 
-      {/* مودال كتابة التشخيص النهائي */}
       <Modal visible={diagnosisModalVisible} transparent={true} animationType="fade">
         <View style={styles.modalOverlay}>
           <View style={styles.diagnosisContainer}>
@@ -192,7 +190,6 @@ export default function DiagnosticRoom() {
         </View>
       </Modal>
 
-      {/* مودال عرض تقرير التقييم النهائي المفصل */}
       <Modal visible={feedbackModalVisible} transparent={true} animationType="slide">
         <View style={styles.modalOverlay}>
           <View style={styles.feedbackContainer}>
@@ -223,7 +220,11 @@ const styles = StyleSheet.create({
   chatArea: { flex: 1 }, chatContent: { padding: 16, paddingBottom: 20 },
   messageBubble: { maxWidth: '85%', padding: 14, borderRadius: 12, marginBottom: 12 }, requestBubble: { backgroundColor: '#0284C7', alignSelf: 'flex-end', borderBottomRightRadius: 2 }, responseBubble: { backgroundColor: '#334155', alignSelf: 'flex-start', borderBottomLeftRadius: 2 }, messageText: { color: '#F8FAFC', fontSize: 15, lineHeight: 22 },
   quickActions: { flexDirection: 'row', paddingHorizontal: 10, paddingVertical: 8, backgroundColor: '#0F172A', justifyContent: 'space-between' }, actionBtn: { flex: 1, backgroundColor: '#1E293B', marginHorizontal: 4, paddingVertical: 10, borderRadius: 6, alignItems: 'center', borderWidth: 1, borderColor: '#334155' }, actionBtnText: { color: '#38BDF8', fontSize: 12, fontWeight: '600' },
-  inputContainer: { padding: 12, backgroundColor: '#1E293B', borderTopWidth: 1, borderTopColor: '#334155' }, finalDiagnosisBtn: { backgroundColor: '#10B981', padding: 12, borderRadius: 8, alignItems: 'center', marginBottom: 12 }, finalDiagnosisText: { color: '#0F172A', fontWeight: 'bold', fontSize: 16 }, inputRow: { flexDirection: 'row', alignItems: 'center' }, textInput: { flex: 1, backgroundColor: '#0F172A', color: '#F8FAFC', paddingHorizontal: 16, paddingVertical: 12, borderRadius: 8, borderWidth: 1, borderColor: '#334155', marginRight: 10 }, sendBtn: { backgroundColor: '#38BDF8', paddingHorizontal: 20, paddingVertical: 14, borderRadius: 8 }, sendBtnText: { color: '#0F172A', fontWeight: 'bold' },
+  
+  // التعديل تم هنا (إضافة paddingBottom: 24) لرفع الأزرار عن خيارات الأندرويد
+  inputContainer: { padding: 12, paddingBottom: 24, backgroundColor: '#1E293B', borderTopWidth: 1, borderTopColor: '#334155' }, 
+  
+  finalDiagnosisBtn: { backgroundColor: '#10B981', padding: 12, borderRadius: 8, alignItems: 'center', marginBottom: 12 }, finalDiagnosisText: { color: '#0F172A', fontWeight: 'bold', fontSize: 16 }, inputRow: { flexDirection: 'row', alignItems: 'center' }, textInput: { flex: 1, backgroundColor: '#0F172A', color: '#F8FAFC', paddingHorizontal: 16, paddingVertical: 12, borderRadius: 8, borderWidth: 1, borderColor: '#334155', marginRight: 10 }, sendBtn: { backgroundColor: '#38BDF8', paddingHorizontal: 20, paddingVertical: 14, borderRadius: 8 }, sendBtnText: { color: '#0F172A', fontWeight: 'bold' },
   modalOverlay: { flex: 1, backgroundColor: 'rgba(15, 23, 42, 0.85)', justifyContent: 'flex-end' }, menuContainer: { backgroundColor: '#1E293B', borderTopLeftRadius: 20, borderTopRightRadius: 20, padding: 20, maxHeight: '70%' }, menuTitle: { color: '#F8FAFC', fontSize: 20, fontWeight: 'bold', marginBottom: 16, textAlign: 'center', textTransform: 'capitalize' }, menuItem: { paddingVertical: 16, borderBottomWidth: 1, borderBottomColor: '#334155' }, menuItemText: { color: '#38BDF8', fontSize: 16 }, closeMenuBtn: { marginTop: 16, padding: 16, backgroundColor: '#334155', borderRadius: 8, alignItems: 'center' }, closeMenuText: { color: '#F8FAFC', fontWeight: 'bold' },
   diagnosisContainer: { backgroundColor: '#1E293B', padding: 24, margin: 16, borderRadius: 16, marginBottom: 'auto', marginTop: 'auto' }, diagnosisTitle: { color: '#10B981', fontSize: 20, fontWeight: 'bold', marginBottom: 8 }, diagnosisSubtitle: { color: '#94A3B8', fontSize: 14, marginBottom: 20 }, diagnosisInput: { backgroundColor: '#0F172A', color: '#F8FAFC', padding: 16, borderRadius: 8, borderWidth: 1, borderColor: '#334155', height: 120, textAlignVertical: 'top', marginBottom: 20 }, diagnosisActionRow: { flexDirection: 'row', justifyContent: 'flex-end', gap: 12 }, cancelBtn: { padding: 12 }, cancelBtnText: { color: '#94A3B8', fontWeight: 'bold' }, submitBtn: { backgroundColor: '#10B981', paddingHorizontal: 24, paddingVertical: 12, borderRadius: 8 }, submitBtnText: { color: '#0F172A', fontWeight: 'bold' },
   evaluatingOverlay: { ...StyleSheet.absoluteFillObject, backgroundColor: 'rgba(15, 23, 42, 0.9)', justifyContent: 'center', alignItems: 'center', zIndex: 50 }, evaluatingText: { color: '#F8FAFC', marginTop: 16, fontSize: 16, fontWeight: '500', textAlign: 'center', paddingHorizontal: 20 },
