@@ -1,7 +1,8 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef } from 'react';
 import { StyleSheet, Text, View, TextInput, Pressable, ScrollView, Modal, KeyboardAvoidingView, Platform, FlatList } from 'react-native';
 import { useStore } from '../../src/store';
 import { dummyCases } from '../../src/utils/dummyCases';
+import { fetchAIResponse } from '../../src/services/aiService';
 
 const medicalMenus: any = {
   history: ['Past Medical History (PMH)', 'Family History', 'Surgical History', 'Drug & Allergy History', 'Social & Occupational History', 'Systemic Review'],
@@ -17,12 +18,13 @@ export default function DiagnosticRoom() {
   const [activeMenu, setActiveMenu] = useState<string | null>(null);
   const [diagnosisModalVisible, setDiagnosisModalVisible] = useState(false);
   const [finalDiagnosis, setFinalDiagnosis] = useState('');
+  const [isTyping, setIsTyping] = useState(false);
   const scrollViewRef = useRef<ScrollView>(null);
 
-  // Load Case Data
+  // جلب بيانات الحالة الحالية
   const currentCase = dummyCases[subCategory || 'Cardiology']?.[difficulty || 'Beginner']?.[0] || dummyCases['Cardiology']['Beginner'][0];
 
-  const handleSendRequest = (text: string) => {
+  const handleSendRequest = async (text: string) => {
     if (!text.trim()) return;
     
     deductPoints(2); // خصم النقاط
@@ -31,17 +33,36 @@ export default function DiagnosticRoom() {
     setInteractions((prev) => [...prev, newRequest]);
     setInputText('');
     setActiveMenu(null);
+    setIsTyping(true);
 
-    // Hybrid System Logic: Fetch specific result or return default
-    setTimeout(() => {
-      const result = currentCase.data[text] || `Results for ${text} are within normal limits, or data is unavailable at this facility.`;
-      
-      setInteractions((prev) => [...prev, {
-        id: (Date.now() + 1).toString(),
-        type: 'response',
-        text: result
-      }]);
-    }, 800); // محاكاة وقت انتظار بسيط لواقعية التطبيق
+    // 1. تجهيز السياق الخفي للذكاء الاصطناعي (يحتوي على إجابات الحالة)
+    const hiddenContext = `
+      Current Patient Facts (STRICTLY USE THIS DATA): 
+      - Info: ${currentCase.patientInfo}
+      - Chief Complaint: ${currentCase.chiefComplaint}
+      - Clinical Data & Lab Results: ${JSON.stringify(currentCase.data)}
+    `;
+
+    // 2. تجهيز تاريخ المحادثة بالصيغة التي يفهمها الـ API
+    const apiHistory = [
+      { role: 'system', content: hiddenContext },
+      ...interactions.map(msg => ({
+        role: msg.type === 'request' ? 'user' : 'assistant',
+        content: msg.text
+      }))
+    ];
+
+    // 3. الاتصال بـ OpenRouter
+    const aiResult = await fetchAIResponse(apiHistory, text);
+
+    // 4. عرض النتيجة
+    setInteractions((prev) => [...prev, {
+      id: (Date.now() + 1).toString(),
+      type: 'response',
+      text: aiResult
+    }]);
+    
+    setIsTyping(false);
   };
 
   const handleContentSizeChange = () => scrollViewRef.current?.scrollToEnd({ animated: true });
@@ -63,6 +84,11 @@ export default function DiagnosticRoom() {
             <Text style={styles.messageText}>{msg.text}</Text>
           </View>
         ))}
+        {isTyping && (
+          <View style={[styles.messageBubble, styles.responseBubble]}>
+            <Text style={[styles.messageText, { fontStyle: 'italic', color: '#94A3B8' }]}>Consultant is reviewing...</Text>
+          </View>
+        )}
       </ScrollView>
 
       <View style={styles.quickActions}>
@@ -77,8 +103,10 @@ export default function DiagnosticRoom() {
           <Text style={styles.finalDiagnosisText}>Final Diagnosis</Text>
         </Pressable>
         <View style={styles.inputRow}>
-          <TextInput style={styles.textInput} placeholder="Type custom request..." placeholderTextColor="#64748B" value={inputText} onChangeText={setInputText} onSubmitEditing={() => handleSendRequest(inputText)} />
-          <Pressable style={styles.sendBtn} onPress={() => handleSendRequest(inputText)}><Text style={styles.sendBtnText}>Send</Text></Pressable>
+          <TextInput style={styles.textInput} placeholder="Type custom request..." placeholderTextColor="#64748B" value={inputText} onChangeText={setInputText} onSubmitEditing={() => handleSendRequest(inputText)} editable={!isTyping} />
+          <Pressable style={[styles.sendBtn, isTyping && { opacity: 0.5 }]} onPress={() => handleSendRequest(inputText)} disabled={isTyping}>
+            <Text style={styles.sendBtnText}>Send</Text>
+          </Pressable>
         </View>
       </View>
 
@@ -102,7 +130,7 @@ export default function DiagnosticRoom() {
             <TextInput style={styles.diagnosisInput} placeholder="Enter your final diagnosis here..." placeholderTextColor="#64748B" multiline value={finalDiagnosis} onChangeText={setFinalDiagnosis} />
             <View style={styles.diagnosisActionRow}>
               <Pressable style={styles.cancelBtn} onPress={() => setDiagnosisModalVisible(false)}><Text style={styles.cancelBtnText}>Cancel</Text></Pressable>
-              <Pressable style={styles.submitBtn} onPress={() => { setDiagnosisModalVisible(false); alert(`Case Ended! Score: ${score}\nActual Diagnosis: ${currentCase.correctDiagnosis}`); }}><Text style={styles.submitBtnText}>Submit</Text></Pressable>
+              <Pressable style={styles.submitBtn} onPress={() => { setDiagnosisModalVisible(false); alert(`Case Ended! Score: ${score}\nActual: ${currentCase.correctDiagnosis}`); }}><Text style={styles.submitBtnText}>Submit</Text></Pressable>
             </View>
           </View>
         </View>

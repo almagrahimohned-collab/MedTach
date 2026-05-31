@@ -1,7 +1,7 @@
 import { StyleSheet, Text, View, Pressable, ScrollView } from 'react-native';
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import { useState } from 'react';
-import { useStore } from '../../src/store';
+import { useStore } from '../../../src/store';
 
 const specialtyData: any = {
   internal: ['Cardiology', 'Respiratory', 'Gastroenterology', 'Endocrinology'],
@@ -14,12 +14,11 @@ export default function SpecialtyDetails() {
   const { id } = useLocalSearchParams();
   const router = useRouter();
   const setSessionConfig = useStore((state) => state.setSessionConfig);
-  
+
   const [sub, setSub] = useState(specialtyData[id as string]?.[0] || '');
   const [level, setLevel] = useState('Beginner');
 
   const handleStartSession = () => {
-    // حفظ الإعدادات في Zustand
     setSessionConfig(id as string, sub, level);
     router.push('/cases');
   };
