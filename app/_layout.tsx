@@ -9,6 +9,7 @@ export default function RootLayout() {
         <Stack.Screen name="(tabs)" />
         <Stack.Screen name="cases/index" options={{ headerShown: true, title: 'Diagnostic Room', headerStyle: { backgroundColor: '#1E293B' }, headerTintColor: '#38BDF8' }} />
         <Stack.Screen name="profile/history" options={{ headerShown: true, title: 'Medical Record', headerStyle: { backgroundColor: '#1E293B' }, headerTintColor: '#38BDF8' }} />
+<Stack.Screen name="leaderboard/index" options={{ headerShown: true, title: 'Top Doctors' }} />
       </Stack>
     </>
   );
