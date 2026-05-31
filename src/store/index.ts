@@ -15,6 +15,10 @@ interface AppStore {
   subCategory: string | null;
   difficulty: string | null;
   specialtyId: string | null;
+  
+  // Daily Challenge State
+  dailyChallengeId: string | null;
+  lastChallengeDate: string | null;
 
   // Actions
   deductPoints: (points: number) => void;
@@ -22,6 +26,7 @@ interface AppStore {
   saveCaseResult: (caseId: string, finalScore: number) => void;
   setCategory: (specialtyId: string, sub: string, diff: string) => void;
   resetSession: () => void;
+  setDailyChallenge: (caseId: string) => void;
 }
 
 export const useStore = create<AppStore>()(
@@ -33,27 +38,35 @@ export const useStore = create<AppStore>()(
       subCategory: null,
       difficulty: null,
       specialtyId: null,
-      
+      dailyChallengeId: null,
+      lastChallengeDate: null,
+
       // Actions
-      deductPoints: (points) => 
+      deductPoints: (points) =>
         set((state) => ({ score: Math.max(0, state.score - points) })),
-      
-      resetScore: () => 
+
+      resetScore: () =>
         set({ score: 100 }),
-      
-      saveCaseResult: (caseId, finalScore) => 
+
+      saveCaseResult: (caseId, finalScore) =>
         set((state) => ({
           completedCases: [
-            ...state.completedCases, 
+            ...state.completedCases,
             { caseId, score: finalScore, date: new Date().toISOString() }
           ]
         })),
-      
-      setCategory: (specialtyId, sub, diff) => 
+
+      setCategory: (specialtyId, sub, diff) =>
         set({ specialtyId, subCategory: sub, difficulty: diff, score: 100 }),
-      
-      resetSession: () => 
+
+      resetSession: () =>
         set({ specialtyId: null, subCategory: null, difficulty: null, score: 100 }),
+
+      setDailyChallenge: (caseId) => 
+        set({ 
+          dailyChallengeId: caseId, 
+          lastChallengeDate: new Date().toISOString().split('T')[0] 
+        }),
     }),
     {
       name: 'clinical-mind-storage',
