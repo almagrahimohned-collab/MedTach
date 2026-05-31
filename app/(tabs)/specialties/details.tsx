@@ -13,13 +13,16 @@ const specialtyData: any = {
 export default function SpecialtyDetails() {
   const { id } = useLocalSearchParams();
   const router = useRouter();
-  const setSessionConfig = useStore((state) => state.setSessionConfig);
+  
+  // نستخدم setCategory كما هي معرفة في الـ store
+  const setCategory = useStore((state) => state.setCategory);
 
   const [sub, setSub] = useState(specialtyData[id as string]?.[0] || '');
   const [level, setLevel] = useState('Beginner');
 
   const handleStartSession = () => {
-    setSessionConfig(id as string, sub, level);
+    // استدعاء الدالة الصحيحة
+    setCategory(id as string, sub, level);
     router.push('/cases');
   };
 
