@@ -1,5 +1,5 @@
 import React, { useState, useRef } from 'react';
-import { StyleSheet, Text, View, TextInput, Pressable, ScrollView, Modal, KeyboardAvoidingView, Platform, FlatList } from 'react-native';
+import { StyleSheet, Text, View, TextInput, Pressable, ScrollView, Modal, KeyboardAvoidingView, Platform, FlatList, ActivityIndicator } from 'react-native';
 import { useStore } from '../../src/store';
 import { dummyCases } from '../../src/utils/dummyCases';
 import { fetchAIResponse } from '../../src/services/aiService';
@@ -17,17 +17,19 @@ export default function DiagnosticRoom() {
   const [inputText, setInputText] = useState('');
   const [activeMenu, setActiveMenu] = useState<string | null>(null);
   const [diagnosisModalVisible, setDiagnosisModalVisible] = useState(false);
+  const [feedbackModalVisible, setFeedbackModalVisible] = useState(false);
   const [finalDiagnosis, setFinalDiagnosis] = useState('');
   const [isTyping, setIsTyping] = useState(false);
+  const [isEvaluating, setIsEvaluating] = useState(false);
+  const [feedbackText, setFeedbackText] = useState('');
   const scrollViewRef = useRef<ScrollView>(null);
 
-  // جلب بيانات الحالة الحالية
   const currentCase = dummyCases[subCategory || 'Cardiology']?.[difficulty || 'Beginner']?.[0] || dummyCases['Cardiology']['Beginner'][0];
 
   const handleSendRequest = async (text: string) => {
     if (!text.trim()) return;
     
-    deductPoints(2); // خصم النقاط
+    deductPoints(2); 
 
     const newRequest = { id: Date.now().toString(), type: 'request' as const, text };
     setInteractions((prev) => [...prev, newRequest]);
@@ -35,7 +37,6 @@ export default function DiagnosticRoom() {
     setActiveMenu(null);
     setIsTyping(true);
 
-    // 1. تجهيز السياق الخفي للذكاء الاصطناعي (يحتوي على إجابات الحالة)
     const hiddenContext = `
       Current Patient Facts (STRICTLY USE THIS DATA): 
       - Info: ${currentCase.patientInfo}
@@ -43,7 +44,6 @@ export default function DiagnosticRoom() {
       - Clinical Data & Lab Results: ${JSON.stringify(currentCase.data)}
     `;
 
-    // 2. تجهيز تاريخ المحادثة بالصيغة التي يفهمها الـ API
     const apiHistory = [
       { role: 'system', content: hiddenContext },
       ...interactions.map(msg => ({
@@ -52,10 +52,8 @@ export default function DiagnosticRoom() {
       }))
     ];
 
-    // 3. الاتصال بـ OpenRouter
     const aiResult = await fetchAIResponse(apiHistory, text);
 
-    // 4. عرض النتيجة
     setInteractions((prev) => [...prev, {
       id: (Date.now() + 1).toString(),
       type: 'response',
@@ -63,6 +61,54 @@ export default function DiagnosticRoom() {
     }]);
     
     setIsTyping(false);
+  };
+
+  const handleSubmitDiagnosis = async () => {
+    if (!finalDiagnosis.trim()) return;
+    
+    setIsEvaluating(true);
+    setDiagnosisModalVisible(false);
+
+    const evaluationPrompt = `
+      CRITICAL ACTION: EVALUATE RESIDENT PERFORMANCE.
+      The resident has submitted their Final Diagnosis: "${finalDiagnosis}"
+      
+      Review the entire interaction history, the tests they requested, and compare their submission with the correct diagnosis: "${currentCase.correctDiagnosis}".
+      
+      Provide a comprehensive, professional evaluation report formatted exactly like this:
+      
+      📢 DIAGNOSTIC ACCURACY:
+      [State if correct, partially correct, or incorrect with medical justification]
+      
+      🧠 CLINICAL REASONING:
+      [Evaluate their approach. Did they request unnecessary tests? Did they follow a logical sequence?]
+      
+      ⚠️ CRITICAL MISSES:
+      [List any crucial history questions or diagnostic investigations they missed or skipped]
+      
+      🎓 FINAL ATTENDING VERDICT:
+      [Provide a brief constructive summary or educational pearl for the resident]
+    `;
+
+    const hiddenContext = `
+      Current Patient Facts: 
+      - Correct Diagnosis: ${currentCase.correctDiagnosis}
+      - Clinical Case Background: ${currentCase.patientInfo} ${currentCase.chiefComplaint}
+      - Full Diagnostic Blueprint: ${JSON.stringify(currentCase.data)}
+    `;
+
+    const apiHistory = [
+      { role: 'system', content: hiddenContext },
+      ...interactions.map(msg => ({
+        role: msg.type === 'request' ? 'user' : 'assistant',
+        content: msg.text
+      }))
+    ];
+
+    const result = await fetchAIResponse(apiHistory, evaluationPrompt);
+    setFeedbackText(result);
+    setIsEvaluating(false);
+    setFeedbackModalVisible(true);
   };
 
   const handleContentSizeChange = () => scrollViewRef.current?.scrollToEnd({ animated: true });
@@ -91,6 +137,14 @@ export default function DiagnosticRoom() {
         )}
       </ScrollView>
 
+      {/* شاشة الانتظار أثناء التقييم */}
+      {isEvaluating && (
+        <View style={styles.evaluatingOverlay}>
+          <ActivityIndicator size="large" color="#10B981" />
+          <Text style={styles.evaluatingText}>Attending Physician is evaluating your performance...</Text>
+        </View>
+      )}
+
       <View style={styles.quickActions}>
         <Pressable style={styles.actionBtn} onPress={() => setActiveMenu('history')}><Text style={styles.actionBtnText}>History</Text></Pressable>
         <Pressable style={styles.actionBtn} onPress={() => setActiveMenu('examination')}><Text style={styles.actionBtnText}>Exam</Text></Pressable>
@@ -99,17 +153,18 @@ export default function DiagnosticRoom() {
       </View>
 
       <View style={styles.inputContainer}>
-        <Pressable style={styles.finalDiagnosisBtn} onPress={() => setDiagnosisModalVisible(true)}>
+        <Pressable style={styles.finalDiagnosisBtn} onPress={() => setDiagnosisModalVisible(true)} disabled={isEvaluating}>
           <Text style={styles.finalDiagnosisText}>Final Diagnosis</Text>
         </Pressable>
         <View style={styles.inputRow}>
-          <TextInput style={styles.textInput} placeholder="Type custom request..." placeholderTextColor="#64748B" value={inputText} onChangeText={setInputText} onSubmitEditing={() => handleSendRequest(inputText)} editable={!isTyping} />
-          <Pressable style={[styles.sendBtn, isTyping && { opacity: 0.5 }]} onPress={() => handleSendRequest(inputText)} disabled={isTyping}>
+          <TextInput style={styles.textInput} placeholder="Type custom request..." placeholderTextColor="#64748B" value={inputText} onChangeText={setInputText} onSubmitEditing={() => handleSendRequest(inputText)} editable={!isTyping && !isEvaluating} />
+          <Pressable style={[styles.sendBtn, (isTyping || isEvaluating) && { opacity: 0.5 }]} onPress={() => handleSendRequest(inputText)} disabled={isTyping || isEvaluating}>
             <Text style={styles.sendBtnText}>Send</Text>
           </Pressable>
         </View>
       </View>
 
+      {/* مودال الفحوصات والتاريخ المرضي */}
       <Modal visible={!!activeMenu} transparent={true} animationType="slide">
         <View style={styles.modalOverlay}>
           <View style={styles.menuContainer}>
@@ -122,16 +177,34 @@ export default function DiagnosticRoom() {
         </View>
       </Modal>
 
+      {/* مودال كتابة التشخيص النهائي */}
       <Modal visible={diagnosisModalVisible} transparent={true} animationType="fade">
         <View style={styles.modalOverlay}>
           <View style={styles.diagnosisContainer}>
             <Text style={styles.diagnosisTitle}>Submit Final Diagnosis</Text>
-            <Text style={styles.diagnosisSubtitle}>Warning: Submitting will end the case.</Text>
-            <TextInput style={styles.diagnosisInput} placeholder="Enter your final diagnosis here..." placeholderTextColor="#64748B" multiline value={finalDiagnosis} onChangeText={setFinalDiagnosis} />
+            <Text style={styles.diagnosisSubtitle}>Warning: Submitting will end the case and trigger consultant evaluation.</Text>
+            <TextInput style={styles.diagnosisInput} placeholder="Enter your final diagnosis with clinical justification..." placeholderTextColor="#64748B" multiline value={finalDiagnosis} onChangeText={setFinalDiagnosis} />
             <View style={styles.diagnosisActionRow}>
               <Pressable style={styles.cancelBtn} onPress={() => setDiagnosisModalVisible(false)}><Text style={styles.cancelBtnText}>Cancel</Text></Pressable>
-              <Pressable style={styles.submitBtn} onPress={() => { setDiagnosisModalVisible(false); alert(`Case Ended! Score: ${score}\nActual: ${currentCase.correctDiagnosis}`); }}><Text style={styles.submitBtnText}>Submit</Text></Pressable>
+              <Pressable style={styles.submitBtn} onPress={handleSubmitDiagnosis}><Text style={styles.submitBtnText}>Submit Case</Text></Pressable>
             </View>
+          </View>
+        </View>
+      </Modal>
+
+      {/* مودال عرض تقرير التقييم النهائي المفصل */}
+      <Modal visible={feedbackModalVisible} transparent={true} animationType="slide">
+        <View style={styles.modalOverlay}>
+          <View style={styles.feedbackContainer}>
+            <Text style={styles.feedbackTitle}>📋 Performance Evaluation Report</Text>
+            <ScrollView style={styles.feedbackScroll}>
+              <Text style={styles.feedbackContentText}>{feedbackText}</Text>
+              <View style={styles.scoreSummaryCard}>
+                <Text style={styles.scoreSummaryTitle}>Case Performance Summary</Text>
+                <Text style={styles.scoreSummaryValue}>Remaining Efficiency Score: {score}/100</Text>
+              </View>
+            </ScrollView>
+            <Pressable style={styles.closeFeedbackBtn} onPress={() => setFeedbackModalVisible(false)}><Text style={styles.closeFeedbackText}>Return to Station</Text></Pressable>
           </View>
         </View>
       </Modal>
@@ -152,5 +225,9 @@ const styles = StyleSheet.create({
   quickActions: { flexDirection: 'row', paddingHorizontal: 10, paddingVertical: 8, backgroundColor: '#0F172A', justifyContent: 'space-between' }, actionBtn: { flex: 1, backgroundColor: '#1E293B', marginHorizontal: 4, paddingVertical: 10, borderRadius: 6, alignItems: 'center', borderWidth: 1, borderColor: '#334155' }, actionBtnText: { color: '#38BDF8', fontSize: 12, fontWeight: '600' },
   inputContainer: { padding: 12, backgroundColor: '#1E293B', borderTopWidth: 1, borderTopColor: '#334155' }, finalDiagnosisBtn: { backgroundColor: '#10B981', padding: 12, borderRadius: 8, alignItems: 'center', marginBottom: 12 }, finalDiagnosisText: { color: '#0F172A', fontWeight: 'bold', fontSize: 16 }, inputRow: { flexDirection: 'row', alignItems: 'center' }, textInput: { flex: 1, backgroundColor: '#0F172A', color: '#F8FAFC', paddingHorizontal: 16, paddingVertical: 12, borderRadius: 8, borderWidth: 1, borderColor: '#334155', marginRight: 10 }, sendBtn: { backgroundColor: '#38BDF8', paddingHorizontal: 20, paddingVertical: 14, borderRadius: 8 }, sendBtnText: { color: '#0F172A', fontWeight: 'bold' },
   modalOverlay: { flex: 1, backgroundColor: 'rgba(15, 23, 42, 0.85)', justifyContent: 'flex-end' }, menuContainer: { backgroundColor: '#1E293B', borderTopLeftRadius: 20, borderTopRightRadius: 20, padding: 20, maxHeight: '70%' }, menuTitle: { color: '#F8FAFC', fontSize: 20, fontWeight: 'bold', marginBottom: 16, textAlign: 'center', textTransform: 'capitalize' }, menuItem: { paddingVertical: 16, borderBottomWidth: 1, borderBottomColor: '#334155' }, menuItemText: { color: '#38BDF8', fontSize: 16 }, closeMenuBtn: { marginTop: 16, padding: 16, backgroundColor: '#334155', borderRadius: 8, alignItems: 'center' }, closeMenuText: { color: '#F8FAFC', fontWeight: 'bold' },
-  diagnosisContainer: { backgroundColor: '#1E293B', padding: 24, margin: 16, borderRadius: 16, marginBottom: 'auto', marginTop: 'auto' }, diagnosisTitle: { color: '#10B981', fontSize: 20, fontWeight: 'bold', marginBottom: 8 }, diagnosisSubtitle: { color: '#94A3B8', fontSize: 14, marginBottom: 20 }, diagnosisInput: { backgroundColor: '#0F172A', color: '#F8FAFC', padding: 16, borderRadius: 8, borderWidth: 1, borderColor: '#334155', height: 120, textAlignVertical: 'top', marginBottom: 20 }, diagnosisActionRow: { flexDirection: 'row', justifyContent: 'flex-end', gap: 12 }, cancelBtn: { padding: 12 }, cancelBtnText: { color: '#94A3B8', fontWeight: 'bold' }, submitBtn: { backgroundColor: '#10B981', paddingHorizontal: 24, paddingVertical: 12, borderRadius: 8 }, submitBtnText: { color: '#0F172A', fontWeight: 'bold' }
+  diagnosisContainer: { backgroundColor: '#1E293B', padding: 24, margin: 16, borderRadius: 16, marginBottom: 'auto', marginTop: 'auto' }, diagnosisTitle: { color: '#10B981', fontSize: 20, fontWeight: 'bold', marginBottom: 8 }, diagnosisSubtitle: { color: '#94A3B8', fontSize: 14, marginBottom: 20 }, diagnosisInput: { backgroundColor: '#0F172A', color: '#F8FAFC', padding: 16, borderRadius: 8, borderWidth: 1, borderColor: '#334155', height: 120, textAlignVertical: 'top', marginBottom: 20 }, diagnosisActionRow: { flexDirection: 'row', justifyContent: 'flex-end', gap: 12 }, cancelBtn: { padding: 12 }, cancelBtnText: { color: '#94A3B8', fontWeight: 'bold' }, submitBtn: { backgroundColor: '#10B981', paddingHorizontal: 24, paddingVertical: 12, borderRadius: 8 }, submitBtnText: { color: '#0F172A', fontWeight: 'bold' },
+  evaluatingOverlay: { ...StyleSheet.absoluteFillObject, backgroundColor: 'rgba(15, 23, 42, 0.9)', justifyContent: 'center', alignItems: 'center', zIndex: 50 }, evaluatingText: { color: '#F8FAFC', marginTop: 16, fontSize: 16, fontWeight: '500', textAlign: 'center', paddingHorizontal: 20 },
+  feedbackContainer: { backgroundColor: '#1E293B', borderTopLeftRadius: 24, borderTopRightRadius: 24, padding: 24, height: '85%', width: '100%' }, feedbackTitle: { color: '#F59E0B', fontSize: 22, fontWeight: 'bold', marginBottom: 16 }, feedbackScroll: { flex: 1, marginBottom: 16 }, feedbackContentText: { color: '#E2E8F0', fontSize: 15, lineHeight: 24, letterSpacing: 0.3 },
+  scoreSummaryCard: { backgroundColor: '#0F172A', padding: 16, borderRadius: 12, marginTop: 24, borderWidth: 1, borderColor: '#334155' }, scoreSummaryTitle: { color: '#94A3B8', fontSize: 14, marginBottom: 4 }, scoreSummaryValue: { color: '#10B981', fontSize: 18, fontWeight: 'bold' },
+  closeFeedbackBtn: { backgroundColor: '#38BDF8', padding: 16, borderRadius: 12, alignItems: 'center' }, closeFeedbackText: { color: '#0F172A', fontWeight: 'bold', fontSize: 16 }
 });
