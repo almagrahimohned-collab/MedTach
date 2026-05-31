@@ -31,7 +31,7 @@ export default function Dashboard() {
         <Text style={styles.actionBtnText}>Start New Diagnostic Case</Text>
       </Pressable>
 
-      <Pressable style={[styles.actionBtn, styles.secondaryBtn]} onPress={() => router.push('/settings')}>
+      <Pressable style={[styles.actionBtn, styles.secondaryBtn]} onPress={() => router.push('/profile/history')}>
         <Text style={styles.secondaryBtnText}>View Medical Record & Analytics</Text>
       </Pressable>
     </ScrollView>
