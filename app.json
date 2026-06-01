@@ -38,11 +38,15 @@
             "backgroundColor": "#000000"
           }
         }
-      ]
+      ],
+      "expo-font"
     ],
     "experiments": {
       "typedRoutes": true,
       "reactCompiler": true
+    },
+    "extra": {
+      "OPENROUTER_API_KEY": "${EXPO_PUBLIC_OPENROUTER_API_KEY}"
     }
   }
 }

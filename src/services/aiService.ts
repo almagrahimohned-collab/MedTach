@@ -1,10 +1,9 @@
 import axios from 'axios';
 
-const OPENROUTER_API_KEY = 'OPENROUTER_KEY_PLACEHOLDER
+const OPENROUTER_API_KEY = process.env.EXPO_PUBLIC_OPENROUTER_API_KEY;
 const SITE_URL = 'https://clinicalmind.app';
 const SITE_NAME = 'ClinicalMind';
 
-// قائمة موديلات متنوعة للتبديل التلقائي في حال فشل أي منها
 const MODEL_FALLBACK_LIST = [
   'anthropic/claude-3.5-sonnet',
   'google/gemini-2.0-flash-exp',
@@ -23,6 +22,10 @@ CORE RULES:
 5. TONE: Be concise, academic, and professional. Do not give away the final diagnosis until they submit it.`;
 
 export const fetchAIResponse = async (history: any[], userRequest: string) => {
+  if (!OPENROUTER_API_KEY) {
+    return "Attending Physician: API key not configured. Please check environment variables.";
+  }
+
   for (const model of MODEL_FALLBACK_LIST) {
     try {
       const response = await axios.post(

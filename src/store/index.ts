@@ -8,8 +8,23 @@ interface CaseResult {
   date: string;
 }
 
+interface DailyChallenge {
+  date: string;
+  specialty: string;
+  level: string;
+  caseId: string;
+  completed: boolean;
+  bonusPoints: number;
+}
+
+interface QuestProgress {
+  id: string;
+  completed: boolean;
+  claimed: boolean;
+  progress: number;
+}
+
 interface AppStore {
-  // Session State
   score: number;
   totalPoints: number;
   completedCases: CaseResult[];
@@ -17,47 +32,49 @@ interface AppStore {
   difficulty: string | null;
   specialtyId: string | null;
 
-  // Daily Challenge State
-  dailyChallengeId: string | null;
+  dailyChallenge: DailyChallenge | null;
   lastChallengeDate: string | null;
 
-  // Badges State
   badges: string[];
+  quests: QuestProgress[];
 
-  // Actions
   addPoints: (points: number) => void;
   deductPoints: (points: number) => void;
   resetScore: () => void;
   saveCaseResult: (caseId: string, finalScore: number) => void;
   setCategory: (specialtyId: string, sub: string, diff: string) => void;
   resetSession: () => void;
-  setDailyChallenge: (caseId: string) => void;
+  setDailyChallenge: (challenge: DailyChallenge) => void;
+  completeDailyChallenge: (bonusPoints: number) => void;
   addBadge: (badge: string) => void;
+  updateQuestProgress: (questId: string, progress: number) => void;
+  claimQuest: (questId: string) => number;
+  getAccuracy: () => number;
+  getUniqueSpecialties: () => number;
+  getTodayCases: () => CaseResult[];
 }
 
 export const useStore = create<AppStore>()(
   persist(
-    (set) => ({
-      // Initial State
+    (set, get) => ({
       score: 100,
       totalPoints: 0,
       completedCases: [],
       subCategory: null,
       difficulty: null,
       specialtyId: null,
-      dailyChallengeId: null,
+      dailyChallenge: null,
       lastChallengeDate: null,
       badges: [],
+      quests: [],
 
-      // Actions
       addPoints: (points) =>
         set((state) => ({ totalPoints: state.totalPoints + points })),
 
       deductPoints: (points) =>
         set((state) => ({ score: Math.max(0, state.score - points) })),
 
-      resetScore: () =>
-        set({ score: 100 }),
+      resetScore: () => set({ score: 100 }),
 
       saveCaseResult: (caseId, finalScore) =>
         set((state) => ({
@@ -65,7 +82,7 @@ export const useStore = create<AppStore>()(
             ...state.completedCases,
             { caseId, score: finalScore, date: new Date().toISOString() }
           ],
-          totalPoints: state.totalPoints + finalScore // إضافة نتيجة الحالة للمجموع التراكمي
+          totalPoints: state.totalPoints + finalScore
         })),
 
       setCategory: (specialtyId, sub, diff) =>
@@ -74,16 +91,72 @@ export const useStore = create<AppStore>()(
       resetSession: () =>
         set({ specialtyId: null, subCategory: null, difficulty: null, score: 100 }),
 
-      setDailyChallenge: (caseId) =>
+      setDailyChallenge: (challenge) =>
         set({
-          dailyChallengeId: caseId,
-          lastChallengeDate: new Date().toISOString().split('T')[0]
+          dailyChallenge: challenge,
+          lastChallengeDate: challenge.date
         }),
+
+      completeDailyChallenge: (bonusPoints) =>
+        set((state) => ({
+          totalPoints: state.totalPoints + bonusPoints,
+          dailyChallenge: state.dailyChallenge
+            ? { ...state.dailyChallenge, completed: true }
+            : null
+        })),
 
       addBadge: (badge) =>
         set((state) => ({
-          badges: state.badges.includes(badge) ? state.badges : [...state.badges, badge]
+          badges: state.badges.includes(badge)
+            ? state.badges
+            : [...state.badges, badge]
         })),
+
+      updateQuestProgress: (questId, progress) =>
+        set((state) => ({
+          quests: state.quests.map(q =>
+            q.id === questId ? { ...q, progress, completed: progress >= 100 } : q
+          )
+        })),
+
+      claimQuest: (questId) => {
+        const quest = get().quests.find(q => q.id === questId);
+        if (quest && quest.completed && !quest.claimed) {
+          const reward = quest.id.includes('weekly') ? 
+            (quest.id.includes('accuracy') ? 250 : quest.id.includes('specialties') ? 150 : 200) :
+            (quest.id.includes('perfect') ? 75 : quest.id.includes('points') ? 40 : 50);
+          
+          set((state) => ({
+            totalPoints: state.totalPoints + reward,
+            quests: state.quests.map(q =>
+              q.id === questId ? { ...q, claimed: true } : q
+            )
+          }));
+          return reward;
+        }
+        return 0;
+      },
+
+      getAccuracy: () => {
+        const cases = get().completedCases;
+        if (cases.length === 0) return 100;
+        return Math.round(
+          cases.reduce((acc, c) => acc + c.score, 0) / cases.length
+        );
+      },
+
+      getUniqueSpecialties: () => {
+        const cases = get().completedCases;
+        const uniqueSpecialties = new Set(
+          cases.map((c) => c.caseId?.split('_')[0])
+        );
+        return uniqueSpecialties.size;
+      },
+
+      getTodayCases: () => {
+        const today = new Date().toISOString().split('T')[0];
+        return get().completedCases.filter((c) => c.date?.startsWith(today));
+      },
     }),
     {
       name: 'clinical-mind-storage',

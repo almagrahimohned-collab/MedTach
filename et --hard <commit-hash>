@@ -1,0 +1,23 @@
+[33m72f7c4d[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmaster[m[33m)[m feat: design flexible diagnostic suite template for hybrid cases
+[33m5521663[m prep: setup scoring logic integration points for case diagnosis screen
+[33m7e144e3[m feat: implement leaderboard UI and register route in stack navigation
+[33me18c48f[m feat: implement scoring algorithm and integrate total points tracking in store
+[33m3aa41b5[m feat: implement daily challenge logic with countdown timer and store persistence
+[33m6edaf04[m feat: complete dashboard, history chart, and navigation routing
+[33mf905201[m feat: complete dashboard and navigation integration for medical records
+[33m73991dc[m feat: add performance history dashboard with charting
+[33m0352df1[m feat: complete performance evaluation system, state management, and persist storage logic
+[33m2b44867[m fix: design layout issues and integrate api feedback system
+[33m53e2333[m add-clinical-performance-evaluation-report-system
+[33m85c4a02[m update-ai-service-with-strict-english-consultant-prompt
+[33mbefdf7c[m integrate-openrouter-api-with-hybrid-context
+[33ma0d5796[m add-profile-and-leaderboard-screens
+[33m1544385[m implement-hybrid-system-logic-with-dummy-data
+[33mb12fad2[m integrate-zustand-store-and-scoring-system
+[33m0556e44[m build-professional-diagnostic-room-ui
+[33m479e926[m separate-specialties-and-subcategories-screens
+[33mdfb199f[m add-specialties-screen
+[33m0474049[m auth-ui-english-update
+[33ma99b3d9[m setup-navigation
+[33mdadaa7d[m initial-project-setup
+[33m1963fb3[m Initial commit
