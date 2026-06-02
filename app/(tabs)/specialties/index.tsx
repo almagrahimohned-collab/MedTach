@@ -1,379 +1,118 @@
-import React, { useState, useCallback, useRef } from 'react';
-import { 
-  StyleSheet, 
-  Text, 
-  View, 
-  Pressable, 
-  FlatList, 
-  Animated, 
-  Dimensions,
-  Platform,
+import React, { useState, useEffect, useRef } from 'react';
+import {
+  StyleSheet, Text, View, Pressable, FlatList, Animated, Dimensions, ActivityIndicator,
 } from 'react-native';
 import { useRouter } from 'expo-router';
+import { Ionicons } from '@expo/vector-icons';
+import { contentService } from '../../../src/services/contentService';
 
 const { width } = Dimensions.get('window');
 
-const specialties = [
-  { 
-    id: 'internal', 
-    name: 'Internal Medicine',
-    emoji: '🏥',
-    color: '#3B82F6',
-    description: 'Adult diseases & chronic conditions',
-    caseCount: 45,
-    difficulty: 'Intermediate',
-  },
-  { 
-    id: 'pediatrics', 
-    name: 'Pediatrics',
-    emoji: '👶',
-    color: '#F59E0B',
-    description: 'Child healthcare & development',
-    caseCount: 32,
-    difficulty: 'Beginner',
-  },
-  { 
-    id: 'surgery', 
-    name: 'Surgery',
-    emoji: '🔪',
-    color: '#EF4444',
-    description: 'Operative procedures & trauma',
-    caseCount: 38,
-    difficulty: 'Advanced',
-  },
-  { 
-    id: 'gynecology', 
-    name: 'OB/GYN',
-    emoji: '🤰',
-    color: '#8B5CF6',
-    description: 'Women health & pregnancy',
-    caseCount: 28,
-    difficulty: 'Intermediate',
-  },
-  { 
-    id: 'cardiology', 
-    name: 'Cardiology',
-    emoji: '❤️',
-    color: '#EC4899',
-    description: 'Heart & cardiovascular system',
-    caseCount: 50,
-    difficulty: 'Advanced',
-  },
-  { 
-    id: 'neurology', 
-    name: 'Neurology',
-    emoji: '🧠',
-    color: '#10B981',
-    description: 'Brain & nervous system',
-    caseCount: 35,
-    difficulty: 'Advanced',
-  },
+const mainSpecialties = [
+  { id: 'cardiology', name: 'Internal Medicine', emoji: '🩺', color: '#3B82F6', description: 'Adult diseases & chronic conditions' },
+  { id: 'pediatrics', name: 'Pediatrics', emoji: '👶', color: '#F59E0B', description: 'Child healthcare & development' },
+  { id: 'gynecology', name: 'OB/GYN', emoji: '🤰', color: '#8B5CF6', description: 'Women health & pregnancy' },
+  { id: 'surgery', name: 'Surgery', emoji: '🏥', color: '#EF4444', description: 'Operative procedures & trauma' },
 ];
 
 export default function Specialties() {
   const router = useRouter();
-  const [selectedId, setSelectedId] = useState<string | null>(null);
-  const scaleAnims = useRef<{ [key: string]: Animated.Value }>({}).current;
+  const [caseCounts, setCaseCounts] = useState<Record<string, number>>({});
+  const [loading, setLoading] = useState(true);
+  const fadeAnim = useRef(new Animated.Value(0)).current;
+  const slideAnim = useRef(new Animated.Value(30)).current;
 
-  // نفس الـ handlers بتاعتك
-  const getScaleAnim = (id: string) => {
-    if (!scaleAnims[id]) {
-      scaleAnims[id] = new Animated.Value(1);
-    }
-    return scaleAnims[id];
-  };
-
-  const handlePressIn = useCallback((id: string) => {
-    Animated.spring(getScaleAnim(id), {
-      toValue: 0.95,
-      useNativeDriver: true,
-    }).start();
+  useEffect(() => {
+    Animated.parallel([
+      Animated.timing(fadeAnim, { toValue: 1, duration: 500, useNativeDriver: true }),
+      Animated.timing(slideAnim, { toValue: 0, duration: 500, useNativeDriver: true }),
+    ]).start();
+    loadCaseCounts();
   }, []);
 
-  const handlePressOut = useCallback((id: string) => {
-    Animated.spring(getScaleAnim(id), {
-      toValue: 1,
-      useNativeDriver: true,
-    }).start();
-  }, []);
-
-  // نفس التنقل بتاعك بالظبط
-  const handleSpecialtyPress = useCallback((item: typeof specialties[0]) => {
-    setSelectedId(item.id);
-    router.push(`/specialties/details?id=${item.id}`);
-  }, [router]);
-
-  const getDifficultyColor = (difficulty: string) => {
-    switch (difficulty) {
-      case 'Beginner': return '#10B981';
-      case 'Intermediate': return '#F59E0B';
-      case 'Advanced': return '#EF4444';
-      default: return '#6B7280';
+  const loadCaseCounts = async () => {
+    try {
+      const index = await contentService.getIndex();
+      const counts: Record<string, number> = {};
+      mainSpecialties.forEach(spec => {
+        const bySpec = index.cases_by_specialty[spec.id] || {};
+        counts[spec.id] = Object.values(bySpec).reduce((a: number, b: any) => a + (b || 0), 0);
+      });
+      setCaseCounts(counts);
+    } catch (e) {
+      mainSpecialties.forEach(s => { caseCounts[s.id] = 0; });
+      setCaseCounts({ ...caseCounts });
+    } finally {
+      setLoading(false);
     }
   };
 
-  const renderSpecialtyCard = useCallback(({ item }: { item: typeof specialties[0] }) => {
-    const scaleAnim = getScaleAnim(item.id);
-
+  if (loading) {
     return (
-      <Animated.View style={[
-        styles.cardWrapper,
-        { transform: [{ scale: scaleAnim }] }
-      ]}>
-        <Pressable
-          style={({ pressed }) => [
-            styles.card,
-            { borderColor: item.color + '40' },
-            selectedId === item.id && { borderColor: item.color, borderWidth: 2 },
-            pressed && { opacity: 0.9, transform: [{ scale: 0.98 }] },
-          ]}
-          onPress={() => handleSpecialtyPress(item)}
-          onPressIn={() => handlePressIn(item.id)}
-          onPressOut={() => handlePressOut(item.id)}
-        >
-          {/* Emoji & Name */}
-          <View style={styles.cardTop}>
-            <View style={[styles.emojiContainer, { backgroundColor: item.color + '20' }]}>
-              <Text style={styles.emoji}>{item.emoji}</Text>
-            </View>
-            <Text style={styles.cardTitle} numberOfLines={2}>
-              {item.name}
-            </Text>
-          </View>
-
-          {/* Description */}
-          <Text style={styles.cardDescription} numberOfLines={2}>
-            {item.description}
-          </Text>
-
-          {/* Stats */}
-          <View style={styles.cardStats}>
-            <View style={styles.statItem}>
-              <Text style={styles.statIcon}>📚</Text>
-              <Text style={styles.statText}>{item.caseCount} Cases</Text>
-            </View>
-            
-            <View style={[styles.difficultyBadge, { 
-              backgroundColor: getDifficultyColor(item.difficulty) + '20',
-              borderColor: getDifficultyColor(item.difficulty) + '40',
-            }]}>
-              <View style={[styles.difficultyDot, { 
-                backgroundColor: getDifficultyColor(item.difficulty) 
-              }]} />
-              <Text style={[styles.difficultyText, { 
-                color: getDifficultyColor(item.difficulty) 
-              }]}>
-                {item.difficulty}
-              </Text>
-            </View>
-          </View>
-
-          {/* Arrow indicator */}
-          <View style={styles.arrowContainer}>
-            <Text style={[styles.arrow, { color: item.color }]}>→</Text>
-          </View>
-        </Pressable>
-      </Animated.View>
+      <View style={styles.loadingContainer}>
+        <ActivityIndicator size="large" color="#38BDF8" />
+      </View>
     );
-  }, [selectedId, handleSpecialtyPress, handlePressIn, handlePressOut]);
+  }
 
   return (
     <View style={styles.container}>
-      {/* Header */}
-      <View style={styles.header}>
-        <View style={styles.titleContainer}>
+      <Animated.View style={[styles.content, { opacity: fadeAnim, transform: [{ translateY: slideAnim }] }]}>
+        <View style={styles.header}>
           <Text style={styles.title}>Select Specialty</Text>
-          <Text style={styles.subtitle}>Choose a medical field to begin</Text>
+          <Text style={styles.subtitle}>Choose a medical field to begin diagnosis</Text>
         </View>
-        
-        {/* Quick Stats */}
-        <View style={styles.statsRow}>
-          <View style={styles.overviewItem}>
-            <Text style={styles.overviewIcon}>📋</Text>
-            <Text style={styles.overviewText}>
-              {specialties.length} Specialties
-            </Text>
-          </View>
-          <View style={styles.overviewItem}>
-            <Text style={styles.overviewIcon}>📄</Text>
-            <Text style={styles.overviewText}>
-              {specialties.reduce((sum, s) => sum + s.caseCount, 0)} Cases
-            </Text>
-          </View>
-        </View>
-      </View>
 
-      {/* Grid */}
-      <FlatList
-        data={specialties}
-        keyExtractor={(item) => item.id}
-        numColumns={2}
-        renderItem={renderSpecialtyCard}
-        contentContainerStyle={styles.listContent}
-        columnWrapperStyle={styles.columnWrapper}
-        showsVerticalScrollIndicator={false}
-      />
+        <FlatList
+          data={mainSpecialties}
+          keyExtractor={(item) => item.id}
+          numColumns={2}
+          columnWrapperStyle={styles.columnWrapper}
+          contentContainerStyle={styles.listContent}
+          renderItem={({ item }) => (
+            <Pressable
+              style={styles.card}
+              onPress={() => router.push(`/specialties/details?id=${item.id}`)}
+            >
+              <View style={[styles.iconBox, { backgroundColor: item.color + '20' }]}>
+                <Text style={styles.emoji}>{item.emoji}</Text>
+              </View>
+              <Text style={styles.cardTitle}>{item.name}</Text>
+              <Text style={styles.cardDesc}>{item.description}</Text>
+              <View style={styles.cardFooter}>
+                <Ionicons name="document-text-outline" size={14} color="#94A3B8" />
+                <Text style={styles.caseCount}>{caseCounts[item.id] || 0} Cases</Text>
+              </View>
+            </Pressable>
+          )}
+        />
+
+        <View style={{ height: 20 }} />
+      </Animated.View>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#0A0E1A',
-  },
-  header: {
-    paddingHorizontal: 16,
-    paddingTop: 20,
-    paddingBottom: 16,
-  },
-  titleContainer: {
-    marginBottom: 16,
-  },
-  title: {
-    fontSize: 28,
-    fontWeight: '800',
-    color: '#F8FAFC',
-    letterSpacing: 0.5,
-  },
-  subtitle: {
-    fontSize: 14,
-    color: '#94A3B8',
-    marginTop: 4,
-  },
-  statsRow: {
-    flexDirection: 'row',
-    gap: 10,
-  },
-  overviewItem: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    backgroundColor: '#1E293B',
-    paddingHorizontal: 12,
-    paddingVertical: 6,
-    borderRadius: 20,
-    gap: 6,
-  },
-  overviewIcon: {
-    fontSize: 14,
-  },
-  overviewText: {
-    color: '#E2E8F0',
-    fontSize: 12,
-    fontWeight: '600',
-  },
-  listContent: {
-    paddingHorizontal: 12,
-    paddingBottom: 32,
-  },
-  columnWrapper: {
-    gap: 10,
-    marginBottom: 10,
-  },
-  cardWrapper: {
-    flex: 1,
-    maxWidth: (width - 44) / 2,
-  },
+  container: { flex: 1, backgroundColor: '#0A0E1A' },
+  loadingContainer: { flex: 1, backgroundColor: '#0A0E1A', justifyContent: 'center', alignItems: 'center' },
+  content: { flex: 1, padding: 16 },
+  header: { marginBottom: 20, marginTop: 10 },
+  title: { fontSize: 28, fontWeight: '800', color: '#F8FAFC', marginBottom: 4 },
+  subtitle: { fontSize: 14, color: '#94A3B8' },
+  listContent: { paddingBottom: 20 },
+  columnWrapper: { gap: 12, marginBottom: 12 },
   card: {
-    flex: 1,
-    backgroundColor: '#1E293B',
-    padding: 16,
-    borderRadius: 16,
-    borderWidth: 1.5,
-    borderColor: '#334155',
-    minHeight: 180,
-    justifyContent: 'space-between',
-    // Shadow
-    ...Platform.select({
-      ios: {
-        shadowColor: '#000',
-        shadowOffset: { width: 0, height: 2 },
-        shadowOpacity: 0.25,
-        shadowRadius: 8,
-      },
-      android: {
-        elevation: 4,
-      },
-    }),
+    flex: 1, backgroundColor: '#1E293B', padding: 20, borderRadius: 20,
+    borderWidth: 1, borderColor: '#334155', gap: 10,
   },
-  cardTop: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 10,
-    marginBottom: 8,
+  iconBox: {
+    width: 56, height: 56, borderRadius: 28,
+    justifyContent: 'center', alignItems: 'center',
   },
-  emojiContainer: {
-    width: 48,
-    height: 48,
-    borderRadius: 24,
-    justifyContent: 'center',
-    alignItems: 'center',
-    borderWidth: 1,
-    borderColor: 'rgba(255,255,255,0.1)',
-  },
-  emoji: {
-    fontSize: 24,
-  },
-  cardTitle: {
-    flex: 1,
-    fontSize: 16,
-    fontWeight: '700',
-    color: '#F8FAFC',
-    letterSpacing: 0.3,
-  },
-  cardDescription: {
-    fontSize: 11,
-    color: '#94A3B8',
-    lineHeight: 16,
-    marginBottom: 10,
-  },
-  cardStats: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    marginTop: 'auto',
-  },
-  statItem: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 4,
-  },
-  statIcon: {
-    fontSize: 12,
-  },
-  statText: {
-    fontSize: 10,
-    color: '#CBD5E1',
-    fontWeight: '500',
-  },
-  difficultyBadge: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    paddingHorizontal: 8,
-    paddingVertical: 3,
-    borderRadius: 12,
-    borderWidth: 1,
-    gap: 4,
-  },
-  difficultyDot: {
-    width: 6,
-    height: 6,
-    borderRadius: 3,
-  },
-  difficultyText: {
-    fontSize: 9,
-    fontWeight: '700',
-    textTransform: 'uppercase',
-    letterSpacing: 0.5,
-  },
-  arrowContainer: {
-    position: 'absolute',
-    top: 12,
-    right: 12,
-  },
-  arrow: {
-    fontSize: 20,
-    fontWeight: '900',
-    opacity: 0.7,
-  },
+  emoji: { fontSize: 28 },
+  cardTitle: { fontSize: 16, fontWeight: '700', color: '#F8FAFC' },
+  cardDesc: { fontSize: 11, color: '#94A3B8', lineHeight: 16 },
+  cardFooter: { flexDirection: 'row', alignItems: 'center', gap: 6, marginTop: 'auto' },
+  caseCount: { fontSize: 12, color: '#64748B', fontWeight: '500' },
 });

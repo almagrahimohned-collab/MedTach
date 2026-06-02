@@ -37,7 +37,6 @@ export default function TabLayout() {
           ),
         }}
       />
-
       <Tabs.Screen
         name="specialties"
         options={{
@@ -51,7 +50,6 @@ export default function TabLayout() {
           ),
         }}
       />
-
       <Tabs.Screen
         name="leaderboard"
         options={{
@@ -65,7 +63,6 @@ export default function TabLayout() {
           ),
         }}
       />
-
       <Tabs.Screen
         name="profile"
         options={{

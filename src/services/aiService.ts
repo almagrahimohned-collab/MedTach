@@ -1,56 +1,94 @@
 import axios from 'axios';
 
 const OPENROUTER_API_KEY = process.env.EXPO_PUBLIC_OPENROUTER_API_KEY;
-const SITE_URL = 'https://clinicalmind.app';
-const SITE_NAME = 'ClinicalMind';
+const API_URL = 'https://openrouter.ai/api/v1/chat/completions';
+const SITE_URL = 'https://medtach.app';
+const SITE_NAME = 'MedTach';
 
-const MODEL_FALLBACK_LIST = [
-  'anthropic/claude-3.5-sonnet',
-  'google/gemini-2.0-flash-exp',
-  'meta-llama/llama-3.1-405b-instruct',
-  'mistralai/mistral-large-2',
-  'qwen/qwen-2.5-72b-instruct'
-];
+const getHeaders = () => ({
+  'Authorization': `Bearer ${OPENROUTER_API_KEY}`,
+  'Content-Type': 'application/json',
+});
 
-const SYSTEM_PROMPT = `You are a strict, senior attending physician supervising a medical resident in a clinical diagnostic simulator. ALL YOUR RESPONSES MUST BE STRICTLY IN ENGLISH.
+export async function chatWithCase(
+  userMessage: string,
+  _queryType: string,
+  caseContext: any,
+  history: any[] = []
+): Promise<string> {
+  const systemPrompt = `You are a medical simulation AI with THREE roles:
 
-CORE RULES:
-1. DIAGNOSTICS ONLY: This is a diagnostic identification simulator. Focus entirely on history, clinical examination, and investigations.
-2. STRICT HYBRID DATA: You will receive the patient's factual data in the hidden context. You MUST ONLY disclose results that explicitly exist in this provided data. NEVER hallucinate or invent lab values.
-3. UNAVAILABLE TESTS: If requested data is not present, reply: "This specific investigation is currently unavailable or clinically irrelevant. Please refocus your diagnostic approach."
-4. OFF-TOPIC: If the user types non-medical text, reply: "Doctor, please maintain professionalism and focus on the clinical assessment."
-5. TONE: Be concise, academic, and professional. Do not give away the final diagnosis until they submit it.`;
+1. PATIENT: When asked personal questions (symptoms, history, feelings), respond AS THE PATIENT naturally with 2-4 sentences. Express emotions matching the persona. Use simple non-medical language.
 
-export const fetchAIResponse = async (history: any[], userRequest: string) => {
-  if (!OPENROUTER_API_KEY) {
-    return "Attending Physician: API key not configured. Please check environment variables.";
-  }
+2. TECHNICIAN: When asked for test results, provide ONLY the exact stored data. If test not available, say "This investigation is not clinically indicated."
 
-  for (const model of MODEL_FALLBACK_LIST) {
+3. SUPERVISOR: When asked for medical guidance, act as senior attending. Be concise but helpful. NEVER reveal the final diagnosis.
+
+CASE: ${caseContext.patientInfo}
+COMPLAINT: ${caseContext.chiefComplaint}
+PERSONA: ${caseContext.patientPersona}
+DATA: ${JSON.stringify(caseContext.hiddenData).substring(0, 600)}
+RESPONSES: ${JSON.stringify(caseContext.patientResponses).substring(0, 600)}`;
+
+  const messages = [
+    { role: 'system', content: systemPrompt },
+    ...history.slice(-6),
+    { role: 'user', content: userMessage },
+  ];
+
+  const models = ['google/gemini-2.0-flash-exp', 'meta-llama/llama-3.1-8b-instruct'];
+  
+  for (const model of models) {
     try {
-      const response = await axios.post(
-        'https://openrouter.ai/api/v1/chat/completions',
-        {
-          model: model,
-          messages: [
-            { role: 'system', content: SYSTEM_PROMPT },
-            ...history,
-            { role: 'user', content: userRequest }
-          ],
-        },
-        {
-          headers: {
-            'Authorization': `Bearer ${OPENROUTER_API_KEY}`,
-            'HTTP-Referer': SITE_URL,
-            'X-Title': SITE_NAME,
-            'Content-Type': 'application/json',
-          }
-        }
-      );
+      const response = await axios.post(API_URL, {
+        model, messages, max_tokens: 300, temperature: 0.7,
+      }, { headers: getHeaders() });
       return response.data.choices[0].message.content;
-    } catch (error) {
-      console.warn(`Model ${model} failed, trying next...`);
-    }
+    } catch { continue; }
   }
-  return "Attending Physician: We are currently experiencing technical difficulties with all diagnostic engines. Please check your connection.";
-};
+  return 'I apologize, Doctor. I am unable to respond at this moment. Please try again.';
+}
+
+export async function evaluateDiagnosis(
+  student: string, correct: string, tests: number, time: number, diff: string
+): Promise<any> {
+  const prompt = `Compare student diagnosis with correct diagnosis.
+Student: "${student}"
+Correct: "${correct}"
+
+Reply ONLY with JSON (no markdown, no backticks):
+{"verdict":"correct"|"incorrect"|"partially_correct","confidence":0-100,"key_clue_used":"brief","key_clue_missed":"brief or null","one_action":"brief","learning_tip":"brief"}`;
+
+  try {
+    const response = await axios.post(API_URL, {
+      model: 'google/gemini-2.0-flash-exp',
+      messages: [{ role: 'user', content: prompt }],
+      max_tokens: 250,
+      temperature: 0.2,
+    }, { headers: getHeaders() });
+    
+    const text = response.data.choices[0].message.content;
+    const cleanText = text.replace(/```json|```/g, '').trim();
+    const jsonMatch = cleanText.match(/\{[\s\S]*\}/);
+    
+    if (jsonMatch) {
+      return JSON.parse(jsonMatch[0]);
+    }
+  } catch (e) {
+    console.warn('Evaluation error:', e);
+  }
+  
+  // Fallback
+  const isCorrect = student.toLowerCase().includes(correct.toLowerCase());
+  return {
+    verdict: isCorrect ? 'correct' : 'incorrect',
+    confidence: isCorrect ? 85 : 40,
+    key_clue_used: 'Diagnosis submitted',
+    key_clue_missed: isCorrect ? null : 'Review the case findings carefully',
+    one_action: 'Compare your findings with the correct diagnosis',
+    learning_tip: 'Practice more cases to improve diagnostic accuracy',
+  };
+}
+
+export const fetchAIResponse = chatWithCase;
+export const classifyQuery = async (text: string) => ({ category: 'medical', type: 'general' });
