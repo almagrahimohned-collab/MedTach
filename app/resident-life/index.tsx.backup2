@@ -1,0 +1,899 @@
+import React, { useState, useEffect, useRef, useCallback } from 'react';
+import { StyleSheet, Text, View, Pressable, ScrollView, Modal } from 'react-native';
+import { useRouter } from 'expo-router';
+import { Ionicons } from '@expo/vector-icons';
+import { useStore } from '../../src/store';
+import {
+  ShiftState, createInitialShift, updateShift, performAction,
+  makeDiagnosis, answerConsult, resolveInterruption, acceptConsult,
+  evaluateShift, formatTime, getResourceSummary,
+  togglePause, setGameSpeed, TICK_SPEED_MS,
+  getSuggestedPatient, getForgottenPatients, getPendingResults,
+  checkStableDeterioration, getClinicalPearls, getClinicalAudit,
+  Patient, Action, ConsultRequest, Interruption,
+} from './ShiftManager';
+import { getLevelProgress, getCurrentLevelInfo } from './CareerSystem';
+
+export default function ResidentLife() {
+  const router = useRouter();
+  const { addPoints } = useStore();
+  const [state, setState] = useState<ShiftState | null>(null);
+  const [selectedPatient, setSelectedPatient] = useState<Patient | null>(null);
+  const [showPatientModal, setShowPatientModal] = useState(false);
+  const [showDiagnosis, setShowDiagnosis] = useState(false);
+  const [showConsult, setShowConsult] = useState<ConsultRequest | null>(null);
+  const [showInterruption, setShowInterruption] = useState<Interruption | null>(null);
+  const [showReport, setShowReport] = useState(false);
+  const [showResources, setShowResources] = useState(false);
+  const [gameStarted, setGameStarted] = useState(false);
+  const [gameOver, setGameOver] = useState(false);
+  const [shiftResult, setShiftResult] = useState<any>(null);
+  const [loading, setLoading] = useState(true);
+  const timerRef = useRef<NodeJS.Timeout | null>(null);
+  const stateRef = useRef<ShiftState | null>(null);
+
+  useEffect(() => { stateRef.current = state; }, [state]);
+  useEffect(() => { initShift(); return () => { if (timerRef.current) clearInterval(timerRef.current); }; }, []);
+
+  useEffect(() => {
+    if (gameStarted && !gameOver && state) {
+      const interval = state.gameSpeed === 2 ? TICK_SPEED_MS / 2 : TICK_SPEED_MS;
+      timerRef.current = setInterval(() => {
+        if (stateRef.current && !stateRef.current.paused) {
+          const updated = updateShift(stateRef.current);
+          const alive = updated.patients.filter(p => p.status !== 'died');
+          if (alive.length === 0 || updated.focus <= 0) {
+            if (timerRef.current) clearInterval(timerRef.current);
+            setShiftResult(evaluateShift(updated));
+            setGameOver(true);
+          }
+          setState(updated);
+        }
+      }, interval);
+      return () => { if (timerRef.current) clearInterval(timerRef.current); };
+    }
+  }, [gameStarted, gameOver, state?.gameSpeed]);
+
+  // Auto-show interruptions
+  useEffect(() => {
+    if (state && state.interruptions.length > 0) {
+      const unhandled = state.interruptions.find(i => !i.resolved);
+      if (unhandled && !showInterruption && !showPatientModal && !showConsult) {
+        setShowInterruption(unhandled);
+      }
+    }
+  }, [state?.interruptions.length]);
+
+  // Clinical reminders: forgotten patients, pending results, stable deterioration
+  useEffect(() => {
+    if (!state || !gameStarted || gameOver || !state.paused) return;
+    // Only check when game is running
+  }, []);
+
+  // Periodic clinical checks
+  useEffect(() => {
+    if (!state || !gameStarted || gameOver || state.timeElapsed % 5 !== 0) return;
+
+    setState(prev => {
+      if (!prev) return prev;
+      let updated = { ...prev, events: [...prev.events] };
+
+      // Forgotten patients
+      const forgotten = getForgottenPatients(prev);
+      if (forgotten.length > 0) {
+        updated.events.push(`⚠️ Reminder: ${forgotten[0].name} (${forgotten[0].priority}) hasn't been assessed in ${prev.timeElapsed - (forgotten[0].arrivalTime || 0)}min.`);
+      }
+
+      // Pending results
+      const pending = getPendingResults(prev);
+      if (pending.length > 0) {
+        updated.events.push(`📋 Results ready: ${pending.map(p => p.name).join(', ')}. Review now.`);
+      }
+
+      // Stable deterioration check
+      const unstable = checkStableDeterioration(prev);
+      if (unstable) {
+        updated.patients = updated.patients.map(p => {
+          if (p.id === unstable.patient.id) return { ...p, status: 'deteriorated' as const, deteriorationTimer: 10 };
+          return p;
+        });
+        updated.events.push(`⚠️ ${unstable.reason}`);
+      }
+
+      return updated;
+    });
+  }, [state?.timeElapsed === 5 || state?.timeElapsed === 10 || state?.timeElapsed === 15 || state?.timeElapsed === 20 || state?.timeElapsed === 25 || state?.timeElapsed === 30 || state?.timeElapsed === 35 || state?.timeElapsed === 40]);
+
+  const initShift = async () => {
+    setLoading(true);
+    try {
+      const initial = await createInitialShift('junior');
+      setState(initial);
+      stateRef.current = initial;
+    } catch (e) { console.error(e); }
+    setLoading(false);
+  };
+
+  const handleAction = useCallback((patientId: string, action: Action) => {
+    if (!stateRef.current) return;
+    const updated = performAction(stateRef.current, patientId, action.id);
+    setState(updated); stateRef.current = updated;
+    setShowPatientModal(false);
+  }, []);
+
+  const handleDiagnosis = useCallback((patientId: string, diagnosis: string) => {
+    if (!stateRef.current) return;
+    const updated = makeDiagnosis(stateRef.current, patientId, diagnosis);
+    setState(updated); stateRef.current = updated;
+    setShowDiagnosis(false);
+    setShowPatientModal(false);
+  }, []);
+
+  const handleConsultAnswer = useCallback((consultId: string, answerIndex: number) => {
+    if (!stateRef.current) return;
+    const updated = answerConsult(stateRef.current, consultId, answerIndex);
+    setState(updated); stateRef.current = updated;
+    setShowConsult(null);
+  }, []);
+
+  const handleResolveInterruption = useCallback((interruptionId: string) => {
+    if (!stateRef.current) return;
+    const updated = resolveInterruption(stateRef.current, interruptionId);
+    setState(updated); stateRef.current = updated;
+    setShowInterruption(null);
+  }, []);
+
+  const handleEndShift = useCallback(() => {
+    if (timerRef.current) clearInterval(timerRef.current);
+    if (!stateRef.current) return;
+    const result = evaluateShift(stateRef.current);
+    setShiftResult(result);
+    addPoints(result.xpEarned);
+    setGameOver(true);
+    setShowReport(true);
+  }, []);
+
+  const handleSuggestedPatient = useCallback(() => {
+    if (!stateRef.current) return;
+    const suggested = getSuggestedPatient(stateRef.current);
+    if (suggested) {
+      setSelectedPatient(suggested);
+      setShowPatientModal(true);
+    }
+  }, []);
+
+  if (loading || !state) {
+    return (
+      <View style={styles.container}>
+        <View style={styles.center}>
+          <Ionicons name="medical" size={60} color="#EF4444" />
+          <Text style={styles.title}>Loading Shift...</Text>
+        </View>
+      </View>
+    );
+  }
+
+  if (!gameStarted) {
+    const careerInfo = getCurrentLevelInfo(state.career);
+    const progress = getLevelProgress(state.career);
+
+    return (
+      <View style={styles.container}>
+        <ScrollView contentContainerStyle={styles.scroll}>
+          <View style={styles.center}>
+            <Ionicons name="medkit" size={60} color="#EF4444" />
+            <Text style={styles.title}>Resident Life</Text>
+            <Text style={styles.subtitle}>Emergency Department Simulator</Text>
+
+            <View style={styles.card}>
+              <Text style={styles.cardTitle}>👨‍⚕️ {careerInfo.title}</Text>
+              <View style={styles.progressBar}>
+                <View style={[styles.progressFill, { width: `${progress}%` }]} />
+              </View>
+              <Text style={styles.cardText}>{state.career.xp} XP • Next level: {state.career.xpToNextLevel} XP</Text>
+            </View>
+
+            <View style={styles.infoSection}>
+              <View style={styles.infoRow}>
+                <Ionicons name="people" size={16} color="#94A3B8" />
+                <Text style={styles.infoText}>{state.patients.length} patients waiting</Text>
+              </View>
+              <View style={styles.infoRow}>
+                <Ionicons name="time" size={16} color="#94A3B8" />
+                <Text style={styles.infoText}>Real clinical decision-making</Text>
+              </View>
+              <View style={styles.infoRow}>
+                <Ionicons name="flask" size={16} color="#38BDF8" />
+                <Text style={styles.infoText}>Diagnose • Treat • Manage resources</Text>
+              </View>
+              <View style={styles.infoRow}>
+                <Ionicons name="bulb" size={16} color="#F59E0B" />
+                <Text style={styles.infoText}>Smart suggestions + Clinical pearls</Text>
+              </View>
+              <View style={styles.infoRow}>
+                <Ionicons name="notifications" size={16} color="#EF4444" />
+                <Text style={styles.infoText}>Interruptions + Reminders + Alerts</Text>
+              </View>
+            </View>
+
+            <View style={styles.auditPreview}>
+              <Text style={styles.auditTitle}>🏥 Shift Type: {state.shiftType === 'night' ? '🌙 Night' : '🌅 Morning'}</Text>
+              <Text style={styles.auditText}>
+                {state.shiftType === 'night' ? 'Reduced staff • Lab delays • Higher acuity' : 'Full staff • Normal operations • Teaching rounds'}
+              </Text>
+            </View>
+
+            <Pressable style={styles.btn} onPress={() => setGameStarted(true)}>
+              <Text style={styles.btnText}>Start Shift</Text>
+            </Pressable>
+          </View>
+        </ScrollView>
+      </View>
+    );
+  }
+
+  if (gameOver && showReport && shiftResult) {
+    const audit = state ? getClinicalAudit(state) : null;
+    const pearls = state ? getClinicalPearls(state) : [];
+
+    return (
+      <View style={styles.container}>
+        <ScrollView contentContainerStyle={styles.scroll}>
+          <View style={styles.center}>
+            <Ionicons name="clipboard" size={60} color="#38BDF8" />
+            <Text style={styles.title}>Shift Report</Text>
+
+            <View style={styles.badge}>
+              <Text style={styles.badgeText}>
+                {shiftResult.accuracy >= 80 ? '🌟 EXCELLENT' :
+                 shiftResult.accuracy >= 60 ? '👍 GOOD' :
+                 shiftResult.accuracy >= 40 ? '⚠️ ADEQUATE' : '❌ NEEDS IMPROVEMENT'}
+              </Text>
+            </View>
+
+            <Text style={styles.xpText}>{shiftResult.xpEarned} XP</Text>
+
+            <View style={styles.statsGrid}>
+              <View style={styles.statBox}>
+                <Text style={styles.statValue}>{shiftResult.accuracy.toFixed(0)}%</Text>
+                <Text style={styles.statLabel}>Clinical</Text>
+              </View>
+              <View style={styles.statBox}>
+                <Text style={styles.statValue}>{shiftResult.diagnosticAccuracy.toFixed(0)}%</Text>
+                <Text style={styles.statLabel}>Diagnostic</Text>
+              </View>
+              {audit && (
+                <View style={styles.statBox}>
+                  <Text style={styles.statValue}>{audit.guidelineAdherence.toFixed(0)}%</Text>
+                  <Text style={styles.statLabel}>Guidelines</Text>
+                </View>
+              )}
+            </View>
+
+            <View style={styles.statsSection}>
+              <Text style={styles.statText}>✅ {shiftResult.survived} survived</Text>
+              <Text style={styles.statText}>❌ {shiftResult.died} died</Text>
+              <Text style={styles.statText}>📞 {shiftResult.consultsCorrect}/{shiftResult.consultsAnswered} consults correct</Text>
+              <Text style={styles.statText}>🔔 {shiftResult.interruptionsHandled} interruptions handled</Text>
+              {audit && (
+                <>
+                  <Text style={styles.statText}>💉 {audit.unnecessaryTests} unnecessary tests</Text>
+                  <Text style={styles.statText}>🧠 {audit.treatmentsBeforeDiagnosis} treatments before diagnosis</Text>
+                </>
+              )}
+            </View>
+
+            {pearls.length > 0 && (
+              <View style={styles.pearlsSection}>
+                <Text style={styles.pearlsTitle}>📚 Clinical Pearls</Text>
+                {pearls.map((pearl, i) => (
+                  <Text key={i} style={styles.pearlText}>{pearl}</Text>
+                ))}
+              </View>
+            )}
+
+            {shiftResult.levelUp && (
+              <View style={styles.levelUp}>
+                <Text style={styles.levelUpText}>🎉 LEVEL UP!</Text>
+                <Text style={styles.levelUpSubtext}>You are now a {shiftResult.newLevel}!</Text>
+              </View>
+            )}
+
+            {shiftResult.achievementsUnlocked?.length > 0 && (
+              <View style={styles.achSection}>
+                <Text style={styles.achTitle}>🏆 Achievements Unlocked</Text>
+                {shiftResult.achievementsUnlocked.map((a: string, i: number) => (
+                  <Text key={i} style={styles.achText}>{a}</Text>
+                ))}
+              </View>
+            )}
+
+            <Pressable style={styles.btn} onPress={async () => {
+              const newShift = await createInitialShift(
+                shiftResult.newLevel || state.level,
+                undefined,
+                state.career
+              );
+              setState(newShift); stateRef.current = newShift;
+              setGameOver(false); setGameStarted(true);
+              setShowReport(false); setShiftResult(null);
+            }}>
+              <Text style={styles.btnText}>Next Shift</Text>
+            </Pressable>
+
+            <Pressable onPress={() => router.back()}>
+              <Text style={styles.link}>Back to Dashboard</Text>
+            </Pressable>
+          </View>
+        </ScrollView>
+      </View>
+    );
+  }
+
+  const critical = state.patients.filter(p => p.status === 'waiting' && p.priority === 'critical');
+  const urgent = state.patients.filter(p => p.status === 'waiting' && p.priority === 'urgent');
+  const stable = state.patients.filter(p => p.status === 'waiting' && p.priority === 'stable');
+  const inProgress = state.patients.filter(p => p.status === 'in-progress' || p.status === 'deteriorated');
+  const done = state.patients.filter(p => p.status === 'stable');
+  const dead = state.patients.filter(p => p.status === 'died');
+  const suggestedPatient = getSuggestedPatient(state);
+
+  return (
+    <View style={styles.container}>
+      {/* Header */}
+      <View style={styles.header}>
+        <Pressable onPress={() => { if (timerRef.current) clearInterval(timerRef.current); router.back(); }}>
+          <Ionicons name="close" size={22} color="#94A3B8" />
+        </Pressable>
+        <View style={{ flex: 1 }}>
+          <Text style={styles.headerTitle}>ER {state.shiftType === 'night' ? '🌙' : '🌅'}</Text>
+          <Text style={styles.headerTime}>{formatTime(state.timeElapsed)}</Text>
+        </View>
+        <View style={styles.headerBtns}>
+          {/* Pause */}
+          <Pressable style={styles.smallBtn} onPress={() => {
+            const u = togglePause(stateRef.current!); setState(u); stateRef.current = u;
+          }}>
+            <Ionicons name={state.paused ? 'play' : 'pause'} size={16} color="#FFF" />
+          </Pressable>
+          {/* Speed */}
+          <Pressable style={styles.smallBtn} onPress={() => {
+            const u = setGameSpeed(stateRef.current!, state.gameSpeed === 1 ? 2 : 1);
+            setState(u); stateRef.current = u;
+          }}>
+            <Text style={styles.smallBtnText}>{state.gameSpeed}x</Text>
+          </Pressable>
+          {/* Suggested patient */}
+          {suggestedPatient && (
+            <Pressable style={styles.suggestBtn} onPress={handleSuggestedPatient}>
+              <Ionicons name="bulb" size={14} color="#F59E0B" />
+              <Text style={styles.suggestText}>Next</Text>
+            </Pressable>
+          )}
+          <Text style={styles.headerStat}>⚡{state.focus}%</Text>
+          <Text style={styles.headerStat}>⭐{state.reputation}</Text>
+          {state.patientQueue.length > 0 && (
+            <Text style={styles.queueBadge}>+{state.patientQueue.length}</Text>
+          )}
+          <Pressable onPress={() => setShowResources(true)}>
+            <Ionicons name="business" size={18} color="#38BDF8" />
+          </Pressable>
+        </View>
+      </View>
+
+      {/* Pause Overlay */}
+      {state.paused && (
+        <View style={styles.overlay}>
+          <Ionicons name="pause-circle" size={60} color="#FFF" />
+          <Text style={styles.overlayTitle}>PAUSED</Text>
+          <Text style={styles.overlaySub}>Take your time to think clinically</Text>
+          <Pressable style={styles.btn} onPress={() => {
+            const u = togglePause(stateRef.current!); setState(u); stateRef.current = u;
+          }}>
+            <Text style={styles.btnText}>Resume Shift</Text>
+          </Pressable>
+        </View>
+      )}
+
+      <ScrollView style={styles.content} showsVerticalScrollIndicator={false}>
+        {/* Queue Alert */}
+        {state.patientQueue.length > 0 && (
+          <View style={styles.alert}>
+            <Ionicons name="people" size={14} color="#F59E0B" />
+            <Text style={styles.alertText}>{state.patientQueue.length} patient(s) waiting to arrive</Text>
+          </View>
+        )}
+
+        {/* Interruptions Alert */}
+        {state.interruptions.filter(i => !i.resolved).length > 0 && (
+          <Pressable style={styles.alertRed} onPress={() => {
+            const next = state.interruptions.find(i => !i.resolved);
+            if (next) setShowInterruption(next);
+          }}>
+            <Ionicons name="alert-circle" size={14} color="#EF4444" />
+            <Text style={styles.alertRedText}>
+              {state.interruptions.filter(i => !i.resolved).length} interruption(s) - Tap to view
+            </Text>
+          </Pressable>
+        )}
+
+        {/* Pending Results Alert */}
+        {getPendingResults(state).length > 0 && (
+          <View style={styles.alertBlue}>
+            <Ionicons name="document-text" size={14} color="#38BDF8" />
+            <Text style={styles.alertBlueText}>
+              Results ready for {getPendingResults(state).length} patient(s)
+            </Text>
+          </View>
+        )}
+
+        {/* Critical Patients */}
+        {critical.length > 0 && (
+          <View style={styles.section}>
+            <Text style={styles.sectionTitle}>🔴 Critical ({critical.length})</Text>
+            {critical.map(p => (
+              <Pressable
+                key={p.id}
+                style={[styles.patientCard, styles.cardCritical, suggestedPatient?.id === p.id && styles.cardSuggested]}
+                onPress={() => { setSelectedPatient(p); setShowPatientModal(true); }}
+              >
+                <View style={{ flex: 1 }}>
+                  <View style={{ flexDirection: 'row', alignItems: 'center', gap: 6 }}>
+                    <Text style={styles.pName}>{p.name}</Text>
+                    <Text style={styles.pAge}>{p.age}{p.gender === 'male' ? 'M' : 'F'}</Text>
+                    {suggestedPatient?.id === p.id && <Text style={styles.suggestedTag}>⭐ SUGGESTED</Text>}
+                  </View>
+                  <Text style={styles.pComplaint}>{p.complaint.substring(0, 55)}...</Text>
+                  <Text style={styles.pTimer}>
+                    ⏱ {p.deteriorationTimer}min
+                    {p.deteriorationTimer < 8 && ' ⚠️ URGENT'}
+                    {p.completedActions.length === 0 && p.arrivalTime && state.timeElapsed - p.arrivalTime > 8 && ' ⚠️ NOT ASSESSED'}
+                  </Text>
+                </View>
+                <Ionicons name="chevron-forward" size={18} color="#EF4444" />
+              </Pressable>
+            ))}
+          </View>
+        )}
+
+        {/* Urgent Patients */}
+        {urgent.length > 0 && (
+          <View style={styles.section}>
+            <Text style={styles.sectionTitle}>🟡 Urgent ({urgent.length})</Text>
+            {urgent.map(p => (
+              <Pressable
+                key={p.id}
+                style={[styles.patientCard, styles.cardUrgent, suggestedPatient?.id === p.id && styles.cardSuggested]}
+                onPress={() => { setSelectedPatient(p); setShowPatientModal(true); }}
+              >
+                <View style={{ flex: 1 }}>
+                  <View style={{ flexDirection: 'row', alignItems: 'center', gap: 6 }}>
+                    <Text style={styles.pName}>{p.name}</Text>
+                    <Text style={styles.pAge}>{p.age}{p.gender === 'male' ? 'M' : 'F'}</Text>
+                    {suggestedPatient?.id === p.id && <Text style={styles.suggestedTag}>⭐ SUGGESTED</Text>}
+                  </View>
+                  <Text style={styles.pComplaint}>{p.complaint.substring(0, 55)}...</Text>
+                  <Text style={styles.pTimer}>
+                    ⏱ {p.deteriorationTimer}min
+                    {p.completedActions.length === 0 && p.arrivalTime && state.timeElapsed - p.arrivalTime > 10 && ' ⚠️ NOT ASSESSED'}
+                  </Text>
+                </View>
+                <Ionicons name="chevron-forward" size={18} color="#F59E0B" />
+              </Pressable>
+            ))}
+          </View>
+        )}
+
+        {/* Stable Patients */}
+        {stable.length > 0 && (
+          <View style={styles.section}>
+            <Text style={styles.sectionTitle}>🟢 Stable ({stable.length})</Text>
+            {stable.map(p => (
+              <Pressable
+                key={p.id}
+                style={[styles.patientCard, suggestedPatient?.id === p.id && styles.cardSuggested]}
+                onPress={() => { setSelectedPatient(p); setShowPatientModal(true); }}
+              >
+                <View style={{ flex: 1 }}>
+                  <View style={{ flexDirection: 'row', alignItems: 'center', gap: 6 }}>
+                    <Text style={styles.pName}>{p.name}</Text>
+                    <Text style={styles.pAge}>{p.age}{p.gender === 'male' ? 'M' : 'F'}</Text>
+                  </View>
+                  <Text style={styles.pComplaint}>{p.complaint.substring(0, 55)}...</Text>
+                </View>
+                <Ionicons name="chevron-forward" size={18} color="#10B981" />
+              </Pressable>
+            ))}
+          </View>
+        )}
+
+        {/* In Progress */}
+        {inProgress.length > 0 && (
+          <View style={styles.section}>
+            <Text style={styles.sectionTitle}>🔄 In Progress ({inProgress.length})</Text>
+          </View>
+        )}
+
+        {/* Done */}
+        {done.length > 0 && (
+          <View style={styles.section}>
+            <Text style={styles.sectionTitle}>✅ Stable ({done.length})</Text>
+          </View>
+        )}
+
+        {/* Dead */}
+        {dead.length > 0 && (
+          <View style={styles.section}>
+            <Text style={[styles.sectionTitle, { color: '#EF4444' }]}>💀 Deceased ({dead.length})</Text>
+          </View>
+        )}
+
+        {/* Consults */}
+        {state.consults.filter(c => !c.accepted).length > 0 && (
+          <View style={styles.section}>
+            <Text style={styles.sectionTitle}>📞 Consults</Text>
+            {state.consults.filter(c => !c.accepted).map(c => (
+              <Pressable
+                key={c.id}
+                style={styles.consultCard}
+                onPress={() => {
+                  const u = acceptConsult(stateRef.current!, c.id);
+                  setState(u); stateRef.current = u;
+                  setShowConsult(c);
+                }}
+              >
+                <View style={{ flex: 1 }}>
+                  <Text style={styles.consultFrom}>{c.from}</Text>
+                  <Text style={styles.consultDesc}>{c.description}</Text>
+                </View>
+                <Ionicons name="chatbubbles" size={20} color="#38BDF8" />
+              </Pressable>
+            ))}
+          </View>
+        )}
+
+        {/* Shift Log */}
+        <View style={styles.section}>
+          <Text style={styles.sectionTitle}>📝 Shift Log</Text>
+          {state.events.slice(-10).reverse().map((e, i) => (
+            <Text key={i} style={styles.eventText}>{e}</Text>
+          ))}
+        </View>
+
+        <View style={{ height: 60 }} />
+      </ScrollView>
+
+      {/* End Shift Button */}
+      <Pressable style={styles.endBtn} onPress={handleEndShift}>
+        <Text style={styles.endBtnText}>End Shift & Get Report</Text>
+      </Pressable>
+
+      {/* Patient Modal */}
+      <Modal visible={showPatientModal} transparent animationType="slide">
+        <View style={styles.modalOverlay}>
+          <View style={styles.modalContent}>
+            {selectedPatient && (
+              <>
+                <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
+                  <Text style={styles.modalTitle}>{selectedPatient.name}</Text>
+                  <Text style={[
+                    styles.priorityTag,
+                    { color: selectedPatient.priority === 'critical' ? '#EF4444' : selectedPatient.priority === 'urgent' ? '#F59E0B' : '#10B981' }
+                  ]}>
+                    {selectedPatient.priority === 'critical' ? '🔴 Critical' : selectedPatient.priority === 'urgent' ? '🟡 Urgent' : '🟢 Stable'}
+                  </Text>
+                </View>
+
+                <Text style={styles.modalSub}>
+                  {selectedPatient.age}{selectedPatient.gender === 'male' ? 'M' : 'F'} • {selectedPatient.complaint}
+                </Text>
+
+                <Text style={styles.modalTimer}>
+                  ⏱ Deteriorates in {selectedPatient.deteriorationTimer} minutes
+                  {selectedPatient.deteriorationTimer < 8 && ' ⚠️ ACT NOW'}
+                </Text>
+
+                {/* Diagnosis status */}
+                {selectedPatient.diagnosisAttempted ? (
+                  <Text style={selectedPatient.diagnosisCorrect ? styles.diagCorrect : styles.diagWrong}>
+                    {selectedPatient.diagnosisCorrect ? '✅ Correct Diagnosis' : '❌ Incorrect Diagnosis'}
+                  </Text>
+                ) : (
+                  <Pressable style={styles.diagnoseBtn} onPress={() => setShowDiagnosis(true)}>
+                    <Ionicons name="bulb" size={18} color="#A78BFA" />
+                    <Text style={styles.diagnoseBtnText}>Make Diagnosis (+XP Bonus)</Text>
+                  </Pressable>
+                )}
+
+                {/* Survival criteria info */}
+                <View style={styles.criteriaInfo}>
+                  <Text style={styles.criteriaTitle}>Required for survival:</Text>
+                  <Text style={styles.criteriaText}>
+                    {selectedPatient.outcomeCriteria.requiredForSurvival.map(a => {
+                      const action = selectedPatient.requiredActions.find(act => act.id === a);
+                      const done = selectedPatient.completedActions.includes(a);
+                      return `${done ? '✅' : '❌'} ${action?.name || a}`;
+                    }).join(' | ')}
+                  </Text>
+                </View>
+
+                <Text style={styles.actionSectionTitle}>Actions:</Text>
+                {selectedPatient.requiredActions.map(a => (
+                  <Pressable
+                    key={a.id}
+                    style={[
+                      styles.actionBtn,
+                      a.completed && styles.actionDone,
+                      a.category === 'treatment' && styles.actionTreatment,
+                    ]}
+                    onPress={() => handleAction(selectedPatient.id, a)}
+                    disabled={a.completed}
+                  >
+                    <Ionicons
+                      name={a.completed ? 'checkmark-circle' : a.category === 'treatment' ? 'medkit' : a.category === 'lab' ? 'flask' : a.category === 'imaging' ? 'camera' : 'add-circle'}
+                      size={18}
+                      color={a.completed ? '#10B981' : a.category === 'treatment' ? '#F59E0B' : '#38BDF8'}
+                    />
+                    <View style={{ flex: 1 }}>
+                      <View style={{ flexDirection: 'row', alignItems: 'center', gap: 6 }}>
+                        <Text style={styles.actionName}>{a.name}</Text>
+                        {a.category === 'treatment' && <Text style={styles.treatmentTag}>TREATMENT</Text>}
+                        {selectedPatient.outcomeCriteria.requiredForSurvival.includes(a.id) && (
+                          <Text style={styles.survivalTag}>SURVIVAL</Text>
+                        )}
+                      </View>
+                      <Text style={styles.actionTime}>
+                        ⏱ {a.timeCost}min {a.resultTime > 0 ? `• Result in ${a.resultTime}min` : ''}
+                      </Text>
+                      {a.completed && a.result && (
+                        <Text style={styles.actionResult}>{a.result}</Text>
+                      )}
+                    </View>
+                  </Pressable>
+                ))}
+
+                <Pressable style={styles.closeBtn} onPress={() => setShowPatientModal(false)}>
+                  <Text style={styles.closeBtnText}>Close</Text>
+                </Pressable>
+              </>
+            )}
+          </View>
+        </View>
+      </Modal>
+
+      {/* Diagnosis Modal */}
+      <Modal visible={showDiagnosis && !!selectedPatient} transparent animationType="slide">
+        <View style={styles.modalOverlay}>
+          <View style={styles.modalContent}>
+            {selectedPatient && (
+              <>
+                <Text style={styles.modalTitle}>Diagnosis: {selectedPatient.name}</Text>
+                <Text style={styles.modalSub}>{selectedPatient.complaint}</Text>
+                <Text style={styles.diagHint}>Select the most likely diagnosis:</Text>
+                <View style={{ gap: 8, marginTop: 12 }}>
+                  {[...new Set([selectedPatient.correctDiagnosis, ...selectedPatient.differentialDiagnoses])].map((d, i) => (
+                    <Pressable key={i} style={styles.diagOption} onPress={() => handleDiagnosis(selectedPatient.id, d)}>
+                      <Ionicons name="medical" size={18} color="#8B5CF6" />
+                      <Text style={styles.diagText}>{d}</Text>
+                    </Pressable>
+                  ))}
+                </View>
+                <Pressable style={styles.closeBtn} onPress={() => setShowDiagnosis(false)}>
+                  <Text style={styles.closeBtnText}>Cancel</Text>
+                </Pressable>
+              </>
+            )}
+          </View>
+        </View>
+      </Modal>
+
+      {/* Consult Modal */}
+      <Modal visible={!!showConsult} transparent animationType="slide">
+        <View style={styles.modalOverlay}>
+          <View style={styles.modalContent}>
+            {showConsult && (
+              <>
+                <Text style={styles.modalTitle}>{showConsult.from} Consult</Text>
+                <Text style={styles.modalSub}>{showConsult.description}</Text>
+                <Text style={styles.consultQuestion}>{showConsult.question}</Text>
+                <View style={{ gap: 8, marginTop: 12 }}>
+                  {showConsult.options.map((opt, i) => (
+                    <Pressable key={i} style={styles.diagOption} onPress={() => handleConsultAnswer(showConsult.id, i)}>
+                      <Text style={styles.consultOptionText}>
+                        {String.fromCharCode(65 + i)}. {opt}
+                      </Text>
+                    </Pressable>
+                  ))}
+                </View>
+                <Pressable style={styles.closeBtn} onPress={() => setShowConsult(null)}>
+                  <Text style={styles.closeBtnText}>Dismiss</Text>
+                </Pressable>
+              </>
+            )}
+          </View>
+        </View>
+      </Modal>
+
+      {/* Interruption Modal */}
+      <Modal visible={!!showInterruption} transparent animationType="fade">
+        <View style={styles.modalOverlay}>
+          <View style={[styles.modalContent, styles.interruptionModal]}>
+            {showInterruption && (
+              <>
+                <Ionicons
+                  name={showInterruption.type === 'nurse' ? 'person' : showInterruption.type === 'lab' ? 'flask' : showInterruption.type === 'equipment' ? 'hardware-chip' : 'warning'}
+                  size={50}
+                  color={showInterruption.urgency === 'high' ? '#EF4444' : '#F59E0B'}
+                />
+                <Text style={styles.interruptionTitle}>{showInterruption.type.toUpperCase()}</Text>
+                <Text style={styles.interruptionMessage}>{showInterruption.message}</Text>
+                <Text style={styles.interruptionCost}>⏱ Takes {showInterruption.timeCost} minutes</Text>
+                <Pressable style={[styles.btn, { backgroundColor: showInterruption.urgency === 'high' ? '#EF4444' : '#F59E0B' }]} onPress={() => handleResolveInterruption(showInterruption.id)}>
+                  <Text style={styles.btnText}>Acknowledge & Handle</Text>
+                </Pressable>
+              </>
+            )}
+          </View>
+        </View>
+      </Modal>
+
+      {/* Resources Modal */}
+      <Modal visible={showResources} transparent animationType="slide">
+        <View style={styles.modalOverlay}>
+          <View style={styles.modalContent}>
+            <Text style={styles.modalTitle}>🏥 Hospital Resources</Text>
+            {getResourceSummary(state).map((s, i) => (
+              <Text key={i} style={styles.resourceText}>{s}</Text>
+            ))}
+            <Pressable style={styles.closeBtn} onPress={() => setShowResources(false)}>
+              <Text style={styles.closeBtnText}>Close</Text>
+            </Pressable>
+          </View>
+        </View>
+      </Modal>
+    </View>
+  );
+}
+
+const styles = StyleSheet.create({
+  container: { flex: 1, backgroundColor: '#0A0E1A' },
+  center: { flex: 1, justifyContent: 'center', alignItems: 'center', padding: 20, gap: 10 },
+  scroll: { flexGrow: 1, paddingBottom: 40 },
+
+  // Welcome
+  title: { color: '#F8FAFC', fontSize: 28, fontWeight: '800' },
+  subtitle: { color: '#94A3B8', fontSize: 16 },
+  card: { backgroundColor: '#1E293B', padding: 16, borderRadius: 14, width: '100%', borderWidth: 1, borderColor: '#334155' },
+  cardTitle: { color: '#F8FAFC', fontSize: 16, fontWeight: '700' },
+  cardText: { color: '#94A3B8', fontSize: 12, marginTop: 4 },
+  progressBar: { height: 6, backgroundColor: '#334155', borderRadius: 3, marginVertical: 8 },
+  progressFill: { height: '100%', backgroundColor: '#10B981', borderRadius: 3 },
+  infoSection: { gap: 8, marginVertical: 8, width: '100%', paddingHorizontal: 10 },
+  infoRow: { flexDirection: 'row', alignItems: 'center', gap: 8 },
+  infoText: { color: '#E2E8F0', fontSize: 14 },
+  auditPreview: { backgroundColor: '#1E293B', padding: 12, borderRadius: 10, width: '100%', borderWidth: 1, borderColor: '#334155' },
+  auditTitle: { color: '#F8FAFC', fontSize: 13, fontWeight: '600' },
+  auditText: { color: '#94A3B8', fontSize: 11, marginTop: 2 },
+  btn: { backgroundColor: '#EF4444', paddingHorizontal: 30, paddingVertical: 14, borderRadius: 14, marginTop: 8 },
+  btnText: { color: '#FFF', fontSize: 16, fontWeight: '700' },
+  link: { color: '#94A3B8', fontSize: 14, marginTop: 8 },
+
+  // Report
+  xpText: { color: '#F59E0B', fontSize: 40, fontWeight: '800' },
+  badge: { backgroundColor: '#1E293B', paddingHorizontal: 16, paddingVertical: 6, borderRadius: 12 },
+  badgeText: { color: '#F59E0B', fontSize: 16, fontWeight: '700' },
+  statsGrid: { flexDirection: 'row', gap: 12, marginTop: 8 },
+  statBox: { backgroundColor: '#1E293B', padding: 12, borderRadius: 10, alignItems: 'center', flex: 1 },
+  statValue: { color: '#F8FAFC', fontSize: 20, fontWeight: '700' },
+  statLabel: { color: '#64748B', fontSize: 10, marginTop: 2 },
+  statsSection: { gap: 4, marginTop: 8, width: '100%', paddingHorizontal: 10 },
+  statText: { color: '#E2E8F0', fontSize: 14 },
+  pearlsSection: { backgroundColor: '#1E293B', padding: 14, borderRadius: 12, width: '100%', marginTop: 12, borderWidth: 1, borderColor: '#334155' },
+  pearlsTitle: { color: '#F8FAFC', fontSize: 14, fontWeight: '700', marginBottom: 8 },
+  pearlText: { color: '#94A3B8', fontSize: 12, paddingVertical: 3, lineHeight: 18 },
+  levelUp: { backgroundColor: '#10B98120', padding: 16, borderRadius: 14, borderWidth: 1, borderColor: '#10B98140', marginTop: 8, width: '100%', alignItems: 'center' },
+  levelUpText: { color: '#10B981', fontSize: 20, fontWeight: '800' },
+  levelUpSubtext: { color: '#F8FAFC', fontSize: 14, marginTop: 4 },
+  achSection: { backgroundColor: '#F59E0B15', padding: 12, borderRadius: 10, marginTop: 8, width: '100%' },
+  achTitle: { color: '#F59E0B', fontSize: 13, fontWeight: '700', marginBottom: 4 },
+  achText: { color: '#F8FAFC', fontSize: 13, paddingVertical: 1 },
+
+  // Header
+  header: { flexDirection: 'row', alignItems: 'center', padding: 12, paddingTop: 18, backgroundColor: '#1A1F2E', borderBottomWidth: 1, borderBottomColor: '#1E293B', gap: 8 },
+  headerTitle: { color: '#F8FAFC', fontSize: 15, fontWeight: '700' },
+  headerTime: { color: '#94A3B8', fontSize: 11 },
+  headerBtns: { flexDirection: 'row', gap: 6, alignItems: 'center' },
+  smallBtn: { backgroundColor: '#334155', paddingHorizontal: 8, paddingVertical: 5, borderRadius: 6 },
+  smallBtnText: { color: '#FFF', fontSize: 12, fontWeight: '700' },
+  suggestBtn: { flexDirection: 'row', alignItems: 'center', backgroundColor: '#F59E0B20', paddingHorizontal: 8, paddingVertical: 5, borderRadius: 6, gap: 4, borderWidth: 1, borderColor: '#F59E0B40' },
+  suggestText: { color: '#F59E0B', fontSize: 10, fontWeight: '700' },
+  headerStat: { color: '#F59E0B', fontSize: 11, fontWeight: '700', backgroundColor: '#1E293B', paddingHorizontal: 6, paddingVertical: 3, borderRadius: 6, overflow: 'hidden' },
+  queueBadge: { color: '#F59E0B', fontSize: 11, fontWeight: '700', backgroundColor: '#F59E0B20', paddingHorizontal: 6, paddingVertical: 3, borderRadius: 6, overflow: 'hidden' },
+
+  // Overlay
+  overlay: { position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, backgroundColor: 'rgba(0,0,0,0.9)', zIndex: 100, justifyContent: 'center', alignItems: 'center', gap: 12 },
+  overlayTitle: { color: '#FFF', fontSize: 32, fontWeight: '800' },
+  overlaySub: { color: '#94A3B8', fontSize: 14 },
+
+  // Content
+  content: { flex: 1, padding: 10 },
+  alert: { flexDirection: 'row', alignItems: 'center', gap: 8, backgroundColor: '#F59E0B15', padding: 8, borderRadius: 8, marginBottom: 8 },
+  alertText: { color: '#F59E0B', fontSize: 11, fontWeight: '600' },
+  alertRed: { flexDirection: 'row', alignItems: 'center', gap: 8, backgroundColor: '#EF444420', padding: 8, borderRadius: 8, marginBottom: 8 },
+  alertRedText: { color: '#EF4444', fontSize: 11, fontWeight: '600' },
+  alertBlue: { flexDirection: 'row', alignItems: 'center', gap: 8, backgroundColor: '#38BDF820', padding: 8, borderRadius: 8, marginBottom: 8 },
+  alertBlueText: { color: '#38BDF8', fontSize: 11, fontWeight: '600' },
+
+  // Patients
+  section: { marginBottom: 14 },
+  sectionTitle: { color: '#F8FAFC', fontSize: 13, fontWeight: '700', marginBottom: 6 },
+  patientCard: { backgroundColor: '#1E293B', padding: 12, borderRadius: 10, flexDirection: 'row', alignItems: 'center', borderWidth: 1, borderColor: '#334155', marginBottom: 6 },
+  cardCritical: { borderLeftWidth: 3, borderLeftColor: '#EF4444' },
+  cardUrgent: { borderLeftWidth: 3, borderLeftColor: '#F59E0B' },
+  cardSuggested: { borderColor: '#F59E0B60', borderWidth: 2, backgroundColor: '#F59E0B08' },
+  pName: { color: '#F8FAFC', fontSize: 13, fontWeight: '600' },
+  pAge: { color: '#64748B', fontSize: 11 },
+  pComplaint: { color: '#94A3B8', fontSize: 11, marginTop: 1 },
+  pTimer: { color: '#EF4444', fontSize: 10, marginTop: 3, fontWeight: '600' },
+  suggestedTag: { color: '#F59E0B', fontSize: 8, fontWeight: '700', backgroundColor: '#F59E0B20', paddingHorizontal: 4, paddingVertical: 1, borderRadius: 3 },
+
+  // Consults
+  consultCard: { backgroundColor: '#1E293B', padding: 12, borderRadius: 10, flexDirection: 'row', alignItems: 'center', borderWidth: 1, borderColor: '#38BDF840', marginBottom: 6 },
+  consultFrom: { color: '#38BDF8', fontSize: 12, fontWeight: '600' },
+  consultDesc: { color: '#94A3B8', fontSize: 11, marginTop: 1 },
+  consultQuestion: { color: '#F8FAFC', fontSize: 15, fontWeight: '600', marginTop: 12 },
+  consultOptionText: { color: '#E2E8F0', fontSize: 14 },
+
+  // Events
+  eventText: { color: '#64748B', fontSize: 10, paddingVertical: 1 },
+
+  // End button
+  endBtn: { backgroundColor: '#10B981', margin: 10, padding: 14, borderRadius: 12, alignItems: 'center' },
+  endBtnText: { color: '#FFF', fontSize: 14, fontWeight: '700' },
+
+  // Modal
+  modalOverlay: { flex: 1, backgroundColor: 'rgba(0,0,0,0.7)', justifyContent: 'flex-end' },
+  modalContent: { backgroundColor: '#1E293B', padding: 20, borderTopLeftRadius: 20, borderTopRightRadius: 20, maxHeight: '85%' },
+  modalTitle: { color: '#F8FAFC', fontSize: 18, fontWeight: '700' },
+  modalSub: { color: '#94A3B8', fontSize: 12, marginTop: 4 },
+  modalTimer: { color: '#EF4444', fontSize: 12, fontWeight: '600', marginTop: 6 },
+  priorityTag: { fontSize: 11, fontWeight: '600' },
+  diagCorrect: { color: '#10B981', fontSize: 12, fontWeight: '600', marginTop: 6 },
+  diagWrong: { color: '#EF4444', fontSize: 12, fontWeight: '600', marginTop: 6 },
+  diagHint: { color: '#94A3B8', fontSize: 12, marginTop: 8 },
+  diagnoseBtn: { flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: 8, backgroundColor: '#8B5CF620', padding: 12, borderRadius: 10, borderWidth: 1, borderColor: '#8B5CF6', marginTop: 10 },
+  diagnoseBtnText: { color: '#A78BFA', fontSize: 14, fontWeight: '600' },
+
+  // Criteria
+  criteriaInfo: { backgroundColor: '#0F172A', padding: 10, borderRadius: 8, marginTop: 10, borderWidth: 1, borderColor: '#334155' },
+  criteriaTitle: { color: '#64748B', fontSize: 10, fontWeight: '600', marginBottom: 4 },
+  criteriaText: { color: '#E2E8F0', fontSize: 11, lineHeight: 16 },
+
+  // Actions
+  actionSectionTitle: { color: '#94A3B8', fontSize: 12, fontWeight: '700', marginTop: 16, marginBottom: 8 },
+  actionBtn: { flexDirection: 'row', alignItems: 'center', padding: 10, borderBottomWidth: 1, borderBottomColor: '#334155', gap: 8 },
+  actionDone: { opacity: 0.5 },
+  actionTreatment: { backgroundColor: '#F59E0B05' },
+  actionName: { color: '#F8FAFC', fontSize: 13, fontWeight: '600' },
+  treatmentTag: { color: '#F59E0B', fontSize: 8, fontWeight: '700', backgroundColor: '#F59E0B20', paddingHorizontal: 4, paddingVertical: 1, borderRadius: 3 },
+  survivalTag: { color: '#EF4444', fontSize: 8, fontWeight: '700', backgroundColor: '#EF444420', paddingHorizontal: 4, paddingVertical: 1, borderRadius: 3 },
+  actionTime: { color: '#64748B', fontSize: 10, marginTop: 1 },
+  actionResult: { color: '#10B981', fontSize: 10, marginTop: 2, fontStyle: 'italic' },
+
+  // Diagnosis options
+  diagOption: { flexDirection: 'row', alignItems: 'center', gap: 10, backgroundColor: '#1E293B', padding: 12, borderRadius: 10, borderWidth: 1, borderColor: '#334155' },
+  diagText: { color: '#E2E8F0', fontSize: 14, flex: 1 },
+
+  // Interruption
+  interruptionModal: { alignItems: 'center', borderColor: '#EF4444', borderWidth: 2, padding: 24 },
+  interruptionTitle: { color: '#F8FAFC', fontSize: 16, fontWeight: '700', marginTop: 8 },
+  interruptionMessage: { color: '#E2E8F0', fontSize: 14, textAlign: 'center', marginTop: 8 },
+  interruptionCost: { color: '#94A3B8', fontSize: 12, marginTop: 6 },
+
+  // Resources
+  resourceText: { color: '#E2E8F0', fontSize: 13, paddingVertical: 3 },
+
+  // Buttons
+  closeBtn: { backgroundColor: '#334155', padding: 12, borderRadius: 10, alignItems: 'center', marginTop: 12 },
+  closeBtnText: { color: '#E2E8F0', fontWeight: '600' },
+});

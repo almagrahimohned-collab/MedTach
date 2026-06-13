@@ -1,0 +1,486 @@
+[
+  {
+    "id": "board_gene_001",
+    "specialty": "genetics",
+    "topic": "Inheritance Patterns",
+    "difficulty": "medium",
+    "vignette": "A couple has a child with cystic fibrosis. Neither parent has the disease. What is the probability that their NEXT child will also have cystic fibrosis?",
+    "options": [
+      { "id": "A", "text": "0%" },
+      { "id": "B", "text": "25%" },
+      { "id": "C", "text": "50%" },
+      { "id": "D", "text": "75%" },
+      { "id": "E", "text": "100%" }
+    ],
+    "correctOptionId": "B",
+    "explanation": {
+      "whyCorrect": "CF is autosomal recessive. Both parents carriers (Ff × Ff). Each pregnancy: 25% affected (ff).",
+      "whyWrong": {
+        "A": "Both MUST be carriers.",
+        "C": "50% is for autosomal dominant.",
+        "D": "75% would be dominant with heterozygous parents.",
+        "E": "100% only if both affected."
+      },
+      "clinicalPearl": "Autosomal recessive: Both parents carriers = 25% risk each pregnancy."
+    },
+    "references": ["Mendelian Inheritance"],
+    "highYield": true,
+    "timeAllocated": 72
+  },
+  {
+    "id": "board_gene_002",
+    "specialty": "genetics",
+    "topic": "Genetic Testing",
+    "difficulty": "hard",
+    "vignette": "A 38-year-old pregnant female undergoes cfDNA screening, which shows high risk for trisomy 21. Ultrasound is normal. What is the MOST appropriate next step?",
+    "options": [
+      { "id": "A", "text": "Tell patient the baby has Down syndrome" },
+      { "id": "B", "text": "Recommend amniocentesis for definitive diagnosis" },
+      { "id": "C", "text": "Repeat cfDNA in 2 weeks" },
+      { "id": "D", "text": "No further testing needed" },
+      { "id": "E", "text": "Recommend termination of pregnancy" }
+    ],
+    "correctOptionId": "B",
+    "explanation": {
+      "whyCorrect": "cfDNA is SCREENING (not diagnostic). Positive → amniocentesis or CVS for karyotype.",
+      "whyWrong": {
+        "A": "cfDNA is NOT diagnostic. Never tell diagnosis based on screening.",
+        "C": "Repeating cfDNA is not indicated.",
+        "D": "Positive screening requires follow-up.",
+        "E": "Never recommend termination based on screening alone."
+      },
+      "clinicalPearl": "Screening (cfDNA) ≠ Diagnosis. Always confirm with amniocentesis or CVS."
+    },
+    "references": ["ACOG Prenatal Screening Guidelines"],
+    "highYield": true,
+    "timeAllocated": 72
+  }
+]
+[
+  {
+    "id": "board_gene_003",
+    "specialty": "genetics",
+    "topic": "Chromosomal Disorders",
+    "difficulty": "medium",
+    "vignette": "A newborn presents with microcephaly, rocker-bottom feet, clenched fists with overlapping fingers, and a prominent occiput. What is the MOST likely chromosomal abnormality?",
+    "options": [
+      { "id": "A", "text": "Trisomy 21 (Down syndrome)" },
+      { "id": "B", "text": "Trisomy 18 (Edwards syndrome)" },
+      { "id": "C", "text": "Trisomy 13 (Patau syndrome)" },
+      { "id": "D", "text": "Turner syndrome (45,X)" },
+      { "id": "E", "text": "Klinefelter syndrome (47,XXY)" }
+    ],
+    "correctOptionId": "B",
+    "explanation": {
+      "whyCorrect": "Trisomy 18: Microcephaly, rocker-bottom feet, clenched fists (overlapping fingers - 2nd over 3rd, 5th over 4th), prominent occiput, low-set ears, heart defects (VSD, PDA). Poor prognosis (most die within first year).",
+      "whyWrong": {
+        "A": "Down syndrome: Up-slanting palpebral fissures, single palmar crease, duodenal atresia, AVSD.",
+        "C": "Patau syndrome: Cleft lip/palate, polydactyly, holoprosencephaly, omphalocele.",
+        "D": "Turner: Female, short stature, webbed neck, coarctation of aorta, streak ovaries.",
+        "E": "Klinefelter: Tall male, gynecomastia, small testes, infertility."
+      },
+      "clinicalPearl": "Trisomy 18: Rocker-bottom feet + Clenched fists (overlapping fingers) + Prominent occiput + Heart defects."
+    },
+    "references": ["Smith's Recognizable Patterns of Human Malformation"],
+    "highYield": true,
+    "timeAllocated": 72
+  },
+  {
+    "id": "board_gene_004",
+    "specialty": "genetics",
+    "topic": "Cancer Genetics",
+    "difficulty": "hard",
+    "vignette": "A 40-year-old female is diagnosed with breast cancer. Her mother had breast cancer at age 45, and her sister had ovarian cancer at age 48. She has Ashkenazi Jewish ancestry. What genetic testing should be offered?",
+    "options": [
+      { "id": "A", "text": "TP53 mutation testing" },
+      { "id": "B", "text": "BRCA1 and BRCA2 testing" },
+      { "id": "C", "text": "PTEN mutation testing" },
+      { "id": "D", "text": "APC mutation testing" },
+      { "id": "E", "text": "MSH2/MLH1 testing" }
+    ],
+    "correctOptionId": "B",
+    "explanation": {
+      "whyCorrect": "Hereditary Breast and Ovarian Cancer (HBOC) syndrome: BRCA1/2 mutations. Ashkenazi Jewish ancestry increases risk (1 in 40 carry BRCA mutation). Family history: Breast <50 + Ovarian cancer.",
+      "whyWrong": {
+        "A": "TP53 = Li-Fraumeni syndrome (sarcomas, breast, leukemia, brain).",
+        "C": "PTEN = Cowden syndrome (breast, thyroid, endometrial).",
+        "D": "APC = Familial adenomatous polyposis (colon cancer).",
+        "E": "MSH2/MLH1 = Lynch syndrome (colon, endometrial)."
+      },
+      "clinicalPearl": "HBOC: BRCA1/2. Ashkenazi Jews: 1/40 carrier rate. Prophylactic mastectomy/oophorectomy reduces risk by 90%+."
+    },
+    "references": ["NCCN Genetic/Familial High-Risk Assessment 2024"],
+    "highYield": true,
+    "timeAllocated": 72
+  },
+  {
+    "id": "board_gene_005",
+    "specialty": "genetics",
+    "topic": "Metabolic Disorders",
+    "difficulty": "hard",
+    "vignette": "A 6-month-old infant presents with developmental delay, hepatosplenomegaly, and coarse facial features. Urine shows increased heparan sulfate and dermatan sulfate. What is the enzyme deficiency?",
+    "options": [
+      { "id": "A", "text": "Alpha-L-iduronidase (Hurler syndrome)" },
+      { "id": "B", "text": "Glucocerebrosidase (Gaucher disease)" },
+      { "id": "C", "text": "Sphingomyelinase (Niemann-Pick)" },
+      { "id": "D", "text": "Hexosaminidase A (Tay-Sachs)" },
+      { "id": "E", "text": "Galactocerebrosidase (Krabbe)" }
+    ],
+    "correctOptionId": "A",
+    "explanation": {
+      "whyCorrect": "Hurler syndrome (MPS I): Alpha-L-iduronidase deficiency → accumulation of heparan sulfate and dermatan sulfate. Features: Coarse facies, developmental delay, hepatosplenomegaly, corneal clouding, dysostosis multiplex. Treatment: Enzyme replacement therapy (laronidase) + HSCT.",
+      "whyWrong": {
+        "B": "Gaucher: Glucocerebrosidase deficiency, glucocerebroside accumulation.",
+        "C": "Niemann-Pick: Sphingomyelinase deficiency, sphingomyelin accumulation.",
+        "D": "Tay-Sachs: Hexosaminidase A deficiency, GM2 ganglioside accumulation.",
+        "E": "Krabbe: Galactocerebrosidase deficiency, galactocerebroside accumulation."
+      },
+      "clinicalPearl": "Hurler syndrome (MPS I): Coarse facies + Heparan/dermatan sulfate in urine + Alpha-L-iduronidase deficiency."
+    },
+    "references": ["Mucopolysaccharidosis Guidelines"],
+    "highYield": true,
+    "timeAllocated": 72
+  },
+  {
+    "id": "board_gene_006",
+    "specialty": "genetics",
+    "topic": "Neurogenetics",
+    "difficulty": "hard",
+    "vignette": "A 40-year-old male presents with progressive chorea, cognitive decline, and personality changes. His father had similar symptoms and died at age 55. What is the genetic basis of this disorder?",
+    "options": [
+      { "id": "A", "text": "CGG trinucleotide repeat in FMR1 gene" },
+      { "id": "B", "text": "CAG trinucleotide repeat in HTT gene" },
+      { "id": "C", "text": "CTG trinucleotide repeat in DMPK gene" },
+      { "id": "D", "text": "GAA trinucleotide repeat in FXN gene" },
+      { "id": "E", "text": "CAG trinucleotide repeat in ATXN3 gene" }
+    ],
+    "correctOptionId": "B",
+    "explanation": {
+      "whyCorrect": "Huntington disease: Autosomal dominant, CAG repeat expansion in HTT gene (chromosome 4). Anticipation (worse in successive generations). Triad: Chorea + Cognitive decline + Psychiatric symptoms. Onset typically 35-45 years.",
+      "whyWrong": {
+        "A": "CGG in FMR1 = Fragile X syndrome.",
+        "C": "CTG in DMPK = Myotonic dystrophy type 1.",
+        "D": "GAA in FXN = Friedreich ataxia.",
+        "E": "CAG in ATXN3 = Machado-Joseph disease (SCA3)."
+      },
+      "clinicalPearl": "Huntington: AD, CAG repeat >40, chromosome 4, chorea + dementia + psychiatric. Anticipation via paternal transmission."
+    },
+    "references": ["Huntington Disease: Genetics and Management"],
+    "highYield": true,
+    "timeAllocated": 72
+  },
+  {
+    "id": "board_gene_007",
+    "specialty": "genetics",
+    "topic": "Pharmacogenomics",
+    "difficulty": "medium",
+    "vignette": "A patient started on clopidogrel after PCI develops stent thrombosis. Genetic testing reveals CYP2C19*2/*2 genotype. What is the BEST alternative antiplatelet agent?",
+    "options": [
+      { "id": "A", "text": "Increase clopidogrel dose" },
+      { "id": "B", "text": "Ticagrelor 90mg BID" },
+      { "id": "C", "text": "Add aspirin only" },
+      { "id": "D", "text": "Warfarin" },
+      { "id": "E", "text": "Prasugrel 10mg daily" }
+    ],
+    "correctOptionId": "B",
+    "explanation": {
+      "whyCorrect": "CYP2C19*2/*2 = Poor metabolizer. Clopidogrel is a prodrug requiring CYP2C19 activation. Poor metabolizers have reduced active metabolite → increased stent thrombosis risk. Ticagrelor is direct-acting (no metabolism needed).",
+      "whyWrong": {
+        "A": "Increasing dose does not overcome genetic poor metabolism.",
+        "C": "Aspirin alone is inadequate post-PCI.",
+        "D": "Warfarin is not an antiplatelet agent.",
+        "E": "Prasugrel also requires CYP metabolism (though less affected than clopidogrel). Ticagrelor is preferred."
+      },
+      "clinicalPearl": "CYP2C19 poor metabolizer + PCI = Use ticagrelor or prasugrel. Do NOT use clopidogrel."
+    },
+    "references": ["CPIC Guidelines for Clopidogrel", "PLATO Trial"],
+    "highYield": true,
+    "timeAllocated": 72
+  },
+  {
+    "id": "board_gene_008",
+    "specialty": "genetics",
+    "topic": "Connective Tissue Disorders",
+    "difficulty": "medium",
+    "vignette": "A 25-year-old tall male presents with ectopia lentis (upward lens dislocation), pectus excavatum, and aortic root dilation. He has long, thin fingers and a positive wrist sign. What is the gene involved?",
+    "options": [
+      { "id": "A", "text": "COL1A1 (Osteogenesis imperfecta)" },
+      { "id": "B", "text": "COL3A1 (Ehlers-Danlos vascular type)" },
+      { "id": "C", "text": "FBN1 (Fibrillin-1)" },
+      { "id": "D", "text": "TGFBR1 (Loeys-Dietz syndrome)" },
+      { "id": "E", "text": "COL5A1 (Ehlers-Danlos classical type)" }
+    ],
+    "correctOptionId": "C",
+    "explanation": {
+      "whyCorrect": "Marfan syndrome: FBN1 mutation (fibrillin-1). AD inheritance. Features: Ectopia lentis (UPWARD), aortic root dilation/aneurysm, MVP, tall stature, arachnodactyly, pectus excavatum/carinatum. Management: Beta-blockers, ARBs, prophylactic aortic surgery if >50mm.",
+      "whyWrong": {
+        "A": "COL1A1 = Osteogenesis imperfecta (brittle bones, blue sclera).",
+        "B": "COL3A1 = Vascular EDS (arterial/organ rupture).",
+        "D": "TGFBR1 = Loeys-Dietz (hypertelorism, bifid uvula, arterial tortuosity).",
+        "E": "COL5A1 = Classical EDS (skin hyperextensibility, joint hypermobility)."
+      },
+      "clinicalPearl": "Marfan: FBN1, UPWARD lens dislocation, aortic root dilation. Use beta-blockers/ARBs to slow aortic dilation."
+    },
+    "references": ["Revised Ghent Criteria for Marfan Syndrome"],
+    "highYield": true,
+    "timeAllocated": 72
+  }
+]
+[
+  {
+    "id": "board_gene_009",
+    "specialty": "genetics",
+    "topic": "Genetic Counseling",
+    "difficulty": "medium",
+    "vignette": "A couple is considering having a child. The wife has an autosomal dominant disorder (heterozygous). What is the probability their child will inherit the condition?",
+    "options": [
+      { "id": "A", "text": "0%" },
+      { "id": "B", "text": "25%" },
+      { "id": "C", "text": "50%" },
+      { "id": "D", "text": "75%" },
+      { "id": "E", "text": "100%" }
+    ],
+    "correctOptionId": "C",
+    "explanation": {
+      "whyCorrect": "Autosomal dominant: Affected parent (heterozygous: Aa) × Unaffected parent (aa). Each pregnancy: 50% chance child inherits the mutated allele (Aa = affected). Independent for each pregnancy.",
+      "whyWrong": {
+        "A": "0% only if both parents are unaffected.",
+        "B": "25% is for autosomal recessive with two carrier parents.",
+        "D": "75% is for autosomal dominant if BOTH parents are heterozygous.",
+        "E": "100% only if affected parent is homozygous (rare for most AD disorders)."
+      },
+      "clinicalPearl": "Autosomal dominant: 50% risk for each child if one parent is heterozygous. Prior outcomes do NOT affect future risk."
+    },
+    "references": ["Principles of Medical Genetics"],
+    "highYield": true,
+    "timeAllocated": 72
+  },
+  {
+    "id": "board_gene_010",
+    "specialty": "genetics",
+    "topic": "Epigenetics",
+    "difficulty": "hard",
+    "vignette": "A genetic disorder shows different severity when inherited from the mother versus the father due to differential methylation. What is this phenomenon called?",
+    "options": [
+      { "id": "A", "text": "Anticipation" },
+      { "id": "B", "text": "Genomic imprinting" },
+      { "id": "C", "text": "Mosaicism" },
+      { "id": "D", "text": "Uniparental disomy" },
+      { "id": "E", "text": "Lyonization" }
+    ],
+    "correctOptionId": "B",
+    "explanation": {
+      "whyCorrect": "Genomic imprinting: Expression depends on parent of origin due to epigenetic silencing (methylation). Examples: Prader-Willi (paternal deletion/maternal UPD), Angelman (maternal deletion/paternal UPD).",
+      "whyWrong": {
+        "A": "Anticipation: Disease worsens in successive generations (triplet repeat expansion).",
+        "C": "Mosaicism: Two cell lines in same individual.",
+        "D": "UPD: Both copies of chromosome from one parent (can cause imprinting disorders).",
+        "E": "Lyonization: Random X-inactivation in females."
+      },
+      "clinicalPearl": "Imprinting: Parent-of-origin effect due to methylation. Prader-Willi/Angelman = Classic examples (15q11-q13)."
+    },
+    "references": ["Genomic Imprinting in Human Disease"],
+    "highYield": true,
+    "timeAllocated": 72
+  },
+  {
+    "id": "board_gene_011",
+    "specialty": "genetics",
+    "topic": "Tumor Genetics",
+    "difficulty": "hard",
+    "vignette": "A 45-year-old female with hereditary breast cancer (BRCA1 mutation) asks about her risk of ovarian cancer. What is her approximate lifetime risk?",
+    "options": [
+      { "id": "A", "text": "5-10%" },
+      { "id": "B", "text": "15-20%" },
+      { "id": "C", "text": "40-50%" },
+      { "id": "D", "text": "70-80%" },
+      { "id": "E", "text": "95-100%" }
+    ],
+    "correctOptionId": "C",
+    "explanation": {
+      "whyCorrect": "BRCA1 mutation: Lifetime ovarian cancer risk = 39-46% (average 44%). BRCA2: 11-17%. Risk-reducing salpingo-oophorectomy (RRSO) recommended by age 35-40 (BRCA1) or 40-45 (BRCA2) after completion of childbearing.",
+      "whyWrong": {
+        "A": "Too low - general population risk is 1.3%.",
+        "B": "This is closer to BRCA2 ovarian cancer risk (11-17%).",
+        "D": "This is closer to BRCA1 breast cancer risk (72%).",
+        "E": "No hereditary cancer syndrome has 100% penetrance."
+      },
+      "clinicalPearl": "BRCA1: Breast cancer 72%, Ovarian cancer 44%. BRCA2: Breast cancer 69%, Ovarian cancer 17%. RRSO reduces ovarian cancer risk by 90%."
+    },
+    "references": ["NCCN Genetic/Familial High-Risk Assessment 2024"],
+    "highYield": true,
+    "timeAllocated": 72
+  }
+]
+[
+  {
+    "id": "board_gene_012",
+    "specialty": "genetics",
+    "topic": "Mitochondrial Disorders",
+    "difficulty": "hard",
+    "vignette": "A 30-year-old female presents with hearing loss, diabetes mellitus, and muscle weakness. Her mother, maternal aunt, and maternal grandmother all have similar symptoms. Her father and his family are unaffected. What is the inheritance pattern?",
+    "options": [
+      { "id": "A", "text": "Autosomal dominant" },
+      { "id": "B", "text": "Autosomal recessive" },
+      { "id": "C", "text": "X-linked recessive" },
+      { "id": "D", "text": "Mitochondrial (maternal) inheritance" },
+      { "id": "E", "text": "Y-linked" }
+    ],
+    "correctOptionId": "D",
+    "explanation": {
+      "whyCorrect": "Mitochondrial disorders (MELAS, MERRF, Kearns-Sayre): MATERNAL inheritance (all children of affected female inherit, no male transmission). Features: Diabetes + Hearing loss + Myopathy. Mitochondria are exclusively inherited from the ovum (maternal).",
+      "whyWrong": {
+        "A": "AD would show male-to-male transmission (not present here).",
+        "B": "AR would require both parents to be carriers (father unaffected, no transmission).",
+        "C": "X-linked recessive: Affected males, carrier females (not all females affected).",
+        "E": "Y-linked: Only males affected, father-to-son transmission."
+      },
+      "clinicalPearl": "Mitochondrial inheritance: ONLY females transmit. All children of affected female are affected. Affected males do NOT transmit."
+    },
+    "references": ["Mitochondrial Inheritance Patterns"],
+    "highYield": true,
+    "timeAllocated": 72
+  },
+  {
+    "id": "board_gene_013",
+    "specialty": "genetics",
+    "topic": "Trinucleotide Repeat Disorders",
+    "difficulty": "medium",
+    "vignette": "A 5-year-old boy presents with intellectual disability, large ears, macroorchidism, and autistic features. His grandfather has tremor and ataxia (diagnosed at age 65). What is the genetic mechanism?",
+    "options": [
+      { "id": "A", "text": "CAG repeat expansion" },
+      { "id": "B", "text": "CGG repeat expansion with anticipation" },
+      { "id": "C", "text": "CTG repeat expansion" },
+      { "id": "D", "text": "Deletion 15q11-q13" },
+      { "id": "E", "text": "GAA repeat expansion" }
+    ],
+    "correctOptionId": "B",
+    "explanation": {
+      "whyCorrect": "Fragile X syndrome (CGG expansion in FMR1): Intellectual disability + Large ears + Macroorchidism + Autism. Grandfather with FXTAS (Fragile X-associated tremor/ataxia syndrome) = Premutation carrier (55-200 CGG repeats). Anticipation: Mother inherits premutation → Expands to full mutation (>200) in child.",
+      "whyWrong": {
+        "A": "CAG = Huntington disease (chorea, dementia, no macroorchidism).",
+        "C": "CTG = Myotonic dystrophy (muscle weakness, myotonia, cataracts).",
+        "D": "15q11-q13 deletion = Prader-Willi or Angelman syndrome.",
+        "E": "GAA = Friedreich ataxia (ataxia, cardiomyopathy, no ID or macroorchidism)."
+      },
+      "clinicalPearl": "Fragile X: CGG repeat + Anticipation. Premutation = FXTAS (grandfather). Full mutation = Fragile X syndrome (grandson)."
+    },
+    "references": ["Fragile X Syndrome: Genetics and Management"],
+    "highYield": true,
+    "timeAllocated": 72
+  },
+  {
+    "id": "board_gene_014",
+    "specialty": "genetics",
+    "topic": "Chromosomal Microdeletions",
+    "difficulty": "hard",
+    "vignette": "A newborn presents with tetralogy of Fallot, hypocalcemia, recurrent infections, and cleft palate. FISH shows a deletion on chromosome 22q11.2. What is the diagnosis?",
+    "options": [
+      { "id": "A", "text": "Williams syndrome" },
+      { "id": "B", "text": "DiGeorge syndrome" },
+      { "id": "C", "text": "Cri-du-chat syndrome" },
+      { "id": "D", "text": "Wolf-Hirschhorn syndrome" },
+      { "id": "E", "text": "Prader-Willi syndrome" }
+    ],
+    "correctOptionId": "B",
+    "explanation": {
+      "whyCorrect": "DiGeorge syndrome (22q11.2 deletion): CATCH-22 = Cardiac (TOF, VSD) + Abnormal facies + Thymic aplasia (recurrent infections) + Cleft palate + Hypocalcemia (parathyroid aplasia). Most common microdeletion syndrome (1:4000). TBX1 gene is critical.",
+      "whyWrong": {
+        "A": "Williams (7q11.23 deletion): Supravalvular AS + Hypercalcemia + 'Cocktail party' personality.",
+        "C": "Cri-du-chat (5p deletion): Cat-like cry, microcephaly.",
+        "D": "Wolf-Hirschhorn (4p deletion): 'Greek warrior helmet' facies, severe ID.",
+        "E": "Prader-Willi (15q11-q13 paternal deletion): Hypotonia, hyperphagia, obesity."
+      },
+      "clinicalPearl": "DiGeorge (22q11.2): CATCH-22 = Cardiac + Abnormal facies + Thymus + Cleft + Hypocalcemia. Most common microdeletion."
+    },
+    "references": ["22q11.2 Deletion Syndrome: Clinical Features"],
+    "highYield": true,
+    "timeAllocated": 72
+  }
+]
+[
+  {
+    "id": "board_gene_015",
+    "specialty": "genetics",
+    "topic": "RASopathies",
+    "difficulty": "hard",
+    "vignette": "A 10-year-old boy presents with short stature, webbed neck, pectus excavatum, pulmonic stenosis, and cryptorchidism. He has learning difficulties. What is the gene involved?",
+    "options": [
+      { "id": "A", "text": "FBN1" },
+      { "id": "B", "text": "PTPN11" },
+      { "id": "C", "text": "NF1" },
+      { "id": "D", "text": "ELN" },
+      { "id": "E", "text": "TBX1" }
+    ],
+    "correctOptionId": "B",
+    "explanation": {
+      "whyCorrect": "Noonan syndrome: PTPN11 (50%), SOS1, RAF1, KRAS (RAS-MAPK pathway). Features: Short stature, webbed neck, pectus excavatum, pulmonic stenosis (most common CHD), cryptorchidism, bleeding diathesis. Most common RASopathy. AD inheritance.",
+      "whyWrong": {
+        "A": "FBN1 = Marfan syndrome (tall, arachnodactyly, aortic dilation).",
+        "C": "NF1 = Neurofibromatosis type 1 (café-au-lait spots, neurofibromas).",
+        "D": "ELN = Williams syndrome (supravalvular AS, hypercalcemia).",
+        "E": "TBX1 = DiGeorge syndrome (22q11.2 deletion)."
+      },
+      "clinicalPearl": "Noonan syndrome: PTPN11 + Short stature + Pulmonic stenosis + Webbed neck. RASopathy. AD inheritance."
+    },
+    "references": ["Noonan Syndrome: Clinical Features and Genetics"],
+    "highYield": true,
+    "timeAllocated": 72
+  },
+  {
+    "id": "board_gene_016",
+    "specialty": "genetics",
+    "topic": "Genome-Wide Association Studies",
+    "difficulty": "medium",
+    "vignette": "A GWAS identifies a SNP associated with increased risk of Type 2 DM with odds ratio of 1.15 (p < 5×10⁻⁸). What does this mean for an individual patient?",
+    "options": [
+      { "id": "A", "text": "This SNP is diagnostic of Type 2 DM" },
+      { "id": "B", "text": "This SNP has a small effect on disease risk and is NOT clinically useful for individual prediction" },
+      { "id": "C", "text": "This patient will definitely develop diabetes" },
+      { "id": "D", "text": "This SNP replaces the need for glucose testing" },
+      { "id": "E", "text": "This SNP has a large effect and should be used for screening" }
+    ],
+    "correctOptionId": "B",
+    "explanation": {
+      "whyCorrect": "GWAS SNPs typically have very small effect sizes (OR 1.1-1.3). While statistically significant (p < 5×10⁻⁸), they explain a TINY fraction of disease risk. Not clinically useful for individual prediction. Polygenic risk scores (combining hundreds/thousands of SNPs) have more potential but limited clinical utility currently.",
+      "whyWrong": {
+        "A": "OR 1.15 = minimal increased risk, not diagnostic.",
+        "C": "OR 1.15 is far from deterministic.",
+        "D": "SNPs do not replace clinical testing.",
+        "E": "OR 1.15 is too small for clinical screening."
+      },
+      "clinicalPearl": "GWAS: SNPs have small individual effects (OR 1.1-1.3). Not clinically actionable alone. Polygenic risk scores = Future potential."
+    },
+    "references": ["GWAS Interpretation in Clinical Medicine"],
+    "highYield": true,
+    "timeAllocated": 72
+  },
+  {
+    "id": "board_gene_017",
+    "specialty": "genetics",
+    "topic": "Epigenetics in Cancer",
+    "difficulty": "hard",
+    "vignette": "A 65-year-old male with MDS is treated with azacitidine. What is the mechanism of action of this drug?",
+    "options": [
+      { "id": "A", "text": "Tyrosine kinase inhibition" },
+      { "id": "B", "text": "DNA hypomethylating agent (DNMT inhibitor)" },
+      { "id": "C", "text": "Histone deacetylase (HDAC) inhibitor" },
+      { "id": "D", "text": "Proteasome inhibitor" },
+      { "id": "E", "text": "Immunomodulatory agent" }
+    ],
+    "correctOptionId": "B",
+    "explanation": {
+      "whyCorrect": "Azacitidine (and Decitabine): DNA methyltransferase (DNMT) inhibitors. Hypomethylating agents that reverse aberrant DNA methylation in MDS/AML. Reactivates silenced tumor suppressor genes. Standard of care for higher-risk MDS.",
+      "whyWrong": {
+        "A": "Tyrosine kinase inhibitors = Imatinib, dasatinib (CML, ALL).",
+        "C": "HDAC inhibitors = Vorinostat, romidepsin (CTCL).",
+        "D": "Proteasome inhibitors = Bortezomib, carfilzomib (multiple myeloma).",
+        "E": "Immunomodulatory = Lenalidomide, pomalidomide (myeloma, MDS with 5q-)."
+      },
+      "clinicalPearl": "Azacitidine/Decitabine: DNMT inhibitors (hypomethylating agents). Reactivate tumor suppressor genes. First-line for higher-risk MDS."
+    },
+    "references": ["Epigenetic Therapy in MDS"],
+    "highYield": true,
+    "timeAllocated": 72
+  }
+]

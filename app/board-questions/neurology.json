@@ -1,0 +1,514 @@
+[
+  {
+    "id": "board_neuro_001",
+    "specialty": "neurology",
+    "topic": "Stroke",
+    "difficulty": "hard",
+    "vignette": "A 72-year-old female presents with acute onset right-sided weakness and aphasia that started 2 hours ago. NIHSS is 18. CT head shows no hemorrhage. CTA shows left MCA occlusion. She takes warfarin for AF and INR is 1.8. What is the BEST management?",
+    "options": [
+      { "id": "A", "text": "IV tPA (alteplase) 0.9 mg/kg" },
+      { "id": "B", "text": "Mechanical thrombectomy" },
+      { "id": "C", "text": "IV tPA followed by mechanical thrombectomy" },
+      { "id": "D", "text": "Aspirin 325mg and admit to stroke unit" },
+      { "id": "E", "text": "Start heparin infusion" }
+    ],
+    "correctOptionId": "C",
+    "explanation": {
+      "whyCorrect": "Patient presents within 4.5 hours with large vessel occlusion (MCA) and NIHSS >6. Best outcome: IV tPA + mechanical thrombectomy (bridging therapy).",
+      "whyWrong": {
+        "A": "tPA alone is insufficient for large vessel occlusion.",
+        "B": "Thrombectomy alone without tPA provides less benefit than combined therapy.",
+        "D": "Aspirin alone for large vessel occlusion is inadequate.",
+        "E": "Heparin is not indicated in acute ischemic stroke management."
+      },
+      "clinicalPearl": "Acute stroke <4.5h + LVO (ICA, MCA): IV tPA + Mechanical thrombectomy. Time is brain!"
+    },
+    "references": ["AHA/ASA Stroke Guidelines 2019", "DAWN Trial"],
+    "highYield": true,
+    "timeAllocated": 72
+  },
+  {
+    "id": "board_neuro_002",
+    "specialty": "neurology",
+    "topic": "Meningitis",
+    "difficulty": "medium",
+    "vignette": "A 19-year-old college student presents with fever, severe headache, and neck stiffness for 12 hours. He is drowsy but arousable. Vitals: Temp 39.5°C, HR 120, BP 100/60. No rash. What is the MOST appropriate empiric antibiotic regimen?",
+    "options": [
+      { "id": "A", "text": "Ceftriaxone + Vancomycin + Ampicillin" },
+      { "id": "B", "text": "Ceftriaxone + Vancomycin + Dexamethasone" },
+      { "id": "C", "text": "Meropenem + Vancomycin" },
+      { "id": "D", "text": "Ceftriaxone alone" },
+      { "id": "E", "text": "Ceftriaxone + Metronidazole" }
+    ],
+    "correctOptionId": "B",
+    "explanation": {
+      "whyCorrect": "Bacterial meningitis: empiric = Ceftriaxone + Vancomycin + Dexamethasone (before or with first antibiotic dose).",
+      "whyWrong": {
+        "A": "Ampicillin is added for Listeria in patients >50 or immunocompromised.",
+        "C": "Meropenem is reserved for severe penicillin allergy.",
+        "D": "Ceftriaxone alone does not cover resistant pneumococcus.",
+        "E": "Metronidazole is not part of empiric meningitis treatment."
+      },
+      "clinicalPearl": "Meningitis: Steroids BEFORE antibiotics! Dexamethasone reduces mortality by 50% in pneumococcal meningitis."
+    },
+    "references": ["IDSA Meningitis Guidelines"],
+    "highYield": true,
+    "timeAllocated": 72
+  },
+  {
+    "id": "board_neuro_003",
+    "specialty": "neurology",
+    "topic": "Seizure",
+    "difficulty": "hard",
+    "vignette": "A 28-year-old male with known epilepsy on levetiracetam presents with continuous seizure activity for 12 minutes. He received 4mg IV lorazepam by EMS without response. In the ED, he is still seizing. What is the NEXT best step?",
+    "options": [
+      { "id": "A", "text": "Administer another 4mg IV lorazepam" },
+      { "id": "B", "text": "Load IV fosphenytoin 20mg/kg" },
+      { "id": "C", "text": "Intubate and start propofol infusion" },
+      { "id": "D", "text": "Load IV levetiracetam 60mg/kg" },
+      { "id": "E", "text": "Obtain STAT CT head first" }
+    ],
+    "correctOptionId": "B",
+    "explanation": {
+      "whyCorrect": "Status epilepticus: 1st line = benzodiazepine (given). 2nd line = IV fosphenytoin, valproate, or levetiracetam.",
+      "whyWrong": {
+        "A": "Repeating benzodiazepines after failed first dose is less effective.",
+        "C": "Intubation/propofol is 3rd line (refractory status).",
+        "D": "Levetiracetam is alternative but patient is already on it.",
+        "E": "Neuroimaging is important but should NOT delay seizure control."
+      },
+      "clinicalPearl": "Status Epilepticus: BZD → Fosphenytoin/Valproate/Levetiracetam → Propofol/Midazolam/Phenobarbital."
+    },
+    "references": ["Neurocritical Care Society Guidelines", "ESETT Trial"],
+    "highYield": true,
+    "timeAllocated": 72
+  },
+  {
+    "id": "board_neuro_004",
+    "specialty": "neurology",
+    "topic": "Neuromuscular",
+    "difficulty": "medium",
+    "vignette": "A 45-year-old female presents with progressive weakness over 3 weeks. It started in her legs and is now in her arms. She had a diarrheal illness 2 weeks ago. Exam: Symmetric weakness 4/5 in all limbs, absent reflexes. CSF shows albuminocytologic dissociation. What is the MOST important next step?",
+    "options": [
+      { "id": "A", "text": "Start IV methylprednisolone 1g daily" },
+      { "id": "B", "text": "Start IVIG or plasmapheresis" },
+      { "id": "C", "text": "Obtain MRI of the brain and spine" },
+      { "id": "D", "text": "Start IV acyclovir" },
+      { "id": "E", "text": "Monitor FVC every 2-4 hours" }
+    ],
+    "correctOptionId": "E",
+    "explanation": {
+      "whyCorrect": "Guillain-Barré syndrome. The MOST critical immediate step is monitoring respiratory function (FVC). 25-30% require mechanical ventilation.",
+      "whyWrong": {
+        "A": "Steroids are NOT effective in GBS.",
+        "B": "IVIG/Plasmapheresis is treatment but respiratory monitoring takes priority.",
+        "C": "MRI is not first-line for GBS.",
+        "D": "Acyclovir is for HSV encephalitis, not GBS."
+      },
+      "clinicalPearl": "GBS: Monitor FVC q2-4h. Intubate if FVC <15-20 mL/kg. Treatment: IVIG or Plasmapheresis (NOT steroids)."
+    },
+    "references": ["AAN GBS Guidelines"],
+    "highYield": true,
+    "timeAllocated": 72
+  },
+  {
+    "id": "board_neuro_005",
+    "specialty": "neurology",
+    "topic": "Stroke Subtypes",
+    "difficulty": "hard",
+    "vignette": "A 78-year-old female with hypertension and diabetes presents with acute onset left-sided weakness and left hemineglect. NIHSS is 16. CT shows hyperdense right MCA sign. CTA confirms right MCA occlusion. She takes apixaban for AF. Last dose was 4 hours ago. What is the BEST management?",
+    "options": [
+      { "id": "A", "text": "IV tPA (alteplase)" },
+      { "id": "B", "text": "Mechanical thrombectomy alone" },
+      { "id": "C", "text": "IV tPA + mechanical thrombectomy" },
+      { "id": "D", "text": "Aspirin + admit to stroke unit" },
+      { "id": "E", "text": "Reverse apixaban with andexanet alfa, then treat" }
+    ],
+    "correctOptionId": "B",
+    "explanation": {
+      "whyCorrect": "Recent DOAC (4h) is CONTRAINDICATION to IV tPA. Thrombectomy alone is appropriate for LVO within 24h.",
+      "whyWrong": {
+        "A": "Recent DOAC use within 48h contraindicates IV tPA.",
+        "C": "Cannot give tPA due to recent apixaban.",
+        "D": "Aspirin alone is inadequate for LVO.",
+        "E": "Reversal agents delay definitive treatment."
+      },
+      "clinicalPearl": "Recent DOAC (<48h) = NO tPA. Thrombectomy alone for LVO within 24h."
+    },
+    "references": ["AHA/ASA Stroke Guidelines 2019", "DAWN Trial"],
+    "highYield": true,
+    "timeAllocated": 72
+  },
+  {
+    "id": "board_neuro_006",
+    "specialty": "neurology",
+    "topic": "Movement Disorders",
+    "difficulty": "medium",
+    "vignette": "A 65-year-old male presents with progressive gait difficulty. His wife reports he 'walks like he is stuck to the floor.' Exam: Lead-pipe rigidity, bradykinesia, postural instability. No tremor. Frequent falls. Levodopa trial shows minimal improvement. What is the MOST likely diagnosis?",
+    "options": [
+      { "id": "A", "text": "Parkinson disease" },
+      { "id": "B", "text": "Progressive supranuclear palsy (PSP)" },
+      { "id": "C", "text": "Multiple system atrophy (MSA)" },
+      { "id": "D", "text": "Corticobasal degeneration" },
+      { "id": "E", "text": "Drug-induced parkinsonism" }
+    ],
+    "correctOptionId": "B",
+    "explanation": {
+      "whyCorrect": "PSP: Early falls + Vertical gaze palsy + Axial rigidity + Poor levodopa response.",
+      "whyWrong": {
+        "A": "PD has rest tremor + excellent levodopa response + no early falls.",
+        "C": "MSA has autonomic failure + cerebellar signs.",
+        "D": "CBD has asymmetric apraxia + alien limb phenomenon.",
+        "E": "Drug-induced is symmetric with history of antipsychotic use."
+      },
+      "clinicalPearl": "PSP: Early falls + Vertical gaze palsy + Axial rigidity + Poor levodopa response."
+    },
+    "references": ["MDS PSP Criteria"],
+    "highYield": true,
+    "timeAllocated": 72
+  },
+  {
+    "id": "board_neuro_007",
+    "specialty": "neurology",
+    "topic": "Neuromuscular Junction",
+    "difficulty": "hard",
+    "vignette": "A 60-year-old male with small cell lung cancer presents with proximal muscle weakness that worsens with repetitive activity and improves with rest. He also has dry mouth and erectile dysfunction. EMG shows incremental response to repetitive stimulation. What antibody is MOST likely positive?",
+    "options": [
+      { "id": "A", "text": "Anti-acetylcholine receptor (AChR) antibody" },
+      { "id": "B", "text": "Anti-voltage-gated calcium channel (VGCC) antibody" },
+      { "id": "C", "text": "Anti-MuSK antibody" },
+      { "id": "D", "text": "Anti-Hu antibody" },
+      { "id": "E", "text": "Anti-striated muscle antibody" }
+    ],
+    "correctOptionId": "B",
+    "explanation": {
+      "whyCorrect": "LEMS: Proximal weakness + Autonomic symptoms + SCLC + Anti-VGCC. EMG: Increment (opposite of MG).",
+      "whyWrong": {
+        "A": "AChR antibody = Myasthenia gravis (postsynaptic).",
+        "C": "MuSK = Seronegative MG.",
+        "D": "Anti-Hu = Paraneoplastic encephalomyelitis.",
+        "E": "Anti-striated muscle = Thymoma-associated MG."
+      },
+      "clinicalPearl": "LEMS: Proximal weakness + Autonomic symptoms + SCLC + Anti-VGCC. MG: Ocular/bulbar + Anti-AChR."
+    },
+    "references": ["LEMS Diagnostic Criteria"],
+    "highYield": true,
+    "timeAllocated": 72
+  },
+  {
+    "id": "board_neuro_008",
+    "specialty": "neurology",
+    "topic": "Dementia",
+    "difficulty": "medium",
+    "vignette": "A 72-year-old male presents with progressive memory loss over 2 years. He got lost driving home from the grocery store. MMSE is 22/30. MRI shows hippocampal atrophy. What is the BEST initial pharmacotherapy?",
+    "options": [
+      { "id": "A", "text": "Donepezil 5mg daily" },
+      { "id": "B", "text": "Memantine 5mg daily" },
+      { "id": "C", "text": "Donepezil + Memantine combination" },
+      { "id": "D", "text": "Aducanumab (Aduhelm) infusion" },
+      { "id": "E", "text": "Vitamin E 2000 IU daily" }
+    ],
+    "correctOptionId": "A",
+    "explanation": {
+      "whyCorrect": "Alzheimer disease. Mild-moderate: Cholinesterase inhibitor (donepezil). Memantine is for moderate-severe.",
+      "whyWrong": {
+        "B": "Memantine monotherapy is for moderate-severe AD.",
+        "C": "Combination is for moderate-severe or if progressing on ChEI alone.",
+        "D": "Aducanumab is controversial, not first-line.",
+        "E": "Vitamin E has weak evidence."
+      },
+      "clinicalPearl": "Mild-moderate AD: Donepezil (ChEI). Moderate-severe: Add Memantine."
+    },
+    "references": ["AAN Dementia Guidelines"],
+    "highYield": true,
+    "timeAllocated": 72
+  }
+]
+[
+  {
+    "id": "board_neuro_009",
+    "specialty": "neurology",
+    "topic": "Neuropathy",
+    "difficulty": "medium",
+    "vignette": "A 55-year-old male with diabetes presents with burning pain in his feet, worse at night. Exam shows decreased sensation in a stocking-glove distribution, absent ankle reflexes, and normal strength. What is the BEST first-line treatment?",
+    "options": [
+      { "id": "A", "text": "Opioids" },
+      { "id": "B", "text": "Gabapentin or pregabalin" },
+      { "id": "C", "text": "Amitriptyline" },
+      { "id": "D", "text": "Duloxetine" },
+      { "id": "E", "text": "Carbamazepine" }
+    ],
+    "correctOptionId": "B",
+    "explanation": {
+      "whyCorrect": "Diabetic peripheral neuropathy: First-line = Gabapentinoids (gabapentin, pregabalin) OR SNRIs (duloxetine) OR TCAs (amitriptyline). All have equal efficacy. Gabapentin/pregabalin often preferred due to fewer drug interactions.",
+      "whyWrong": {
+        "A": "Opioids are NOT first-line for neuropathic pain (addiction risk, tolerance).",
+        "C": "TCAs are effective but more side effects (anticholinergic, cardiac).",
+        "D": "Duloxetine is equally effective but gabapentinoids often tried first.",
+        "E": "Carbamazepine is for trigeminal neuralgia, not diabetic neuropathy."
+      },
+      "clinicalPearl": "Neuropathic pain: Gabapentin/pregabalin, duloxetine, or amitriptyline. All first-line. Opioids = last resort."
+    },
+    "references": ["AAN Neuropathic Pain Guidelines"],
+    "highYield": true,
+    "timeAllocated": 72
+  },
+  {
+    "id": "board_neuro_010",
+    "specialty": "neurology",
+    "topic": "Spinal Cord",
+    "difficulty": "hard",
+    "vignette": "A 50-year-old male presents with progressive leg weakness over 6 months. Exam: Spastic paraparesis, hyperreflexia in legs, Babinski sign positive. Sensory level at T10. MRI shows intramedullary lesion from T8-T12 with syringomyelia. What is the MOST likely associated finding?",
+    "options": [
+      { "id": "A", "text": "Optic neuritis" },
+      { "id": "B", "text": "Scoliosis and foot deformities" },
+      { "id": "C", "text": "Multiple cranial nerve palsies" },
+      { "id": "D", "text": "Cerebellar ataxia" },
+      { "id": "E", "text": "Peripheral neuropathy" }
+    ],
+    "correctOptionId": "B",
+    "explanation": {
+      "whyCorrect": "Syringomyelia (fluid-filled cavity in spinal cord): Often associated with Chiari malformation. Presents with loss of pain/temperature (crossing spinothalamic fibers), spastic paraparesis, scoliosis, and foot deformities. Most common at C8-T1 but can occur anywhere.",
+      "whyWrong": {
+        "A": "Optic neuritis suggests multiple sclerosis, not syringomyelia.",
+        "C": "Multiple cranial neuropathies suggest brainstem or meningeal pathology.",
+        "D": "Cerebellar ataxia is not typical for syringomyelia.",
+        "E": "Peripheral neuropathy would cause hyporeflexia, not hyperreflexia."
+      },
+      "clinicalPearl": "Syringomyelia: Cape-like loss of pain/temperature + Spastic paraparesis + Scoliosis. Associated with Chiari malformation."
+    },
+    "references": ["Syringomyelia: Diagnosis and Management"],
+    "highYield": true,
+    "timeAllocated": 72
+  },
+  {
+    "id": "board_neuro_011",
+    "specialty": "neurology",
+    "topic": "Multiple Sclerosis Treatment",
+    "difficulty": "hard",
+    "vignette": "A 30-year-old female with relapsing-remitting MS (RRMS) on glatiramer acetate has 3 relapses in 12 months. MRI shows 2 new enhancing lesions. She is JCV antibody negative. What is the BEST next treatment?",
+    "options": [
+      { "id": "A", "text": "Increase glatiramer acetate dose" },
+      { "id": "B", "text": "Switch to interferon beta-1a" },
+      { "id": "C", "text": "Switch to natalizumab" },
+      { "id": "D", "text": "Switch to ocrelizumab" },
+      { "id": "E", "text": "Add prednisone for relapses" }
+    ],
+    "correctOptionId": "D",
+    "explanation": {
+      "whyCorrect": "RRMS with breakthrough disease on first-line (glatiramer): Escalate to high-efficacy therapy. Ocrelizumab (anti-CD20) is highly effective, reduces relapses by 46% vs interferon, and is first-line for highly active disease. Natalizumab is also highly effective but reserved for JCV+ with monitoring.",
+      "whyWrong": {
+        "A": "Breakthrough disease on glatiramer = treatment failure. Do not continue.",
+        "B": "Switching between first-line agents (interferon, glatiramer) is inappropriate after breakthrough.",
+        "C": "Natalizumab is highly effective but risk of PML (even in JCV-). Ocrelizumab preferred.",
+        "E": "Steroids treat acute relapses but do not prevent future relapses."
+      },
+      "clinicalPearl": "MS breakthrough on first-line: Escalate to high-efficacy (ocrelizumab, natalizumab, fingolimod). JCV- = lower PML risk."
+    },
+    "references": ["ECTRIMS/EAN MS Guidelines", "OPERA Trials"],
+    "highYield": true,
+    "timeAllocated": 72
+  }
+]
+[
+  {
+    "id": "board_neuro_012",
+    "specialty": "neurology",
+    "topic": "CNS Infections",
+    "difficulty": "hard",
+    "vignette": "A 45-year-old HIV patient (CD4 45, not on ART) presents with progressive cognitive decline over 6 weeks. MRI shows non-enhancing white matter lesions without mass effect. CSF: Normal WBC, elevated protein, positive JC virus PCR. What is the diagnosis?",
+    "options": [
+      { "id": "A", "text": "HIV encephalopathy" },
+      { "id": "B", "text": "Progressive multifocal leukoencephalopathy (PML)" },
+      { "id": "C", "text": "Cerebral toxoplasmosis" },
+      { "id": "D", "text": "Primary CNS lymphoma" },
+      { "id": "E", "text": "Cryptococcal meningitis" }
+    ],
+    "correctOptionId": "B",
+    "explanation": {
+      "whyCorrect": "PML: JC virus reactivation in immunosuppressed (HIV CD4 <200). Non-enhancing white matter lesions (demyelination), no mass effect, CSF shows JC virus PCR+. No specific treatment. Best intervention: Start ART to restore immune function.",
+      "whyWrong": {
+        "A": "HIV encephalopathy has diffuse atrophy, not focal white matter lesions.",
+        "C": "Toxoplasmosis: Multiple ring-enhancing lesions with mass effect, positive Toxo IgG.",
+        "D": "PCNSL: Enhancing lesions (periventricular), EBV in CSF, mass effect.",
+        "E": "Cryptococcal: Meningeal enhancement, CSF shows encapsulated yeast, low glucose."
+      },
+      "clinicalPearl": "PML: Non-enhancing white matter lesions + JC virus in CSF + CD4 <200. Treatment: Start ART (immune reconstitution)."
+    },
+    "references": ["AAN PML Guidelines"],
+    "highYield": true,
+    "timeAllocated": 72
+  },
+  {
+    "id": "board_neuro_013",
+    "specialty": "neurology",
+    "topic": "Peripheral Neuropathy",
+    "difficulty": "medium",
+    "vignette": "A 55-year-old male presents with progressive numbness in his hands and feet, weakness in his wrists and ankles, and areflexia. He has a history of rheumatoid arthritis. Nerve conduction study shows multifocal demyelination. What is the treatment?",
+    "options": [
+      { "id": "A", "text": "Gabapentin for neuropathic pain" },
+      { "id": "B", "text": "IVIG or plasmapheresis" },
+      { "id": "C", "text": "Prednisone 1mg/kg" },
+      { "id": "D", "text": "Rituximab" },
+      { "id": "E", "text": "Cyclophosphamide" }
+    ],
+    "correctOptionId": "B",
+    "explanation": {
+      "whyCorrect": "CIDP (Chronic Inflammatory Demyelinating Polyneuropathy): Symmetric weakness + Sensory loss + Areflexia + Demyelination on NCS. Associated with autoimmune diseases (RA). Treatment: IVIG, Plasmapheresis, or Steroids. IVIG and plasmapheresis are first-line.",
+      "whyWrong": {
+        "A": "Gabapentin treats pain but does not modify the disease.",
+        "C": "Steroids are effective but IVIG/plasmapheresis are preferred first-line.",
+        "D": "Rituximab is second-line for refractory CIDP.",
+        "E": "Cyclophosphamide is last resort for severe refractory cases."
+      },
+      "clinicalPearl": "CIDP: Symmetric sensorimotor neuropathy + Demyelination on NCS. Treatment: IVIG or Plasmapheresis (first-line)."
+    },
+    "references": ["AAN CIDP Guidelines"],
+    "highYield": true,
+    "timeAllocated": 72
+  }
+]
+[
+  {
+    "id": "board_neuro_014",
+    "specialty": "neurology",
+    "topic": "Myopathies",
+    "difficulty": "hard",
+    "vignette": "A 50-year-old male presents with progressive proximal muscle weakness (difficulty climbing stairs, combing hair) over 6 months. He also has a violaceous rash on his eyelids (heliotrope) and erythematous papules over his knuckles (Gottron papules). CK is 5000. What is the diagnosis?",
+    "options": [
+      { "id": "A", "text": "Polymyositis" },
+      { "id": "B", "text": "Dermatomyositis" },
+      { "id": "C", "text": "Inclusion body myositis" },
+      { "id": "D", "text": "Limb-girdle muscular dystrophy" },
+      { "id": "E", "text": "Statin-induced myopathy" }
+    ],
+    "correctOptionId": "B",
+    "explanation": {
+      "whyCorrect": "Dermatomyositis: Proximal weakness + Characteristic rashes (heliotrope = periorbital violaceous, Gottron papules = dorsal MCP/PIP). CK elevated. Associated with malignancy (ovary, lung, GI) in adults. Anti-Jo-1, anti-Mi-2 antibodies. Treatment: Steroids + Immunosuppression.",
+      "whyWrong": {
+        "A": "Polymyositis lacks the characteristic rash.",
+        "C": "IBM: Distal > proximal, forearm flexors and quadriceps, CK normal or mild, onset >50.",
+        "D": "LGMD: Genetic, onset younger, no rash, family history.",
+        "E": "Statin myopathy: No rash, improves with statin discontinuation."
+      },
+      "clinicalPearl": "Dermatomyositis: Proximal weakness + Heliotrope rash + Gottron papules + High CK. Screen for malignancy in adults."
+    },
+    "references": ["ACR/EULAR Myositis Classification Criteria"],
+    "highYield": true,
+    "timeAllocated": 72
+  },
+  {
+    "id": "board_neuro_015",
+    "specialty": "neurology",
+    "topic": "Autonomic Disorders",
+    "difficulty": "medium",
+    "vignette": "A 65-year-old male with Parkinson disease for 10 years develops severe orthostatic hypotension (BP drops 40mmHg on standing), supine hypertension, and urinary urgency. What is the MOST likely diagnosis?",
+    "options": [
+      { "id": "A", "text": "Parkinson disease progression" },
+      { "id": "B", "text": "Multiple system atrophy (MSA)" },
+      { "id": "C", "text": "Pure autonomic failure" },
+      { "id": "D", "text": "Autonomic neuropathy from diabetes" },
+      { "id": "E", "text": "Medication side effect from levodopa" }
+    ],
+    "correctOptionId": "B",
+    "explanation": {
+      "whyCorrect": "MSA: Parkinsonism + Autonomic failure (orthostatic hypotension, urinary dysfunction) + Cerebellar signs. Poor or waning levodopa response after 10 years suggests atypical parkinsonism (MSA). Supine hypertension + Orthostatic hypotension is classic.",
+      "whyWrong": {
+        "A": "PD can have autonomic symptoms but usually late and less severe.",
+        "C": "PAF has autonomic failure WITHOUT parkinsonism or cerebellar signs.",
+        "D": "Diabetic neuropathy causes distal symmetric neuropathy, not parkinsonism.",
+        "E": "Levodopa causes orthostasis but typically early in treatment, not after 10 years."
+      },
+      "clinicalPearl": "MSA: Parkinsonism + Severe autonomic failure + Cerebellar signs. Orthostatic hypotension + Supine hypertension = Classic. Poor levodopa response."
+    },
+    "references": ["MSA Diagnostic Criteria"],
+    "highYield": true,
+    "timeAllocated": 72
+  },
+  {
+    "id": "board_neuro_016",
+    "specialty": "neurology",
+    "topic": "Sleep Disorders",
+    "difficulty": "medium",
+    "vignette": "A 35-year-old male presents with excessive daytime sleepiness, cataplexy (sudden loss of muscle tone when laughing), and sleep paralysis. Polysomnography shows sleep-onset REM periods. What is the pathophysiology?",
+    "options": [
+      { "id": "A", "text": "Degeneration of dopamine neurons in substantia nigra" },
+      { "id": "B", "text": "Loss of hypocretin (orexin) neurons in the lateral hypothalamus" },
+      { "id": "C", "text": "Acetylcholine receptor antibodies" },
+      { "id": "D", "text": "GABA deficiency in the thalamus" },
+      { "id": "E", "text": "Serotonin excess in the raphe nucleus" }
+    ],
+    "correctOptionId": "B",
+    "explanation": {
+      "whyCorrect": "Narcolepsy type 1: Triad = Excessive daytime sleepiness + Cataplexy + Sleep paralysis/hypnagogic hallucinations. Caused by autoimmune destruction of hypocretin (orexin) neurons in lateral hypothalamus. Associated with HLA-DQB1*06:02. Treatment: Modafinil, sodium oxybate for cataplexy.",
+      "whyWrong": {
+        "A": "Dopamine loss = Parkinson disease.",
+        "C": "AChR antibodies = Myasthenia gravis.",
+        "D": "GABA deficiency is not the mechanism of narcolepsy.",
+        "E": "Serotonin dysfunction is implicated in depression, not narcolepsy."
+      },
+      "clinicalPearl": "Narcolepsy type 1: Hypocretin deficiency + HLA-DQB1*06:02. Cataplexy = pathognomonic. Sleep-onset REM on PSG."
+    },
+    "references": ["AASM Narcolepsy Guidelines"],
+    "highYield": true,
+    "timeAllocated": 72
+  }
+]
+[
+  {
+    "id": "board_neuro_017",
+    "specialty": "neurology",
+    "topic": "Paraneoplastic Syndromes",
+    "difficulty": "hard",
+    "vignette": "A 65-year-old female presents with progressive cerebellar ataxia, dysarthria, and nystagmus over 4 weeks. MRI brain is normal. CSF shows lymphocytic pleocytosis. Anti-Yo (Purkinje cell) antibody is positive. What should you screen for?",
+    "options": [
+      { "id": "A", "text": "Small cell lung cancer" },
+      { "id": "B", "text": "Breast or ovarian cancer" },
+      { "id": "C", "text": "Hodgkin lymphoma" },
+      { "id": "D", "text": "Thymoma" },
+      { "id": "E", "text": "Testicular cancer" }
+    ],
+    "correctOptionId": "B",
+    "explanation": {
+      "whyCorrect": "Anti-Yo (PCA-1) = Paraneoplastic cerebellar degeneration. Strongly associated with BREAST and OVARIAN cancer (gynecologic malignancies). Rapidly progressive pancerebellar syndrome. Treatment: Treat underlying malignancy + Immunotherapy (limited benefit once neuronal loss).",
+      "whyWrong": {
+        "A": "Anti-Hu (ANNA-1) is associated with SCLC.",
+        "C": "Hodgkin lymphoma is associated with paraneoplastic limbic encephalitis.",
+        "D": "Thymoma is associated with MG (AChR antibodies).",
+        "E": "Testicular cancer is associated with anti-Ma2 encephalitis."
+      },
+      "clinicalPearl": "Paraneoplastic cerebellar degeneration: Anti-Yo = Breast/Ovarian. Anti-Hu = SCLC. Screen aggressively for malignancy."
+    },
+    "references": ["Paraneoplastic Neurologic Syndromes"],
+    "highYield": true,
+    "timeAllocated": 72
+  },
+  {
+    "id": "board_neuro_018",
+    "specialty": "neurology",
+    "topic": "Neuro-ophthalmology",
+    "difficulty": "medium",
+    "vignette": "A 50-year-old female presents with sudden vision loss in her left eye. She has pain with eye movement and decreased color vision (red desaturation). Fundoscopy is normal. MRI shows enhancing left optic nerve lesion. What is the diagnosis?",
+    "options": [
+      { "id": "A", "text": "Central retinal artery occlusion" },
+      { "id": "B", "text": "Optic neuritis" },
+      { "id": "C", "text": "Anterior ischemic optic neuropathy" },
+      { "id": "D", "text": "Papilledema" },
+      { "id": "E", "text": "Retinal detachment" }
+    ],
+    "correctOptionId": "B",
+    "explanation": {
+      "whyCorrect": "Optic neuritis: Subacute vision loss + Pain with eye movement + Decreased color vision (red desaturation) + Enhancing optic nerve on MRI. Often first presentation of MS (70% risk if MRI shows other lesions). Treatment: IV methylprednisolone speeds recovery but does not affect long-term outcome.",
+      "whyWrong": {
+        "A": "CRAO: Acute, painless, cherry-red spot on fundoscopy.",
+        "C": "AION: Acute, painless, altitudinal field defect, disc edema (older patients).",
+        "D": "Papilledema: Bilateral disc edema, headache, elevated ICP.",
+        "E": "Retinal detachment: Flashes/floaters, curtain-like vision loss."
+      },
+      "clinicalPearl": "Optic neuritis: Pain with eye movement + Red desaturation + Enhancing optic nerve. 70% MS risk if brain MRI has lesions."
+    },
+    "references": ["Optic Neuritis Treatment Trial (ONTT)"],
+    "highYield": true,
+    "timeAllocated": 72
+  }
+]

@@ -1,0 +1,658 @@
+/**
+ * ShiftManager.ts v3.0 FINAL
+ * Resident Life - Complete Emergency Department Simulator
+ * Integrates: Resources, Achievements, Career, Real Clinical Decisions
+ */
+
+import { 
+  ResourceState, createInitialResources, updateResourceState, 
+  requestResource, releaseResource, getResourceStatusText, getLabDelay 
+} from './ResourceManager';
+import { 
+  AchievementState, createAchievementState, checkAchievements, AchievementEvent 
+} from './AchievementSystem';
+import { 
+  CareerState, createCareerState, addXp, recordShift, getLevelProgress, 
+  getCurrentLevelInfo, getNextLevelInfo, LEVELS 
+} from './CareerSystem';
+
+// ==================== TYPES ====================
+
+export interface Action {
+  id: string;
+  name: string;
+  timeCost: number;
+  resultTime: number;
+  result?: string;
+  ordered: boolean;
+  completed: boolean;
+  resultAt?: number;
+  isEssential?: boolean;
+  category?: string;
+  resourceRequired?: string;
+  resourceTime?: number;
+}
+
+export interface TreatmentPathway {
+  correct: string[];
+  acceptable: string[];
+  wrongActions: string[];
+  wrongActionsConsequence: string;
+  criticalErrors: { action: string; consequence: string }[];
+}
+
+export interface DeteriorationStage {
+  timer: number;
+  stages: { time: number; event: string }[];
+}
+
+export interface DeteriorationPattern {
+  withoutTreatment: DeteriorationStage;
+  withPartialTreatment?: DeteriorationStage;
+  withCorrectTreatment: DeteriorationStage;
+}
+
+export interface Patient {
+  id: string;
+  name: string;
+  age: number;
+  gender: string;
+  complaint: string;
+  priority: 'critical' | 'urgent' | 'stable';
+  requiredActions: Action[];
+  deteriorationTimer: number;
+  currentState: string;
+  completedActions: string[];
+  status: 'waiting' | 'in-progress' | 'stable' | 'deteriorated' | 'transferred' | 'died';
+  correctDiagnosis?: string;
+  treatmentPathway?: TreatmentPathway;
+  deteriorationPattern?: DeteriorationPattern;
+  xpReward?: number;
+  reputationImpact?: Record<string, number>;
+  arrivalTime?: number;
+  diagnosisTime?: number;
+  treatedInTime?: boolean;
+}
+
+export interface ConsultRequest {
+  id: string;
+  from: string;
+  patient: string;
+  description: string;
+  timeCost: number;
+  repReward: number;
+  accepted: boolean;
+  completed: boolean;
+}
+
+export interface ShiftState {
+  timeElapsed: number;
+  focus: number;
+  reputation: number;
+  xp: number;
+  patients: Patient[];
+  consults: ConsultRequest[];
+  events: string[];
+  level: 'intern' | 'junior' | 'senior' | 'chief';
+  shiftsCompleted: number;
+  totalPatientsTreated: number;
+  totalDeaths: number;
+  correctDiagnoses: number;
+  patientQueue: Patient[];
+  shiftType: 'morning' | 'night' | 'weekend';
+  // New integrated systems
+  resources: ResourceState;
+  achievements: AchievementState;
+  career: CareerState;
+  achievementEvents: AchievementEvent[];
+  pendingAchievements: string[];
+  shiftStartTime: number;
+  patientsSaved: number;
+  criticalSaved: number;
+  diagnosesThisShift: string[];
+  totalDiagnosisTime: number;
+  diagnosisCount: number;
+  massCasualtyActive: boolean;
+  massCasualtyPatients: number;
+}
+
+// ==================== PATIENT GENERATION ====================
+
+const PATIENT_NAMES_MALE = ['Ahmed', 'Hassan', 'Omar', 'Khalid', 'Ibrahim', 'Youssef', 'Ali', 'Mustafa', 'Tariq', 'Bilal', 'Mahmoud', 'Samir', 'Rashid', 'Nabil', 'Kareem'];
+const PATIENT_NAMES_FEMALE = ['Fatima', 'Layla', 'Samira', 'Nour', 'Aisha', 'Mariam', 'Zainab', 'Huda', 'Amal', 'Sara', 'Nadia', 'Lina', 'Rania', 'Dalia', 'Mona'];
+const LAST_NAMES = ['Al-Rashid', 'Al-Farsi', 'Al-Hashimi', 'Al-Qassim', 'Al-Sayed', 'Khan', 'Malik', 'Ahmed', 'Hassan', 'Omar', 'Ibrahim', 'Mahmoud', 'Khalil', 'Nasser', 'Saeed'];
+
+const COMPLAINTS = {
+  critical: [
+    { complaint: 'Crushing chest pain radiating to left arm for 2 hours, diaphoretic', diagnosis: 'STEMI' },
+    { complaint: 'Sudden severe tearing pain between shoulder blades, BP differential', diagnosis: 'Aortic Dissection' },
+    { complaint: 'Sudden dyspnea, pleuritic chest pain, near-syncope, recent hip surgery', diagnosis: 'Massive PE' },
+    { complaint: 'BP 72/40, confused, febrile 39.5°C, indwelling catheter ×2 weeks', diagnosis: 'Septic Shock - CAUTI' },
+    { complaint: 'Sudden right hemiplegia and aphasia ×45 min, known AFib not anticoagulated', diagnosis: 'Acute Ischemic Stroke - LVO' },
+    { complaint: 'Thunderclap headache "worst of life", vomiting, neck stiffness, BP 195/110', diagnosis: 'Subarachnoid Hemorrhage' },
+    { complaint: 'Fever 39°C, rigors, RUQ pain, jaundiced, confused, hypotensive', diagnosis: 'Cholangitis with Septic Shock' },
+    { complaint: 'Severe dyspnea, tracheal deviation, absent left breath sounds post-trauma', diagnosis: 'Tension Pneumothorax' },
+  ],
+  urgent: [
+    { complaint: 'Fever 39.5°C, productive cough rust-colored sputum, pleuritic pain', diagnosis: 'Severe CAP' },
+    { complaint: 'Severe dyspnea ×2h, known COPD on home O2, purulent sputum', diagnosis: 'COPD Exacerbation' },
+    { complaint: 'Sharp pleuritic chest pain, worse lying flat, better sitting forward, febrile', diagnosis: 'Acute Pericarditis' },
+    { complaint: 'Progressive dyspnea ×3 days, orthopnea, bilateral leg edema, known CAD', diagnosis: 'ADHF' },
+    { complaint: 'Fever 38.5°C, acute confusion, dysuria, nursing home resident', diagnosis: 'Urosepsis' },
+    { complaint: 'Sudden severe left pleuritic pain, dyspnea, tall thin build', diagnosis: 'Spontaneous Pneumothorax' },
+    { complaint: 'Acute epigastric pain radiating to back, N/V, known gallstones', diagnosis: 'Acute Pancreatitis' },
+  ],
+  stable: [
+    { complaint: 'Fever 38.5°C, sore throat, mild cough ×2 days', diagnosis: 'Viral URI' },
+    { complaint: 'Mild chest pain, reproducible with palpation, normal vitals', diagnosis: 'Costochondritis' },
+    { complaint: 'Ankle pain and swelling after twisting, able to bear weight', diagnosis: 'Ankle Sprain' },
+    { complaint: 'Mild gastroenteritis, vomiting ×3, tolerating oral fluids', diagnosis: 'Acute Gastroenteritis' },
+    { complaint: 'Headache ×1 day, no red flags, normal neuro exam', diagnosis: 'Tension Headache' },
+  ],
+};
+
+function generatePatientName(gender: string): string {
+  const firstNames = gender === 'male' ? PATIENT_NAMES_MALE : PATIENT_NAMES_FEMALE;
+  return `${firstNames[Math.floor(Math.random() * firstNames.length)]} ${LAST_NAMES[Math.floor(Math.random() * LAST_NAMES.length)]}`;
+}
+
+function generateAge(): number {
+  const weights = [{ range: [18, 35], weight: 20 }, { range: [36, 55], weight: 35 }, { range: [56, 75], weight: 30 }, { range: [76, 90], weight: 15 }];
+  const totalWeight = weights.reduce((sum, w) => sum + w.weight, 0);
+  let random = Math.random() * totalWeight;
+  for (const w of weights) { random -= w.weight; if (random <= 0) return Math.floor(Math.random() * (w.range[1] - w.range[0] + 1)) + w.range[0]; }
+  return 55;
+}
+
+function generatePatient(priority: 'critical' | 'urgent' | 'stable', id: string): Patient {
+  const gender = Math.random() > 0.45 ? 'male' : 'female';
+  const complaintData = COMPLAINTS[priority][Math.floor(Math.random() * COMPLAINTS[priority].length)];
+  const age = generateAge();
+  const baseDeterioration = priority === 'critical' ? 15 : priority === 'urgent' ? 40 : 90;
+
+  return {
+    id, name: generatePatientName(gender), age, gender,
+    complaint: complaintData.complaint, priority,
+    requiredActions: generateActionsForDiagnosis(complaintData.diagnosis),
+    deteriorationTimer: baseDeterioration + Math.floor(Math.random() * 10),
+    currentState: `Waiting in ER bed ${Math.floor(Math.random() * 20) + 1}`,
+    completedActions: [], status: 'waiting',
+    correctDiagnosis: complaintData.diagnosis,
+    arrivalTime: undefined, diagnosisTime: undefined, treatedInTime: false,
+  };
+}
+
+function generateActionsForDiagnosis(diagnosis: string): Action[] {
+  const baseActions: Action[] = [
+    { id: 'history', name: 'History Taking', timeCost: 5, resultTime: 0, ordered: false, completed: false, isEssential: true, category: 'clinical', result: 'Detailed history obtained.' },
+    { id: 'exam', name: 'Physical Examination', timeCost: 5, resultTime: 0, ordered: false, completed: false, isEssential: true, category: 'clinical', result: 'Physical exam completed.' },
+  ];
+
+  if (diagnosis.includes('STEMI') || diagnosis.includes('ACS') || diagnosis.includes('MI')) {
+    baseActions.push(
+      { id: 'ecg', name: '12-Lead ECG', timeCost: 8, resultTime: 0, ordered: false, completed: false, isEssential: true, category: 'investigation', result: 'ST elevation 4mm V1-V4, reciprocal ST depression II/III/aVF. Anteroseptal STEMI.' },
+      { id: 'troponin', name: 'High-Sensitivity Troponin', timeCost: 5, resultTime: 25, ordered: false, completed: false, isEssential: true, category: 'lab', result: 'hs-cTnI: 12.8 ng/mL (Normal <0.04) - Markedly elevated' },
+      { id: 'aspirin', name: 'Aspirin 300mg PO', timeCost: 3, resultTime: 0, ordered: false, completed: false, isEssential: true, category: 'treatment', result: 'Antiplatelet initiated.' },
+      { id: 'heparin', name: 'Unfractionated Heparin IV', timeCost: 8, resultTime: 0, ordered: false, completed: false, isEssential: true, category: 'treatment', result: 'Anticoagulation started.' },
+      { id: 'cath_lab', name: 'Activate Cath Lab for PCI', timeCost: 10, resultTime: 30, ordered: false, completed: false, isEssential: true, category: 'treatment', result: 'Door-to-balloon: 52 min. DES to proximal LAD. TIMI 3 flow.', resourceRequired: 'ct', resourceTime: 45 },
+    );
+  } else if (diagnosis.includes('Dissection')) {
+    baseActions.push(
+      { id: 'ecg', name: '12-Lead ECG', timeCost: 8, resultTime: 0, ordered: false, completed: false, isEssential: true, category: 'investigation', result: 'Sinus tachycardia. LVH with strain. No ST elevation.' },
+      { id: 'cxr', name: 'Chest X-Ray', timeCost: 12, resultTime: 15, ordered: false, completed: false, isEssential: true, category: 'imaging', result: 'Widened mediastinum >8cm. Loss of aortic knob.' },
+      { id: 'bp_control', name: 'IV Beta-Blocker + Vasodilator', timeCost: 10, resultTime: 10, ordered: false, completed: false, isEssential: true, category: 'treatment', result: 'BP controlled to 120/75.' },
+      { id: 'ct_angio', name: 'CT Angiography Chest/Abdomen', timeCost: 20, resultTime: 25, ordered: false, completed: false, isEssential: true, category: 'imaging', result: 'Type A dissection. Pericardial effusion. SURGICAL EMERGENCY.', resourceRequired: 'ct', resourceTime: 25 },
+      { id: 'surgery_consult', name: 'Emergency CT Surgery Consult', timeCost: 8, resultTime: 15, ordered: false, completed: false, isEssential: true, category: 'consult', result: 'CT surgeon activated. OR prepared.' },
+    );
+  } else if (diagnosis.includes('PE') || diagnosis.includes('Pulmonary Embolism')) {
+    baseActions.push(
+      { id: 'ecg', name: '12-Lead ECG', timeCost: 8, resultTime: 0, ordered: false, completed: false, isEssential: true, category: 'investigation', result: 'Sinus tachycardia 125. S1Q3T3. Right axis deviation.' },
+      { id: 'abg', name: 'Arterial Blood Gas', timeCost: 10, resultTime: 10, ordered: false, completed: false, isEssential: true, category: 'lab', result: 'pH 7.32, pO2 52, Lactate 4.8 - Type 1 respiratory failure' },
+      { id: 'echo_bedside', name: 'Bedside Echocardiogram', timeCost: 10, resultTime: 5, ordered: false, completed: false, isEssential: true, category: 'imaging', result: 'Dilated RV. McConnell sign. PAP 60mmHg.' },
+      { id: 'thrombolysis', name: 'Systemic Thrombolysis (Alteplase)', timeCost: 15, resultTime: 30, ordered: false, completed: false, isEssential: true, category: 'treatment', result: 'tPA administered. Hemodynamics stabilizing.' },
+    );
+  } else if (diagnosis.includes('Sepsis') || diagnosis.includes('Septic') || diagnosis.includes('Shock')) {
+    baseActions.push(
+      { id: 'lactate', name: 'Serum Lactate', timeCost: 5, resultTime: 15, ordered: false, completed: false, isEssential: true, category: 'lab', result: 'Lactate: 5.8 mmol/L (Normal <2.0)' },
+      { id: 'blood_cultures', name: 'Blood Cultures ×2', timeCost: 8, resultTime: 0, ordered: false, completed: false, isEssential: true, category: 'lab', result: 'Cultures drawn pre-antibiotics.' },
+      { id: 'cbc', name: 'CBC with Differential', timeCost: 5, resultTime: 20, ordered: false, completed: false, isEssential: true, category: 'lab', result: 'WBC 19.8, Bands 15%, Plt 85' },
+      { id: 'fluids_30ml_kg', name: 'IV Crystalloid 30mL/kg Bolus', timeCost: 20, resultTime: 60, ordered: false, completed: false, isEssential: true, category: 'treatment', result: '2.5L LR. MAP improved 52→58.' },
+      { id: 'vasopressors', name: 'Norepinephrine IV Infusion', timeCost: 20, resultTime: 15, ordered: false, completed: false, isEssential: true, category: 'treatment', result: 'Norepi 0.1 mcg/kg/min. MAP now 68.' },
+      { id: 'antibiotics_sepsis', name: 'IV Broad-Spectrum Antibiotics', timeCost: 10, resultTime: 120, ordered: false, completed: false, isEssential: true, category: 'treatment', result: 'Pip-Tazo 4.5g IV within 45 min.' },
+      { id: 'source_control', name: 'Source Control', timeCost: 10, resultTime: 30, ordered: false, completed: false, isEssential: true, category: 'treatment', result: 'Infection source addressed.' },
+    );
+  } else if (diagnosis.includes('Stroke') || diagnosis.includes('CVA')) {
+    baseActions.push(
+      { id: 'glucose', name: 'Fingerstick Glucose', timeCost: 2, resultTime: 0, ordered: false, completed: false, isEssential: true, category: 'lab', result: 'Glucose: 132 mg/dL' },
+      { id: 'ct_head', name: 'CT Head Non-Contrast STAT', timeCost: 15, resultTime: 15, ordered: false, completed: false, isEssential: true, category: 'imaging', result: 'No hemorrhage. Hyperdense MCA sign. ASPECTS 8.', resourceRequired: 'ct', resourceTime: 15 },
+      { id: 'ecg', name: '12-Lead ECG', timeCost: 8, resultTime: 0, ordered: false, completed: false, isEssential: true, category: 'investigation', result: 'AFib 88-110 bpm.' },
+      { id: 'inr_ptt', name: 'CBC, INR, PTT', timeCost: 5, resultTime: 20, ordered: false, completed: false, isEssential: true, category: 'lab', result: 'INR 1.1, Plt 245 - Safe for tPA' },
+      { id: 'tpa', name: 'IV Alteplase (tPA) 0.9mg/kg', timeCost: 15, resultTime: 60, ordered: false, completed: false, isEssential: true, category: 'treatment', result: 'Door-to-needle: 50 min. tPA started.' },
+      { id: 'thrombectomy', name: 'Mechanical Thrombectomy', timeCost: 30, resultTime: 90, ordered: false, completed: false, isEssential: false, category: 'treatment', result: 'TICI 3. NIHSS 18→6.', resourceRequired: 'ct', resourceTime: 90 },
+    );
+  } else if (diagnosis.includes('SAH') || diagnosis.includes('Subarachnoid')) {
+    baseActions.push(
+      { id: 'ct_head', name: 'CT Head Non-Contrast STAT', timeCost: 15, resultTime: 15, ordered: false, completed: false, isEssential: true, category: 'imaging', result: 'Diffuse SAH. Hydrocephalus. Fisher 4.', resourceRequired: 'ct', resourceTime: 15 },
+      { id: 'nimodipine', name: 'Nimodipine 60mg PO Q4H', timeCost: 5, resultTime: 120, ordered: false, completed: false, isEssential: true, category: 'treatment', result: 'Only proven neuroprotective agent for SAH.' },
+      { id: 'bp_control', name: 'Blood Pressure Control', timeCost: 10, resultTime: 30, ordered: false, completed: false, isEssential: true, category: 'treatment', result: 'BP 140/85. SBP maintained 120-140.' },
+      { id: 'neurosurgery', name: 'Emergency Neurosurgery Consult', timeCost: 10, resultTime: 30, ordered: false, completed: false, isEssential: true, category: 'consult', result: 'EVD + Coiling within 24h.' },
+    );
+  } else if (diagnosis.includes('COPD') || diagnosis.includes('Exacerbation')) {
+    baseActions.push(
+      { id: 'abg', name: 'Arterial Blood Gas', timeCost: 10, resultTime: 10, ordered: false, completed: false, isEssential: true, category: 'lab', result: 'pH 7.22, pCO2 82, pO2 48 - Severe respiratory acidosis' },
+      { id: 'cxr', name: 'Chest X-Ray', timeCost: 12, resultTime: 15, ordered: false, completed: false, isEssential: true, category: 'imaging', result: 'Hyperinflated lungs. No pneumonia.' },
+      { id: 'niv', name: 'Non-Invasive Ventilation (BiPAP)', timeCost: 15, resultTime: 30, ordered: false, completed: false, isEssential: true, category: 'treatment', result: 'pH improving to 7.31. SpO2 93%.' },
+      { id: 'bronchodilators', name: 'Nebulized Bronchodilators', timeCost: 10, resultTime: 15, ordered: false, completed: false, isEssential: true, category: 'treatment', result: 'Peak flow improved 80→140 L/min.' },
+      { id: 'steroids', name: 'IV Methylprednisolone 125mg', timeCost: 5, resultTime: 60, ordered: false, completed: false, isEssential: true, category: 'treatment', result: 'Reduces treatment failure by 50%.' },
+    );
+  } else if (diagnosis.includes('Pneumonia') || diagnosis.includes('CAP')) {
+    baseActions.push(
+      { id: 'cxr', name: 'Chest X-Ray', timeCost: 12, resultTime: 15, ordered: false, completed: false, isEssential: true, category: 'imaging', result: 'RLL consolidation with air bronchograms.' },
+      { id: 'abg', name: 'Arterial Blood Gas', timeCost: 10, resultTime: 10, ordered: false, completed: false, isEssential: true, category: 'lab', result: 'pH 7.44, pO2 58 - Type 1 respiratory failure' },
+      { id: 'cbc', name: 'CBC with Differential', timeCost: 5, resultTime: 20, ordered: false, completed: false, isEssential: true, category: 'lab', result: 'WBC 22.4, Bands 12%' },
+      { id: 'blood_cultures', name: 'Blood Cultures ×2', timeCost: 8, resultTime: 0, ordered: false, completed: false, isEssential: true, category: 'lab', result: 'Cultures drawn pre-antibiotics.' },
+      { id: 'antibiotics_cap', name: 'IV Ceftriaxone + Azithromycin', timeCost: 10, resultTime: 120, ordered: false, completed: false, isEssential: true, category: 'treatment', result: 'Antibiotics within 2h.' },
+    );
+  } else if (diagnosis.includes('Heart Failure') || diagnosis.includes('ADHF')) {
+    baseActions.push(
+      { id: 'cxr', name: 'Chest X-Ray', timeCost: 12, resultTime: 15, ordered: false, completed: false, isEssential: true, category: 'imaging', result: 'Bilateral pulmonary edema. Kerley B lines.' },
+      { id: 'lasix', name: 'IV Furosemide 40-80mg', timeCost: 8, resultTime: 30, ordered: false, completed: false, isEssential: true, category: 'treatment', result: 'Urine output 1.2L in 2h. Crackles decreasing.' },
+      { id: 'nitroglycerin', name: 'IV Nitroglycerin', timeCost: 10, resultTime: 15, ordered: false, completed: false, isEssential: false, category: 'treatment', result: 'Preload/afterload reduced.' },
+    );
+  } else if (diagnosis.includes('Pneumothorax') || diagnosis.includes('Tension')) {
+    baseActions.push(
+      { id: 'cxr', name: 'Chest X-Ray', timeCost: 12, resultTime: 15, ordered: false, completed: false, isEssential: true, category: 'imaging', result: 'Large left pneumothorax ~60%.' },
+      { id: 'pigtail_catheter', name: 'Pigtail Catheter + Heimlich Valve', timeCost: 15, resultTime: 30, ordered: false, completed: false, isEssential: true, category: 'treatment', result: 'Lung fully re-expanded.' },
+    );
+  } else {
+    baseActions.push(
+      { id: 'cbc', name: 'CBC', timeCost: 5, resultTime: 20, ordered: false, completed: false, isEssential: false, category: 'lab', result: 'WBC normal, Hb normal, Plt normal.' },
+    );
+  }
+
+  return baseActions;
+}
+
+// ==================== SHIFT CREATION ====================
+
+export async function createInitialShift(
+  level: string, 
+  shiftType?: string, 
+  careerState?: CareerState
+): Promise<ShiftState> {
+  const patientCount = level === 'intern' ? 4 : level === 'junior' ? 6 : level === 'senior' ? 10 : 15;
+  const selectedShiftType = (shiftType || (Math.random() > 0.5 ? 'morning' : 'night')) as 'morning' | 'night' | 'weekend';
+
+  const initialPatients: Patient[] = [];
+  for (let i = 0; i < patientCount; i++) {
+    const priorityRand = Math.random();
+    const priority = priorityRand < 0.25 ? 'critical' : priorityRand < 0.6 ? 'urgent' : 'stable';
+    initialPatients.push(generatePatient(priority, `p${i + 1}`));
+  }
+
+  const queuePatients: Patient[] = [];
+  const queueSize = selectedShiftType === 'night' ? 3 : 5;
+  for (let i = 0; i < queueSize; i++) {
+    const priorityRand = Math.random();
+    const priority = priorityRand < 0.3 ? 'critical' : priorityRand < 0.7 ? 'urgent' : 'stable';
+    queuePatients.push(generatePatient(priority, `q${i + 1}`));
+  }
+
+  return {
+    timeElapsed: 0,
+    focus: 100,
+    reputation: 500,
+    xp: 0,
+    patients: initialPatients,
+    consults: [],
+    events: [`${selectedShiftType === 'night' ? '🌙 Night' : '🌅 Morning'} shift started at ${selectedShiftType === 'night' ? '19' : '07'}:00. ${patientCount} patients waiting. ${queuePatients.length} more incoming.`],
+    level: level as any,
+    shiftsCompleted: 0,
+    totalPatientsTreated: 0,
+    totalDeaths: 0,
+    correctDiagnoses: 0,
+    patientQueue: queuePatients,
+    shiftType: selectedShiftType,
+    resources: createInitialResources(selectedShiftType),
+    achievements: careerState?.xp ? { achievements: [], totalUnlocked: 0, totalXP: 0 } : createAchievementState(),
+    career: careerState || createCareerState(),
+    achievementEvents: [],
+    pendingAchievements: [],
+    shiftStartTime: Date.now(),
+    patientsSaved: 0,
+    criticalSaved: 0,
+    diagnosesThisShift: [],
+    totalDiagnosisTime: 0,
+    diagnosisCount: 0,
+    massCasualtyActive: false,
+    massCasualtyPatients: 0,
+  };
+}
+
+// ==================== SHIFT UPDATE ====================
+
+export function updateShift(state: ShiftState): ShiftState {
+  const newState = { ...state, timeElapsed: state.timeElapsed + 1 };
+  const events = [...state.events];
+
+  // Update resources
+  newState.resources = updateResourceState(state.resources, 1);
+
+  // Patient deterioration
+  newState.patients = state.patients.map(p => {
+    if (p.status === 'died' || p.status === 'transferred' || p.status === 'stable') return p;
+
+    const newTimer = p.deteriorationTimer - 1;
+    let newStatus = p.status;
+    const completedEssential = p.requiredActions.filter(a => a.isEssential).every(a => a.completed);
+
+    if (completedEssential && p.status !== 'died') {
+      if (newStatus === 'waiting' || newStatus === 'in-progress' || newStatus === 'deteriorated') {
+        newStatus = 'stable';
+        events.push(`✅ ${p.name} is now stable with appropriate treatment.`);
+        newState.patientsSaved++;
+        if (p.priority === 'critical') newState.criticalSaved++;
+      }
+      return { ...p, deteriorationTimer: Math.max(0, newTimer + 15), status: newStatus, treatedInTime: true };
+    }
+
+    if (newTimer <= 0 && p.status !== 'stable') {
+      newStatus = 'deteriorated';
+      events.push(`⚠️ ${p.name} has deteriorated! Immediate action required!`);
+    }
+    if (newTimer <= -10 && newStatus === 'deteriorated') {
+      newStatus = 'died';
+      events.push(`💀 ${p.name} has died from delayed treatment.`);
+      newState.totalDeaths++;
+    }
+
+    return { ...p, deteriorationTimer: newTimer, status: newStatus };
+  });
+
+  // Update pending results
+  newState.patients = newState.patients.map(p => ({
+    ...p,
+    requiredActions: p.requiredActions.map(a => {
+      if (a.ordered && !a.completed && a.resultAt && newState.timeElapsed >= a.resultAt) {
+        return { ...a, completed: true };
+      }
+      return a;
+    }),
+  }));
+
+  // New patient arrivals
+  if (state.patientQueue.length > 0) {
+    const arrivalIntervals = state.shiftType === 'night' ? [5, 10, 15, 20, 25] : [3, 5, 7, 10, 12, 15, 18, 20];
+    if (arrivalIntervals.includes(state.timeElapsed) || state.timeElapsed % 8 === 0) {
+      const newPatient = { ...state.patientQueue[0], arrivalTime: state.timeElapsed };
+      newState.patients = [...newState.patients, newPatient];
+      newState.patientQueue = state.patientQueue.slice(1);
+      const emoji = newPatient.priority === 'critical' ? '🚨' : newPatient.priority === 'urgent' ? '⚠️' : '🟢';
+      events.push(`${emoji} New arrival: ${newPatient.name}, ${newPatient.age}${newPatient.gender === 'male' ? 'M' : 'F'} - ${newPatient.complaint.substring(0, 50)}...`);
+    }
+  }
+
+  // Refill queue
+  if (state.timeElapsed % 10 === 0 && state.timeElapsed > 0 && newState.patientQueue.length < 3) {
+    const priorityRand = Math.random();
+    const priority = priorityRand < 0.2 ? 'critical' : priorityRand < 0.55 ? 'urgent' : 'stable';
+    const id = `q${state.timeElapsed}_${Math.floor(Math.random() * 1000)}`;
+    newState.patientQueue = [...newState.patientQueue, generatePatient(priority, id)];
+  }
+
+  // Mass casualty event (rare)
+  if (state.timeElapsed === 30 && Math.random() < 0.15 && !state.massCasualtyActive) {
+    newState.massCasualtyActive = true;
+    const count = 6 + Math.floor(Math.random() * 6);
+    events.push(`🚨 MASS CASUALTY: Bus accident! ${count} patients incoming!`);
+    for (let i = 0; i < count; i++) {
+      const priority = i < 3 ? 'critical' : i < 7 ? 'urgent' : 'stable';
+      newState.patientQueue = [generatePatient(priority, `mc_${i}`), ...newState.patientQueue];
+    }
+    newState.massCasualtyPatients = count;
+  }
+
+  // Consults
+  if (state.timeElapsed % 10 === 0 && state.timeElapsed > 0 && state.timeElapsed % 20 !== 0) {
+    const departments = ['Surgery', 'OB/GYN', 'Pediatrics', 'Orthopedics', 'Neurology'];
+    const dept = departments[Math.floor(Math.random() * departments.length)];
+    const consult: ConsultRequest = {
+      id: `c${state.timeElapsed}`, from: dept, patient: `Patient in ${dept}`,
+      description: `Urgent evaluation requested`,
+      timeCost: 20, repReward: 15, accepted: false, completed: false,
+    };
+    newState.consults = [...state.consults, consult];
+    events.push(`📞 Consult from ${dept}: ${consult.description}`);
+  }
+
+  // Fatigue
+  if (state.timeElapsed % 40 === 0 && state.timeElapsed > 0) {
+    newState.focus = Math.max(15, state.focus - 4);
+  }
+
+  // Night shift effects
+  if (state.shiftType === 'night' && state.timeElapsed % 15 === 0 && state.timeElapsed > 0) {
+    events.push('🌙 Night shift: Reduced staffing. Lab results delayed 40%.');
+  }
+
+  newState.events = events;
+  return newState;
+}
+
+// ==================== ACTIONS ====================
+
+export function performAction(state: ShiftState, patientId: string, actionId: string): ShiftState {
+  const patient = state.patients.find(p => p.id === patientId);
+  if (!patient) return state;
+
+  const action = patient.requiredActions.find(a => a.id === actionId);
+  if (!action) return state;
+
+  const timeCost = action.timeCost || 5;
+  const resultTime = action.resultTime || 0;
+  
+  // Apply lab delay for night shift
+  const labMultiplier = action.category === 'lab' ? getLabDelay(state.shiftType) : 1;
+  const adjustedResultTime = Math.floor(resultTime * labMultiplier);
+
+  let actionOutcome = '';
+  let reputationChange = 0;
+  const newAchievementEvents: AchievementEvent[] = [];
+
+  // Check treatment pathway
+  const pathway = patient.treatmentPathway;
+  if (pathway?.criticalErrors) {
+    const criticalError = pathway.criticalErrors.find(e => e.action === actionId);
+    if (criticalError) {
+      actionOutcome = `⚠️ CRITICAL ERROR: ${criticalError.consequence}`;
+      reputationChange = -40;
+    }
+  }
+
+  if (pathway?.wrongActions?.includes(actionId)) {
+    actionOutcome = `⚠️ ${pathway.wrongActionsConsequence}`;
+    reputationChange = -20;
+  }
+
+  // Track diagnosis
+  if (actionId === 'history' || actionId === 'exam') {
+    if (!patient.diagnosisTime) {
+      patient.diagnosisTime = state.timeElapsed;
+      newState.diagnosisCount++;
+      newState.totalDiagnosisTime += state.timeElapsed - (patient.arrivalTime || 0);
+    }
+  }
+
+  // Track achievement events
+  if (patient.correctDiagnosis?.includes('STEMI')) {
+    newAchievementEvents.push({ type: 'diagnosis', data: 'STEMI' });
+    newAchievementEvents.push({ type: 'rapid_treatment' });
+  }
+  if (patient.correctDiagnosis?.includes('Stroke')) {
+    newAchievementEvents.push({ type: 'stroke_treated' });
+  }
+  if (patient.correctDiagnosis?.includes('Sepsis') || patient.correctDiagnosis?.includes('Septic')) {
+    newAchievementEvents.push({ type: 'sepsis_bundle_complete' });
+  }
+  if (patient.correctDiagnosis?.includes('Dissection')) {
+    newAchievementEvents.push({ type: 'diagnosis', data: 'Aortic Dissection' });
+    newAchievementEvents.push({ type: 'rare_diagnosis' });
+  }
+  if (patient.correctDiagnosis?.includes('PE') || patient.correctDiagnosis?.includes('Embolism')) {
+    newAchievementEvents.push({ type: 'pe_thrombolysed' });
+  }
+  if (patient.correctDiagnosis?.includes('SAH') || patient.correctDiagnosis?.includes('Subarachnoid')) {
+    newAchievementEvents.push({ type: 'rare_diagnosis' });
+  }
+
+  const newEvents = [...state.events];
+  if (actionOutcome) newEvents.push(actionOutcome);
+
+  const newTimeElapsed = state.timeElapsed + timeCost;
+
+  return {
+    ...state,
+    timeElapsed: newTimeElapsed,
+    focus: Math.max(5, state.focus - 2),
+    reputation: state.reputation + reputationChange,
+    achievementEvents: [...state.achievementEvents, ...newAchievementEvents],
+    patients: state.patients.map(p => {
+      if (p.id !== patientId) return p;
+      return {
+        ...p,
+        completedActions: [...p.completedActions, actionId],
+        requiredActions: p.requiredActions.map(a => {
+          if (a.id !== actionId) return a;
+          const resultAt = a.resultTime > 0 ? newTimeElapsed + adjustedResultTime : newTimeElapsed;
+          return { ...a, ordered: true, resultAt, completed: a.resultTime === 0, result: a.result || `${a.name} completed.` };
+        }),
+        status: 'in-progress' as const,
+        deteriorationTimer: Math.max(1, p.deteriorationTimer + (p.priority === 'critical' ? 5 : 10)),
+      };
+    }),
+    events: [...newEvents, `[${state.timeElapsed}m] ${action.name} for ${patient.name}${actionOutcome ? ' - ' + actionOutcome : ''}`],
+  };
+}
+
+export function acceptConsult(state: ShiftState, consultId: string): ShiftState {
+  return {
+    ...state,
+    consults: state.consults.map(c => c.id === consultId ? { ...c, accepted: true } : c),
+    reputation: state.reputation + 15,
+    xp: state.xp + 20,
+    events: [...state.events, `✅ Accepted consult from ${state.consults.find(c => c.id === consultId)?.from}`],
+  };
+}
+
+// ==================== SHIFT END ====================
+
+export function evaluateShift(state: ShiftState): {
+  survived: number; died: number; consultsAccepted: number;
+  xpEarned: number; reputationChange: number; accuracy: number;
+  bonusXP: number; avgDiagnosisTime: number; achievementsUnlocked: string[];
+  levelUp: boolean; newLevel: string | null; careerProgress: number;
+} {
+  const survived = state.patients.filter(p => p.status !== 'died').length;
+  const died = state.patients.filter(p => p.status === 'died').length;
+  const consultsAccepted = state.consults.filter(c => c.accepted).length;
+  const totalPatients = state.patients.length;
+
+  // Calculate accuracy
+  let correctDecisions = 0;
+  state.patients.forEach(p => {
+    const pathway = p.treatmentPathway;
+    if (!pathway || p.status === 'died') return;
+    const correctActions = pathway.correct || [];
+    const completedCorrect = correctActions.filter(a => p.completedActions.includes(a)).length;
+    if (completedCorrect >= correctActions.length * 0.6) correctDecisions++;
+  });
+  const accuracy = totalPatients > 0 ? (correctDecisions / totalPatients) * 100 : 0;
+
+  // Average diagnosis time
+  const avgDiagnosisTime = state.diagnosisCount > 0 ? state.totalDiagnosisTime / state.diagnosisCount : 0;
+
+  // Calculate XP
+  const baseXP = Math.floor(survived * 50 + state.reputation * 0.5 + accuracy * 3);
+  const deathPenalty = died * 30;
+  const bonusXP = Math.max(0, baseXP - deathPenalty);
+
+  // Check achievements
+  const shiftEvents: AchievementEvent[] = [
+    ...state.achievementEvents,
+    { type: 'shift_complete', data: { deaths: died, accuracy, avgDiagnosisTime, shiftType: state.shiftType, criticalSaved: state.criticalSaved } },
+    { type: 'patient_saved' },
+    ...Array(survived).fill({ type: 'patient_treated' }),
+  ];
+
+  let updatedAchievements = state.achievements;
+  const unlockedNames: string[] = [];
+  shiftEvents.forEach(event => {
+    const result = checkAchievements(updatedAchievements, event);
+    updatedAchievements = result.updatedState;
+    result.newlyUnlocked.forEach(ach => {
+      unlockedNames.push(`${ach.icon} ${ach.name} (+${ach.xpReward} XP)`);
+    });
+  });
+
+  // Career progression
+  const totalXP = bonusXP + updatedAchievements.totalXP;
+  let updatedCareer = state.career;
+  
+  // Record shift
+  updatedCareer = recordShift(updatedCareer, {
+    patientsTreated: totalPatients,
+    deaths: died,
+    accuracy,
+    correctDiagnoses: correctDecisions,
+    shiftType: state.shiftType,
+    specificStats: {
+      fastestDiagnosis: state.diagnosisCount > 0 ? Math.min(...state.patients.filter(p => p.diagnosisTime).map(p => p.diagnosisTime || 999)) : 999,
+      patientsSaved: survived,
+    },
+  });
+
+  // Add XP
+  updatedCareer = addXp(updatedCareer, totalXP);
+
+  // Check level up
+  const oldLevel = state.career.level;
+  const newLevel = updatedCareer.level;
+  const levelUp = oldLevel !== newLevel;
+
+  return {
+    survived, died, consultsAccepted,
+    xpEarned: bonusXP,
+    reputationChange: died > 0 ? -died * 30 : Math.floor(survived * 10),
+    accuracy,
+    bonusXP: totalXP,
+    avgDiagnosisTime,
+    achievementsUnlocked: unlockedNames,
+    levelUp,
+    newLevel: levelUp ? newLevel : null,
+    careerProgress: getLevelProgress(updatedCareer),
+  };
+}
+
+// ==================== UTILITY ====================
+
+export function formatTime(min: number): string {
+  const baseHour = 7;
+  const h = (Math.floor(min / 60) + baseHour) % 24;
+  const m = min % 60;
+  return `${h.toString().padStart(2, '0')}:${m.toString().padStart(2, '0')}`;
+}
+
+export function getPatientStatusColor(status: string): string {
+  switch (status) {
+    case 'critical': return '#EF4444';
+    case 'urgent': return '#F59E0B';
+    case 'stable': return '#10B981';
+    case 'died': return '#6B7280';
+    case 'deteriorated': return '#DC2626';
+    default: return '#94A3B8';
+  }
+}
+
+export function getResourceSummary(state: ShiftState): string[] {
+  return getResourceStatusText(state.resources);
+}

@@ -1,0 +1,6 @@
+import { StyleSheet, Text, View, FlatList } from 'react-native';
+const N = [{ id: '1', icon: '🏆', text: 'You earned "Sharp Shooter" badge!', time: '2h ago' },{ id: '2', icon: '🔥', text: 'Daily Challenge ready!', time: '3h ago' },{ id: '3', icon: '👥', text: 'Dr. Sarah accepted your challenge', time: '5h ago' },{ id: '4', icon: '⭐', text: 'You reached Level 10!', time: '1d ago' },{ id: '5', icon: '📅', text: 'Weekly quest completed! +150 XP', time: '2d ago' }];
+export default function Notifications() {
+  return (<View style={s.c}><Text style={s.t}>Notifications</Text><FlatList data={N} keyExtractor={i=>i.id} contentContainerStyle={{padding:16}} renderItem={({item})=>(<View style={s.r}><Text style={s.i}>{item.icon}</Text><View style={{flex:1}}><Text style={s.nt}>{item.text}</Text><Text style={s.tm}>{item.time}</Text></View></View>)}/></View>);
+}
+const s = StyleSheet.create({ c: { flex: 1, backgroundColor: '#0A0E1A' }, t: { color: '#F8FAFC', fontSize: 24, fontWeight: '800', padding: 20 }, r: { flexDirection: 'row', alignItems: 'center', backgroundColor: '#1E293B', padding: 14, borderRadius: 14, marginBottom: 8, borderWidth: 1, borderColor: '#334155', gap: 12 }, i: { fontSize: 22 }, nt: { color: '#F8FAFC', fontSize: 13, flex: 1 }, tm: { color: '#64748B', fontSize: 11, marginTop: 2 } });

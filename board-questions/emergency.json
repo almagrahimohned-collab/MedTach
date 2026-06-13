@@ -1,0 +1,771 @@
+[
+  {
+    "id": "board_em_001",
+    "specialty": "emergency",
+    "topic": "Trauma Resuscitation",
+    "difficulty": "hard",
+    "vignette": "A 25-year-old male is brought to the trauma bay after a motorcycle accident. He is confused, hypotensive (BP 80/50), tachycardic (HR 130). FAST scan shows free fluid in the abdomen. What is the BEST next step?",
+    "options": [
+      { "id": "A", "text": "CT abdomen and pelvis" },
+      { "id": "B", "text": "Emergent exploratory laparotomy" },
+      { "id": "C", "text": "Start norepinephrine and admit to ICU" },
+      { "id": "D", "text": "Diagnostic peritoneal lavage (DPL)" },
+      { "id": "E", "text": "Serial abdominal exams" }
+    ],
+    "correctOptionId": "B",
+    "explanation": {
+      "whyCorrect": "Unstable blunt trauma patient + Positive FAST scan = EMERGENT LAPAROTOMY. Do NOT delay for CT scan. This patient has hemorrhagic shock requiring immediate surgical control. ATLS: Unstable + positive FAST = OR.",
+      "whyWrong": {
+        "A": "CT delays definitive management in unstable patient.",
+        "C": "Vasopressors are temporizing only; patient needs surgical hemorrhage control.",
+        "D": "DPL has been replaced by FAST in most centers.",
+        "E": "Serial exams are for STABLE patients, not hypotensive."
+      },
+      "clinicalPearl": "Unstable blunt trauma + Positive FAST = OR immediately. CT is for STABLE patients. ATLS: ABCDE, identify and treat life threats."
+    },
+    "references": ["ATLS 10th Edition"],
+    "highYield": true,
+    "timeAllocated": 72
+  },
+  {
+    "id": "board_em_002",
+    "specialty": "emergency",
+    "topic": "Cardiac Arrest",
+    "difficulty": "medium",
+    "vignette": "A 60-year-old male collapses in the ED waiting room. He is unresponsive, pulseless, and not breathing. AED shows ventricular fibrillation. What is the FIRST step?",
+    "options": [
+      { "id": "A", "text": "Start CPR immediately" },
+      { "id": "B", "text": "Defibrillate immediately" },
+      { "id": "C", "text": "Give epinephrine 1mg IV" },
+      { "id": "D", "text": "Intubate" },
+      { "id": "E", "text": "Check for pulse for 10 seconds" }
+    ],
+    "correctOptionId": "B",
+    "explanation": {
+      "whyCorrect": "VF/pulseless VT: IMMEDIATE DEFIBRILLATION. CPR if defibrillator not immediately available. After shock → 2 min CPR → Rhythm check → Shock if VF/VT → Epinephrine after 2nd shock → Amiodarone after 3rd shock.",
+      "whyWrong": {
+        "A": "CPR if defibrillator not immediately available, but AED is ready (shock first).",
+        "C": "Epinephrine given after 2nd shock, not before defibrillation.",
+        "D": "Airway management is secondary to defibrillation and high-quality CPR.",
+        "E": "Already confirmed pulseless - do not delay defibrillation for pulse check."
+      },
+      "clinicalPearl": "VF/pVT: SHOCK FIRST. High-quality CPR between shocks. Epinephrine after 2nd shock. Amiodarone after 3rd shock."
+    },
+    "references": ["AHA ACLS Guidelines 2020"],
+    "highYield": true,
+    "timeAllocated": 72
+  },
+  {
+    "id": "board_em_003",
+    "specialty": "emergency",
+    "topic": "Toxicology",
+    "difficulty": "hard",
+    "vignette": "A 20-year-old female presents with altered mental status, hyperthermia (41°C), muscle rigidity, tachycardia, and mydriasis. She was at a music festival. What toxidrome is this?",
+    "options": [
+      { "id": "A", "text": "Serotonin syndrome" },
+      { "id": "B", "text": "Sympathomimetic toxidrome (MDMA/Ecstasy)" },
+      { "id": "C", "text": "Anticholinergic toxidrome" },
+      { "id": "D", "text": "Neuroleptic malignant syndrome" },
+      { "id": "E", "text": "Opioid overdose" }
+    ],
+    "correctOptionId": "B",
+    "explanation": {
+      "whyCorrect": "Sympathomimetic toxidrome (MDMA, cocaine, methamphetamine): Hyperthermia + Tachycardia + Mydriasis + Agitation + Diaphoresis. MDMA (Ecstasy/Molly) = Hyponatremia + Serotonin-like effects. Treatment: Cooling, benzodiazepines, IV fluids. Monitor for rhabdomyolysis.",
+      "whyWrong": {
+        "A": "Serotonin syndrome: Clonus, hyperreflexia, usually from SSRIs/MAOIs.",
+        "C": "Anticholinergic: Hot as a hare, dry as a bone (no sweating), absent bowel sounds.",
+        "D": "NMS: Lead-pipe rigidity, bradyreflexia, from antipsychotics.",
+        "E": "Opioid: Pinpoint pupils, respiratory depression, hypothermia."
+      },
+      "clinicalPearl": "MDMA toxidrome: Hyperthermia + Tachycardia + Mydriasis + Festival/rave setting. Cool aggressively. Check Na (hyponatremia risk)."
+    },
+    "references": ["Toxidrome Recognition", "MDMA Toxicity Management"],
+    "highYield": true,
+    "timeAllocated": 72
+  },
+  {
+    "id": "board_em_004",
+    "specialty": "emergency",
+    "topic": "Acute Coronary Syndrome",
+    "difficulty": "medium",
+    "vignette": "A 55-year-old male presents with 2 hours of crushing chest pain. ECG shows ST elevation in II, III, aVF. The nearest PCI-capable hospital is 3 hours away. What is the BEST management?",
+    "options": [
+      { "id": "A", "text": "Transfer for primary PCI" },
+      { "id": "B", "text": "Administer fibrinolytic therapy (tenecteplase)" },
+      { "id": "C", "text": "Start heparin and transfer for PCI tomorrow" },
+      { "id": "D", "text": "Consult cardiology by phone" },
+      { "id": "E", "text": "CT coronary angiography" }
+    ],
+    "correctOptionId": "B",
+    "explanation": {
+      "whyCorrect": "Inferior STEMI with PCI not available within 120 minutes: FIBRINOLYTICS (tenecteplase, alteplase, reteplase). Goal: Door-to-needle time <30 minutes. Contraindications: Active bleeding, recent surgery, hemorrhagic stroke history. Transfer after lytics for possible rescue PCI.",
+      "whyWrong": {
+        "A": "Transfer time exceeds 120 min window for primary PCI.",
+        "C": "Anticoagulation alone is insufficient. Need lytics if PCI unavailable.",
+        "D": "Consult does not reperfuse the myocardium.",
+        "E": "CT delays reperfusion and is not indicated for STEMI."
+      },
+      "clinicalPearl": "STEMI: PCI within 120 min → Primary PCI. PCI >120 min away → Fibrinolytics (door-to-needle <30 min) + Transfer."
+    },
+    "references": ["ACC/AHA STEMI Guidelines"],
+    "highYield": true,
+    "timeAllocated": 72
+  },
+  {
+    "id": "board_em_005",
+    "specialty": "emergency",
+    "topic": "Airway Management",
+    "difficulty": "hard",
+    "vignette": "A 40-year-old male with angioedema presents with stridor, drooling, and respiratory distress. O2 sat is 88% on face mask. What is the BEST next step?",
+    "options": [
+      { "id": "A", "text": "Start IV steroids and antihistamines" },
+      { "id": "B", "text": "Awake fiberoptic intubation" },
+      { "id": "C", "text": "Rapid sequence intubation with succinylcholine" },
+      { "id": "D", "text": "Cricothyrotomy" },
+      { "id": "E", "text": "Nebulized racemic epinephrine and observation" }
+    ],
+    "correctOptionId": "B",
+    "explanation": {
+      "whyCorrect": "Impending airway obstruction (stridor, drooling, hypoxia) from angioedema: Secure airway BEFORE it closes completely. Awake fiberoptic intubation by experienced provider (preserves spontaneous breathing). RSI is dangerous (can't ventilate, can't intubate). Have cricothyrotomy tray ready.",
+      "whyWrong": {
+        "A": "Medical therapy is adjunctive but airway takes priority.",
+        "C": "RSI in angioedema risks complete airway loss (distorted anatomy).",
+        "D": "Cricothyrotomy is last resort (failed airway).",
+        "E": "Nebulized epinephrine for croup/post-extubation, not angioedema."
+      },
+      "clinicalPearl": "Angioedema + Stridor + Drooling = Prepare for difficult airway. Awake fiberoptic intubation. Have surgical airway ready."
+    },
+    "references": ["Difficult Airway Society Guidelines"],
+    "highYield": true,
+    "timeAllocated": 72
+  }
+]
+[
+  {
+    "id": "board_em_006",
+    "specialty": "emergency",
+    "topic": "Sepsis Management",
+    "difficulty": "hard",
+    "vignette": "A 70-year-old nursing home resident presents with fever, confusion, and hypotension. Vitals: Temp 39.0°C, BP 78/45, HR 120, RR 30, SpO2 90%. Lactate is 5.2 mmol/L. You have obtained blood cultures and started antibiotics. What is the NEXT priority?",
+    "options": [
+      { "id": "A", "text": "Start norepinephrine through peripheral IV" },
+      { "id": "B", "text": "Administer 30mL/kg IV crystalloid bolus" },
+      { "id": "C", "text": "Place central line" },
+      { "id": "D", "text": "CT abdomen to find source" },
+      { "id": "E", "text": "Start hydrocortisone 50mg IV" }
+    ],
+    "correctOptionId": "B",
+    "explanation": {
+      "whyCorrect": "Sepsis 1-hour bundle: Blood cultures → Antibiotics → FLUIDS 30mL/kg → Vasopressors if refractory hypotension. Fluids are the priority after antibiotics. Start vasopressors through peripheral IV if fluids fail (do not delay for central line).",
+      "whyWrong": {
+        "A": "Vasopressors are after fluid resuscitation (unless fluid overloaded).",
+        "C": "Central line should not delay fluids or vasopressors.",
+        "D": "Source identification is important but not before resuscitation.",
+        "E": "Hydrocortisone is for refractory shock (after fluids + vasopressors)."
+      },
+      "clinicalPearl": "Sepsis bundle: Antibiotics + Fluids 30mL/kg within 1 hour. Vasopressors through peripheral IV if needed. Do NOT delay for central line."
+    },
+    "references": ["Surviving Sepsis Campaign 2021"],
+    "highYield": true,
+    "timeAllocated": 72
+  },
+  {
+    "id": "board_em_007",
+    "specialty": "emergency",
+    "topic": "Anaphylaxis",
+    "difficulty": "medium",
+    "vignette": "A 30-year-old female develops urticaria, wheezing, and lip swelling within minutes of eating shrimp. She feels lightheaded and her BP is 85/50. What is the FIRST medication to administer?",
+    "options": [
+      { "id": "A", "text": "Diphenhydramine 50mg IV" },
+      { "id": "B", "text": "Methylprednisolone 125mg IV" },
+      { "id": "C", "text": "Epinephrine 0.3mg IM (mid-outer thigh)" },
+      { "id": "D", "text": "Albuterol nebulized" },
+      { "id": "E", "text": "IV fluids 2L bolus" }
+    ],
+    "correctOptionId": "C",
+    "explanation": {
+      "whyCorrect": "Anaphylaxis with hypotension: EPINEPHRINE IM 0.3mg (1:1000) mid-outer thigh is FIRST-LINE and life-saving. Give immediately. No contraindications. Antihistamines and steroids are SECONDARY (prevent biphasic reaction, not life-saving). Albuterol for bronchospasm. Fluids for hypotension.",
+      "whyWrong": {
+        "A": "Antihistamines are second-line (do not save lives).",
+        "B": "Steroids take hours to work (prevent biphasic reaction).",
+        "C": "Epinephrine is the ONLY life-saving medication in anaphylaxis.",
+        "D": "Albuterol is for bronchospasm, not hypotension.",
+        "E": "Fluids are adjunctive, not primary."
+      },
+      "clinicalPearl": "Anaphylaxis: EPINEPHRINE IM FIRST (mid-outer thigh). No absolute contraindications. Antihistamines/steroids are secondary."
+    },
+    "references": ["AAAAI Anaphylaxis Guidelines"],
+    "highYield": true,
+    "timeAllocated": 72
+  },
+  {
+    "id": "board_em_008",
+    "specialty": "emergency",
+    "topic": "Stroke",
+    "difficulty": "hard",
+    "vignette": "A 65-year-old male presents with sudden onset left facial droop, left arm weakness, and slurred speech. Symptom onset was 90 minutes ago. CT head shows no hemorrhage. Blood pressure is 195/110. What is the NEXT best step?",
+    "options": [
+      { "id": "A", "text": "Lower BP to <185/110 before tPA" },
+      { "id": "B", "text": "Give tPA immediately, BP will come down" },
+      { "id": "C", "text": "Start nicardipine drip and admit to ICU" },
+      { "id": "D", "text": "Consult neurosurgery" },
+      { "id": "E", "text": "MRI brain before treatment" }
+    ],
+    "correctOptionId": "A",
+    "explanation": {
+      "whyCorrect": "Acute ischemic stroke within tPA window (4.5h): BP must be <185/110 before tPA. Use IV labetalol or nicardipine to lower BP. After tPA, maintain BP <180/105 for 24h. NIHSS determines candidacy for thrombectomy. Do NOT delay tPA for MRI (CT is sufficient).",
+      "whyWrong": {
+        "B": "tPA is contraindicated with BP >185/110 (hemorrhage risk).",
+        "C": "Lowering BP is for tPA eligibility; ICU after treatment.",
+        "D": "Neurosurgery for hemorrhagic stroke, not ischemic.",
+        "E": "MRI delays tPA. CT without contrast is sufficient to exclude hemorrhage."
+      },
+      "clinicalPearl": "Acute stroke: CT → Check BP (<185/110 for tPA) → tPA within 4.5h → Mechanical thrombectomy if LVO within 24h."
+    },
+    "references": ["AHA/ASA Acute Stroke Guidelines 2019"],
+    "highYield": true,
+    "timeAllocated": 72
+  },
+  {
+    "id": "board_em_009",
+    "specialty": "emergency",
+    "topic": "Drowning",
+    "difficulty": "medium",
+    "vignette": "A 10-year-old boy is pulled from a pool after submersion for 3 minutes. He is unconscious, agonal respirations, HR 40. What is the FIRST priority?",
+    "options": [
+      { "id": "A", "text": "Start chest compressions" },
+      { "id": "B", "text": "Rescue breaths" },
+      { "id": "C", "text": "Abdominal thrusts to expel water" },
+      { "id": "D", "text": "Place in recovery position" },
+      { "id": "E", "text": "Cervical spine immobilization" }
+    ],
+    "correctOptionId": "B",
+    "explanation": {
+      "whyCorrect": "Drowning: Rescue breaths FIRST (most arrests are due to hypoxia, not primary cardiac). Open airway, deliver 5 rescue breaths, then start 30:2 CPR. Water in lungs does NOT need to be drained (absorbed quickly). Cervical spine precautions if diving or trauma mechanism.",
+      "whyWrong": {
+        "A": "Compressions after rescue breaths (hypoxia is the primary cause of arrest).",
+        "C": "Abdominal thrusts delay ventilation and increase aspiration risk.",
+        "D": "Recovery position for spontaneously breathing, not agonal.",
+        "E": "C-spine if diving/trauma, not for pool submersion without trauma."
+      },
+      "clinicalPearl": "Drowning: Rescue breaths FIRST (5 initial breaths) → CPR. Hypoxia is primary cause of arrest. Routine C-spine not needed."
+    },
+    "references": ["AHA Drowning Resuscitation Guidelines"],
+    "highYield": true,
+    "timeAllocated": 72
+  },
+  {
+    "id": "board_em_010",
+    "specialty": "emergency",
+    "topic": "Overdose",
+    "difficulty": "hard",
+    "vignette": "A 25-year-old female is brought in unresponsive with empty bottle of amitriptyline. ECG shows QRS 140ms, terminal R wave in aVR (>3mm). What is the BEST treatment?",
+    "options": [
+      { "id": "A", "text": "Sodium bicarbonate 1-2 mEq/kg IV bolus" },
+      { "id": "B", "text": "Activated charcoal" },
+      { "id": "C", "text": "Naloxone" },
+      { "id": "D", "text": "Flumazenil" },
+      { "id": "E", "text": "Gastric lavage" }
+    ],
+    "correctOptionId": "A",
+    "explanation": {
+      "whyCorrect": "TCA overdose: QRS >100ms + R wave in aVR >3mm = Sodium channel blockade (cardiotoxicity). Treatment: Sodium bicarbonate IV bolus (overcomes sodium channel blockade). Also treats hypotension. If QRS >160 or ventricular arrhythmias → Intralipid therapy. Charcoal if within 1-2h and protected airway.",
+      "whyWrong": {
+        "B": "Charcoal has risk of aspiration in unresponsive patient without airway protection.",
+        "C": "Naloxone is for opioid overdose, not TCA.",
+        "D": "Flumazenil is for benzodiazepines, contraindicated in TCA (lowers seizure threshold).",
+        "E": "Gastric lavage is rarely indicated and risks aspiration."
+      },
+      "clinicalPearl": "TCA cardiotoxicity: Wide QRS + R in aVR = Sodium bicarb! QRS >100ms = high risk for seizures/arrhythmias."
+    },
+    "references": ["Toxidromes and Overdose Management"],
+    "highYield": true,
+    "timeAllocated": 72
+  }
+]
+[
+  {
+    "id": "board_em_011",
+    "specialty": "emergency",
+    "topic": "Pulmonary Embolism",
+    "difficulty": "hard",
+    "vignette": "A 45-year-old female presents with sudden dyspnea, pleuritic chest pain, and hemoptysis 1 week after a long flight. She is tachycardic (HR 120), hypotensive (BP 85/60), and hypoxic (SpO2 85%). Bedside echo shows RV dilation and McConnell sign. What is the BEST next step?",
+    "options": [
+      { "id": "A", "text": "CT pulmonary angiography" },
+      { "id": "B", "text": "IV unfractionated heparin" },
+      { "id": "C", "text": "Systemic thrombolytics (tPA)" },
+      { "id": "D", "text": "Start apixaban" },
+      { "id": "E", "text": "Surgical embolectomy" }
+    ],
+    "correctOptionId": "C",
+    "explanation": {
+      "whyCorrect": "Massive PE (hypotension + RV dysfunction): Systemic thrombolytics (tPA) is FIRST-LINE and life-saving. Do NOT delay for CTPA (bedside echo is sufficient in unstable patient). Contraindications: Recent surgery, hemorrhagic stroke. If contraindicated: Surgical embolectomy or catheter-directed thrombolysis.",
+      "whyWrong": {
+        "A": "CTPA delays life-saving thrombolysis in unstable patient.",
+        "B": "Heparin alone is insufficient for massive PE.",
+        "D": "Oral anticoagulants are for stable PE, not massive.",
+        "E": "Surgical embolectomy if thrombolytics contraindicated or fail."
+      },
+      "clinicalPearl": "Massive PE (hypotension): THROMBOLYTICS immediately! Bedside echo can confirm. Do NOT wait for CTPA."
+    },
+    "references": ["CHEST PE Guidelines", "AHA PE Guidelines"],
+    "highYield": true,
+    "timeAllocated": 72
+  },
+  {
+    "id": "board_em_012",
+    "specialty": "emergency",
+    "topic": "Aortic Dissection",
+    "difficulty": "hard",
+    "vignette": "A 65-year-old male with hypertension presents with sudden, severe 'tearing' chest pain radiating to his back. BP in right arm is 160/95, left arm is 110/70. CXR shows widened mediastinum. What is the BEST initial treatment?",
+    "options": [
+      { "id": "A", "text": "Start IV esmolol (beta-blocker) to reduce HR and BP" },
+      { "id": "B", "text": "Start nitroprusside to lower BP" },
+      { "id": "C", "text": "Emergency surgery without further imaging" },
+      { "id": "D", "text": "Start heparin" },
+      { "id": "E", "text": "CT angiogram first, then treat" }
+    ],
+    "correctOptionId": "A",
+    "explanation": {
+      "whyCorrect": "Stanford Type A aortic dissection (ascending aorta): START IV BETA-BLOCKER FIRST (esmolol or labetalol) to reduce HR to 60 and BP to 100-120 systolic. Reduce shear stress on aortic wall. Then add vasodilator (nicardipine, nitroprusside) if needed. Then CT angiogram for definitive diagnosis. Emergency surgery for Type A.",
+      "whyWrong": {
+        "B": "Vasodilator alone can cause reflex tachycardia and worsen dissection. Beta-blocker first!",
+        "C": "CT angiogram needed for diagnosis and surgical planning before OR.",
+        "D": "Heparin is CONTRAINDICATED (worsens bleeding).",
+        "E": "BP control should start simultaneously while preparing for CT."
+      },
+      "clinicalPearl": "Aortic dissection: Beta-blocker FIRST (HR 60, SBP 100-120) → Then vasodilator → CT angiogram → Surgery for Type A."
+    },
+    "references": ["ACC/AHA Aortic Disease Guidelines"],
+    "highYield": true,
+    "timeAllocated": 72
+  },
+  {
+    "id": "board_em_013",
+    "specialty": "emergency",
+    "topic": "Burns",
+    "difficulty": "medium",
+    "vignette": "A 30-year-old male sustains burns to his entire left arm, anterior chest, and anterior left leg. Using the Rule of Nines, what percentage of BSA is burned?",
+    "options": [
+      { "id": "A", "text": "18%" },
+      { "id": "B", "text": "27%" },
+      { "id": "C", "text": "36%" },
+      { "id": "D", "text": "45%" },
+      { "id": "E", "text": "54%" }
+    ],
+    "correctOptionId": "B",
+    "explanation": {
+      "whyCorrect": "Rule of Nines: Entire arm = 9%, Anterior chest = 9%, Anterior leg = 9%. Total = 27%. Parkland formula: 4mL × kg × %BSA (give half in first 8h). Referral to burn center if: >10% partial-thickness, face/hands/feet/genitals, inhalation injury, electrical/chemical burns.",
+      "whyWrong": {
+        "A": "18% = Entire arm + Anterior chest only.",
+        "C": "36% = Entire arm + Entire chest.",
+        "D": "45% = Both arms + Anterior trunk.",
+        "E": "54% = Both arms + Entire trunk."
+      },
+      "clinicalPearl": "Rule of Nines: Arm 9%, Leg 18%, Trunk 18% (anterior 9%, posterior 9%), Head 9%. Parkland: 4mL × kg × %BSA."
+    },
+    "references": ["ATLS Burn Management"],
+    "highYield": true,
+    "timeAllocated": 72
+  }
+]
+[
+  {
+    "id": "board_em_014",
+    "specialty": "emergency",
+    "topic": "Tension Pneumothorax",
+    "difficulty": "hard",
+    "vignette": "A 25-year-old male on mechanical ventilation develops sudden hypotension, distended neck veins, absent breath sounds on the right, and tracheal deviation to the left. What is the IMMEDIATE next step?",
+    "options": [
+      { "id": "A", "text": "Chest X-ray" },
+      { "id": "B", "text": "Needle decompression (2nd ICS, midclavicular line)" },
+      { "id": "C", "text": "Chest tube insertion (5th ICS, anterior axillary line)" },
+      { "id": "D", "text": "CT chest" },
+      { "id": "E", "text": "Increase PEEP on ventilator" }
+    ],
+    "correctOptionId": "B",
+    "explanation": {
+      "whyCorrect": "Tension pneumothorax: CLINICAL diagnosis (do NOT wait for X-ray). Immediate needle decompression (14-16 gauge needle, 2nd ICS, midclavicular line). Then chest tube (5th ICS, anterior axillary line). Tracheal deviation is LATE finding. Hyperresonance + Absent breath sounds on affected side.",
+      "whyWrong": {
+        "A": "CXR delays life-saving intervention in tension PTX.",
+        "C": "Chest tube after needle decompression (needle buys time).",
+        "D": "CT delays treatment and patient will die.",
+        "E": "Increasing PEEP worsens tension pneumothorax."
+      },
+      "clinicalPearl": "Tension PTX: Needle decompression FIRST (clinical diagnosis). Then chest tube. Never wait for imaging."
+    },
+    "references": ["ATLS 10th Edition"],
+    "highYield": true,
+    "timeAllocated": 72
+  },
+  {
+    "id": "board_em_015",
+    "specialty": "emergency",
+    "topic": "Meningitis",
+    "difficulty": "hard",
+    "vignette": "A 20-year-old college student presents with fever, severe headache, neck stiffness, and photophobia for 6 hours. He is drowsy. Non-contrast CT head is normal. What is the NEXT step?",
+    "options": [
+      { "id": "A", "text": "Lumbar puncture immediately" },
+      { "id": "B", "text": "Blood cultures + IV antibiotics + Dexamethasone, then lumbar puncture" },
+      { "id": "C", "text": "MRI brain before LP" },
+      { "id": "D", "text": "Start antibiotics and skip LP" },
+      { "id": "E", "text": "Observe for 12 hours" }
+    ],
+    "correctOptionId": "B",
+    "explanation": {
+      "whyCorrect": "Suspected bacterial meningitis: Blood cultures → IV antibiotics (ceftriaxone + vancomycin) + Dexamethasone BEFORE LP if no contraindication. LP after CT and antibiotics (steroids reduce inflammation, antibiotics won't sterilize CSF for hours). Do NOT delay antibiotics for LP.",
+      "whyWrong": {
+        "A": "LP without prior antibiotics delays treatment and increases mortality.",
+        "C": "MRI is not needed before LP if CT normal and no focal deficits.",
+        "D": "LP provides crucial diagnostic information (cell count, culture, PCR).",
+        "E": "Delaying treatment increases mortality (minutes matter)."
+      },
+      "clinicalPearl": "Meningitis: Blood cultures → Antibiotics + Steroids → LP. Do NOT delay antibiotics for LP or CT."
+    },
+    "references": ["IDSA Meningitis Guidelines"],
+    "highYield": true,
+    "timeAllocated": 72
+  },
+  {
+    "id": "board_em_016",
+    "specialty": "emergency",
+    "topic": "Hypothermia",
+    "difficulty": "medium",
+    "vignette": "A homeless man is found outside in winter, unresponsive with a core temperature of 28°C. ECG shows Osborn (J) waves. What is the BEST rewarming method?",
+    "options": [
+      { "id": "A", "text": "Warm blankets and warm IV fluids" },
+      { "id": "B", "text": "Active external rewarming (Bair Hugger) + Warm IV fluids" },
+      { "id": "C", "text": "Active internal rewarming (warm IV fluids + warm humidified O2 + bladder lavage)" },
+      { "id": "D", "text": "Cardiopulmonary bypass" },
+      { "id": "E", "text": "Immersion in hot water" }
+    ],
+    "correctOptionId": "C",
+    "explanation": {
+      "whyCorrect": "Moderate hypothermia (28-32°C): Active internal rewarming. Warm IV fluids (42°C), warm humidified O2 (42-46°C), bladder/gastric/peritoneal lavage. Severe (<28°C): Cardiopulmonary bypass. Avoid external rewarming alone (afterdrop: cold blood returns to core → arrhythmias).",
+      "whyWrong": {
+        "A": "Passive rewarming insufficient for moderate hypothermia.",
+        "B": "External rewarming alone risks afterdrop and arrhythmias.",
+        "D": "Bypass for severe (<28°C) or cardiac arrest.",
+        "E": "Hot water causes burns and rapid vasodilation (shock)."
+      },
+      "clinicalPearl": "Hypothermia: Internal rewarming for moderate (28-32°C). Bypass for severe (<28°C). 'Not dead until warm and dead.'"
+    },
+    "references": ["AHA Hypothermia Guidelines"],
+    "highYield": true,
+    "timeAllocated": 72
+  },
+  {
+    "id": "board_em_017",
+    "specialty": "emergency",
+    "topic": "Pediatric Fever",
+    "difficulty": "medium",
+    "vignette": "A 3-week-old neonate presents with fever (38.5°C rectally). She is feeding poorly and is lethargic. What is the MOST appropriate management?",
+    "options": [
+      { "id": "A", "text": "Outpatient management with oral antibiotics" },
+      { "id": "B", "text": "Full septic workup (blood, urine, CSF cultures) + IV antibiotics + Hospital admission" },
+      { "id": "C", "text": "CBC and observation for 24 hours" },
+      { "id": "D", "text": "Urine culture only" },
+      { "id": "E", "text": "Acetaminophen and discharge" }
+    ],
+    "correctOptionId": "B",
+    "explanation": {
+      "whyCorrect": "Neonatal fever (<28 days): HIGH RISK for serious bacterial infection. FULL septic workup: Blood culture, urine culture (catheterized), LP (CSF culture) + IV antibiotics (ampicillin + gentamicin or cefotaxime) + Hospital admission. Do NOT discharge or observe.",
+      "whyWrong": {
+        "A": "Neonates cannot be managed as outpatients.",
+        "C": "Observation is inappropriate for febrile neonates.",
+        "D": "Urine alone is insufficient (bacteremia, meningitis risk).",
+        "E": "Symptomatic treatment alone risks missed serious bacterial infection."
+      },
+      "clinicalPearl": "Neonate <28 days with fever: Full septic workup + IV antibiotics + Admit. 'The younger, the sicker.'"
+    },
+    "references": ["AAP Febrile Neonate Guidelines"],
+    "highYield": true,
+    "timeAllocated": 72
+  },
+  {
+    "id": "board_em_018",
+    "specialty": "emergency",
+    "topic": "Wound Management",
+    "difficulty": "easy",
+    "vignette": "A 25-year-old male presents with a 4cm laceration on his forearm from a clean kitchen knife. The wound edges are clean, no visible contamination, and he presents within 4 hours of injury. What is the BEST management?",
+    "options": [
+      { "id": "A", "text": "Primary closure with sutures after irrigation" },
+      { "id": "B", "text": "Leave open to heal by secondary intention" },
+      { "id": "C", "text": "Delayed primary closure in 3-5 days" },
+      { "id": "D", "text": "Oral antibiotics and closure" },
+      { "id": "E", "text": "Topical antibiotic only" }
+    ],
+    "correctOptionId": "A",
+    "explanation": {
+      "whyCorrect": "Clean wound, <6-8 hours (face/scalp up to 24h): Primary closure after copious irrigation. No antibiotics needed for clean, non-infected wounds. Tetanus prophylaxis if >5 years since last booster (or >10 years for clean wounds).",
+      "whyWrong": {
+        "B": "Secondary intention for contaminated or infected wounds.",
+        "C": "Delayed closure for contaminated wounds or >12h on extremities.",
+        "D": "Prophylactic antibiotics for bite wounds, heavily contaminated, or immunocompromised.",
+        "E": "Topical antibiotics may cause contact dermatitis and are not necessary."
+      },
+      "clinicalPearl": "Wound closure: Clean + <6-8h = Primary closure. Contaminated or >12h = Delayed closure. Check tetanus status."
+    },
+    "references": ["ACEP Wound Management Guidelines"],
+    "highYield": true,
+    "timeAllocated": 72
+  }
+]
+[
+  {
+    "id": "board_em_019",
+    "specialty": "emergency",
+    "topic": "Subarachnoid Hemorrhage",
+    "difficulty": "hard",
+    "vignette": "A 45-year-old female presents with sudden onset 'worst headache of my life' (thunderclap). She has neck stiffness but no focal neurological deficits. CT head is NORMAL. What is the NEXT step?",
+    "options": [
+      { "id": "A", "text": "Discharge with analgesics" },
+      { "id": "B", "text": "Lumbar puncture to check for xanthochromia" },
+      { "id": "C", "text": "MRI brain" },
+      { "id": "D", "text": "CT angiogram" },
+      { "id": "E", "text": "Observation for 6 hours" }
+    ],
+    "correctOptionId": "B",
+    "explanation": {
+      "whyCorrect": "Thunderclap headache + Normal CT: LP is MANDATORY to rule out SAH. Check for xanthochromia (bilirubin from RBC breakdown in CSF, takes 6-12h to develop). CT sensitivity is 98% within 6h but decreases after. If LP negative → Consider CT angiogram (aneurysm, RCVS).",
+      "whyWrong": {
+        "A": "Discharging thunderclap headache without LP risks missing SAH (mortality 50%).",
+        "C": "MRI may miss small SAH and delays diagnosis.",
+        "D": "CTA is second step if LP positive or high suspicion.",
+        "E": "Observation alone is inadequate for thunderclap headache."
+      },
+      "clinicalPearl": "Thunderclap headache + Normal CT = LP mandatory (xanthochromia). If LP negative, consider CTA for aneurysm/RCVS."
+    },
+    "references": ["AHA SAH Guidelines"],
+    "highYield": true,
+    "timeAllocated": 72
+  },
+  {
+    "id": "board_em_020",
+    "specialty": "emergency",
+    "topic": "Hyperkalemia",
+    "difficulty": "medium",
+    "vignette": "A 65-year-old male with CKD stage 5 presents with weakness. ECG shows peaked T waves and loss of P waves. K+ is 7.2 mEq/L. What is the FIRST medication to administer?",
+    "options": [
+      { "id": "A", "text": "Sodium bicarbonate" },
+      { "id": "B", "text": "Calcium gluconate IV" },
+      { "id": "C", "text": "Insulin + D50" },
+      { "id": "D", "text": "Kayexalate" },
+      { "id": "E", "text": "Albuterol nebulized" }
+    ],
+    "correctOptionId": "B",
+    "explanation": {
+      "whyCorrect": "Hyperkalemia with ECG changes: IV Calcium gluconate FIRST (cardioprotective, stabilizes myocardium). Then shift K+ intracellularly (Insulin + D50, Bicarb, Albuterol). Then eliminate (Furosemide, Dialysis, Kayexalate). Calcium does NOT lower K+, only protects the heart.",
+      "whyWrong": {
+        "A": "Bicarb is second step (shifts K+ intracellularly).",
+        "C": "Insulin + D50 lowers K+ but does NOT protect heart.",
+        "D": "Kayexalate is slow (takes hours), not for acute management.",
+        "E": "Albuterol is adjunctive, not first-line."
+      },
+      "clinicalPearl": "Hyperkalemia with ECG changes: Calcium FIRST (protects heart) → Then shift K+ (Insulin, Bicarb) → Then eliminate (Dialysis)."
+    },
+    "references": ["AHA Hyperkalemia Management"],
+    "highYield": true,
+    "timeAllocated": 72
+  },
+  {
+    "id": "board_em_021",
+    "specialty": "emergency",
+    "topic": "Carbon Monoxide Poisoning",
+    "difficulty": "medium",
+    "vignette": "A family of 4 presents with headache, nausea, and confusion in winter. They have a faulty furnace. What is the BEST diagnostic test and treatment?",
+    "options": [
+      { "id": "A", "text": "ABG with co-oximetry; 100% O2 via non-rebreather" },
+      { "id": "B", "text": "Pulse oximetry; oxygen via nasal cannula" },
+      { "id": "C", "text": "CBC; observation" },
+      { "id": "D", "text": "CT head; admission" },
+      { "id": "E", "text": "Lumbar puncture; antibiotics" }
+    ],
+    "correctOptionId": "A",
+    "explanation": {
+      "whyCorrect": "CO poisoning: CO-oximetry (not pulse ox - falsely normal) measures carboxyhemoglobin (COHb). Treatment: 100% O2 via non-rebreather mask (reduces COHb half-life from 4-6h to 60-90min). Hyperbaric O2 if: COHb >25%, LOC, neurological deficits, pregnancy with COHb >15%.",
+      "whyWrong": {
+        "B": "Pulse oximetry cannot distinguish COHb from O2Hb (reads normal).",
+        "C": "CBC does not diagnose CO poisoning.",
+        "D": "CT head is not first-line for CO poisoning.",
+        "E": "LP is not indicated for CO poisoning."
+      },
+      "clinicalPearl": "CO poisoning: Co-oximetry (not pulse ox). 100% O2 by NRB. Hyperbaric if severe (LOC, COHb >25%, pregnancy)."
+    },
+    "references": ["CDC CO Poisoning Guidelines"],
+    "highYield": true,
+    "timeAllocated": 72
+  }
+]
+[
+  {
+    "id": "board_em_022",
+    "specialty": "emergency",
+    "topic": "Status Epilepticus",
+    "difficulty": "hard",
+    "vignette": "A 30-year-old male has been seizing continuously for 8 minutes. He received lorazepam 4mg IV by EMS without response. What is the NEXT medication?",
+    "options": [
+      { "id": "A", "text": "Repeat lorazepam 4mg IV" },
+      { "id": "B", "text": "Fosphenytoin 20mg/kg IV" },
+      { "id": "C", "text": "Propofol infusion" },
+      { "id": "D", "text": "Levetiracetam 500mg PO" },
+      { "id": "E", "text": "Dexamethasone 10mg IV" }
+    ],
+    "correctOptionId": "B",
+    "explanation": {
+      "whyCorrect": "Status epilepticus: 1st line = Benzodiazepine (lorazepam). If still seizing at 5-10 min → 2nd line: Fosphenytoin, Valproate, or Levetiracetam IV. If still seizing → 3rd line: Propofol or Midazolam infusion (intubate). Continuous EEG monitoring.",
+      "whyWrong": {
+        "A": "Repeating BZD after failure is less effective and increases respiratory depression.",
+        "C": "Propofol is 3rd line (refractory status).",
+        "D": "Levetiracetam IV (not PO) is alternative 2nd line.",
+        "E": "Steroids have no role in status epilepticus."
+      },
+      "clinicalPearl": "Status epilepticus: BZD → Fosphenytoin/Valproate/Levetiracetam (IV) → Propofol/Midazolam infusion + Intubation."
+    },
+    "references": ["Neurocritical Care Society Status Epilepticus Guidelines"],
+    "highYield": true,
+    "timeAllocated": 72
+  },
+  {
+    "id": "board_em_023",
+    "specialty": "emergency",
+    "topic": "Electrical Injuries",
+    "difficulty": "hard",
+    "vignette": "A 25-year-old electrician sustains an electrical injury from a high-voltage line. Entry wound is on his right hand, exit wound on his left foot. He has dark urine. What is the MOST serious complication?",
+    "options": [
+      { "id": "A", "text": "Cardiac arrhythmia" },
+      { "id": "B", "text": "Rhabdomyolysis and compartment syndrome" },
+      { "id": "C", "text": "Cataracts" },
+      { "id": "D", "text": "Peripheral neuropathy" },
+      { "id": "E", "text": "Skin burns only" }
+    ],
+    "correctOptionId": "B",
+    "explanation": {
+      "whyCorrect": "High-voltage electrical injury: Current passes through body → Massive rhabdomyolysis (dark urine = myoglobinuria) + Compartment syndrome. Aggressive IV fluids (target UO 100-200mL/h). Monitor for hyperkalemia, ARF. Fasciotomy if compartment syndrome. Cardiac monitoring for 24-48h (arrhythmias).",
+      "whyWrong": {
+        "A": "Arrhythmias are common but often transient.",
+        "C": "Cataracts are a late complication (months-years).",
+        "D": "Neuropathy is common but not acutely life-threatening.",
+        "E": "External burns may appear small but internal damage is extensive."
+      },
+      "clinicalPearl": "Electrical injury: Rhabdomyolysis + Compartment syndrome = Major concerns. Aggressive IV fluids. Fasciotomy if needed."
+    },
+    "references": ["ACEP Electrical Injury Guidelines"],
+    "highYield": true,
+    "timeAllocated": 72
+  },
+  {
+    "id": "board_em_024",
+    "specialty": "emergency",
+    "topic": "Pediatric Dehydration",
+    "difficulty": "medium",
+    "vignette": "A 1-year-old infant with vomiting and diarrhea for 3 days presents with sunken eyes, dry mucous membranes, decreased skin turgor, and capillary refill of 3 seconds. What is the degree of dehydration?",
+    "options": [
+      { "id": "A", "text": "Mild (3-5%)" },
+      { "id": "B", "text": "Moderate (6-9%)" },
+      { "id": "C", "text": "Severe (>10%)" },
+      { "id": "D", "text": "No dehydration" },
+      { "id": "E", "text": "Hypernatremic dehydration" }
+    ],
+    "correctOptionId": "B",
+    "explanation": {
+      "whyCorrect": "Moderate dehydration (6-9%): Sunken eyes, dry mucous membranes, decreased skin turgor, prolonged capillary refill (2-3 sec), irritable, thirsty. Severe (>10%): Very sunken eyes, absent tears, skin tenting, prolonged cap refill (>3 sec), lethargic, hypotensive. Mild (3-5%): Slightly dry mucosa, thirsty, alert.",
+      "whyWrong": {
+        "A": "Mild: Alert, slightly dry mouth, normal cap refill.",
+        "C": "Severe: Lethargic, very sunken eyes, skin tenting, shock.",
+        "D": "Definitely dehydrated based on exam.",
+        "E": "Hypernatremic: Doughy skin, neurological symptoms."
+      },
+      "clinicalPearl": "Moderate dehydration: Sunken eyes + Dry mucosa + Delayed cap refill. Oral rehydration if tolerating, IV fluids if not."
+    },
+    "references": ["WHO Dehydration Assessment"],
+    "highYield": true,
+    "timeAllocated": 72
+  }
+]
+[
+  {
+    "id": "board_em_025",
+    "specialty": "emergency",
+    "topic": "Heat Stroke",
+    "difficulty": "hard",
+    "vignette": "A marathon runner collapses at mile 20 on a hot day. He is confused, has hot dry skin, and a core temperature of 41.5°C. What is the BEST cooling method?",
+    "options": [
+      { "id": "A", "text": "Oral fluids and rest" },
+      { "id": "B", "text": "Ice water immersion" },
+      { "id": "C", "text": "Fanning and misting" },
+      { "id": "D", "text": "IV acetaminophen" },
+      { "id": "E", "text": "Ice packs to axillae and groin only" }
+    ],
+    "correctOptionId": "B",
+    "explanation": {
+      "whyCorrect": "Heat stroke: Core temp >40°C + CNS dysfunction + Hot skin. MEDICAL EMERGENCY! Ice water immersion = FASTEST cooling rate (0.15-0.35°C/min). Goal: Cool to 39°C within 30 min. Ice packs to axillae/groin if immersion unavailable. Acetaminophen has NO role (not fever-mediated).",
+      "whyWrong": {
+        "A": "Oral fluids insufficient and aspiration risk with AMS.",
+        "C": "Evaporative cooling is slower than immersion.",
+        "D": "Antipyretics are ineffective (heat stroke is not cytokine-mediated).",
+        "E": "Ice packs alone are slower than full immersion."
+      },
+      "clinicalPearl": "Heat stroke: Core temp >40°C + AMS. Ice water immersion = Fastest cooling. Do NOT give antipyretics."
+    },
+    "references": ["Wilderness Medical Society Heat Illness Guidelines"],
+    "highYield": true,
+    "timeAllocated": 72
+  },
+  {
+    "id": "board_em_026",
+    "specialty": "emergency",
+    "topic": "Acute Abdomen",
+    "difficulty": "hard",
+    "vignette": "A 70-year-old female presents with acute abdominal pain out of proportion to exam. She has atrial fibrillation and is on no anticoagulation. What is the MOST likely diagnosis?",
+    "options": [
+      { "id": "A", "text": "Pancreatitis" },
+      { "id": "B", "text": "Mesenteric ischemia" },
+      { "id": "C", "text": "Diverticulitis" },
+      { "id": "D", "text": "Small bowel obstruction" },
+      { "id": "E", "text": "Appendicitis" }
+    ],
+    "correctOptionId": "B",
+    "explanation": {
+      "whyCorrect": "Mesenteric ischemia: Pain OUT OF PROPORTION to exam (severe pain, minimal tenderness) + AFib (embolic source) + Elderly + No anticoagulation. CT angiography is diagnostic. Treatment: Emergent surgical consult, heparin, revascularization. High mortality if missed.",
+      "whyWrong": {
+        "A": "Pancreatitis: Epigastric radiating to back, lipase elevated, alcohol/gallstones.",
+        "C": "Diverticulitis: LLQ pain, fever, leukocytosis.",
+        "D": "SBO: Cramping, distension, prior surgeries.",
+        "E": "Appendicitis: RLQ pain, McBurney point, younger patients."
+      },
+      "clinicalPearl": "Mesenteric ischemia: Pain out of proportion + AFib + Elderly. CT angiography STAT. Call surgery. High mortality."
+    },
+    "references": ["ACEP Acute Abdominal Pain Guidelines"],
+    "highYield": true,
+    "timeAllocated": 72
+  },
+  {
+    "id": "board_em_027",
+    "specialty": "emergency",
+    "topic": "Testicular Torsion",
+    "difficulty": "medium",
+    "vignette": "A 14-year-old boy presents with sudden onset severe left testicular pain, nausea, and vomiting that woke him from sleep. Exam: Left testis is high-riding with a horizontal lie and absent cremasteric reflex. What is the management?",
+    "options": [
+      { "id": "A", "text": "Outpatient ultrasound in the morning" },
+      { "id": "B", "text": "EMERGENT surgical exploration (do NOT delay for ultrasound)" },
+      { "id": "C", "text": "Manual detorsion and discharge" },
+      { "id": "D", "text": "IV antibiotics" },
+      { "id": "E", "text": "Scrotal support and NSAIDs" }
+    ],
+    "correctOptionId": "B",
+    "explanation": {
+      "whyCorrect": "Testicular torsion: SURGICAL EMERGENCY! Sudden pain + High-riding testis + Horizontal lie + Absent cremasteric reflex. Do NOT delay surgery for ultrasound (viability window = 6-8 hours from onset). Manual detorsion attempt while preparing for OR (open book: detorse laterally → medially).",
+      "whyWrong": {
+        "A": "Ultrasound delays definitive treatment and risks testicular loss.",
+        "C": "Manual detorsion is temporizing; still needs surgical fixation (orchidopexy).",
+        "D": "Antibiotics are for epididymitis, not torsion.",
+        "E": "NSAIDs do not address torsion."
+      },
+      "clinicalPearl": "Testicular torsion: Sudden pain + Absent cremasteric + High-riding testis. EMERGENT surgery (6-8h window)."
+    },
+    "references": ["AUA Testicular Torsion Guidelines"],
+    "highYield": true,
+    "timeAllocated": 72
+  }
+]

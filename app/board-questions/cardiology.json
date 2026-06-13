@@ -1,0 +1,768 @@
+[
+  {
+    "id": "board_cardio_001",
+    "specialty": "cardiology",
+    "topic": "Acute Coronary Syndrome",
+    "difficulty": "medium",
+    "vignette": "A 58-year-old male with history of hypertension and dyslipidemia presents to the emergency department with 45 minutes of crushing substernal chest pain radiating to the left arm. He is diaphoretic. ECG shows ST-segment elevation of 3mm in leads V1-V4. Blood pressure is 145/92 mmHg, heart rate 98 bpm. Which of the following is the MOST appropriate next step?",
+    "options": [
+      { "id": "A", "text": "Administer fibrinolytic therapy within 30 minutes" },
+      { "id": "B", "text": "Activate cardiac catheterization lab for primary PCI" },
+      { "id": "C", "text": "Start IV nitroglycerin and observe for 30 minutes" },
+      { "id": "D", "text": "Obtain CT coronary angiography" },
+      { "id": "E", "text": "Start therapeutic heparin and admit to CCU" }
+    ],
+    "correctOptionId": "B",
+    "explanation": {
+      "whyCorrect": "Primary PCI is the gold standard for STEMI when door-to-balloon time can be achieved within 90 minutes. The patient presents within 12 hours of symptom onset with clear ECG criteria for anterior STEMI (V1-V4). Immediate catheterization lab activation saves myocardium.",
+      "whyWrong": {
+        "A": "Fibrinolytics are reserved for when PCI cannot be performed within 120 minutes of first medical contact.",
+        "C": "Observation is inappropriate for STEMI. Time is myocardium.",
+        "D": "CT angiography does not treat the underlying coronary occlusion and delays reperfusion.",
+        "E": "Anticoagulation alone is insufficient. The artery needs to be opened mechanically."
+      },
+      "clinicalPearl": "Door-to-balloon time should be <90 minutes for STEMI. Every 30-minute delay increases 1-year mortality by 7.5%."
+    },
+    "references": ["ACC/AHA STEMI Guidelines 2023", "ESC STEMI Guidelines 2023"],
+    "highYield": true,
+    "timeAllocated": 72
+  },
+  {
+    "id": "board_cardio_002",
+    "specialty": "cardiology",
+    "topic": "Heart Failure",
+    "difficulty": "medium",
+    "vignette": "A 72-year-old female with history of ischemic cardiomyopathy (EF 30%) presents with progressive dyspnea on exertion, orthopnea, and bilateral lower extremity edema. She is on lisinopril 20mg, carvedilol 25mg BID, and furosemide 40mg daily. BP is 110/68, HR 72, RR 22, SpO2 94%. JVP is elevated, and crackles are heard at both lung bases. Which medication has the STRONGEST mortality benefit in this patient and should be optimized?",
+    "options": [
+      { "id": "A", "text": "Furosemide" },
+      { "id": "B", "text": "Digoxin" },
+      { "id": "C", "text": "Carvedilol" },
+      { "id": "D", "text": "Spironolactone" },
+      { "id": "E", "text": "Lisinopril" }
+    ],
+    "correctOptionId": "C",
+    "explanation": {
+      "whyCorrect": "Beta-blockers (carvedilol, metoprolol succinate, bisoprolol) have the STRONGEST mortality benefit in HFrEF, reducing mortality by 34-35%. The patient is already on maximum lisinopril. Adding or optimizing beta-blocker provides the greatest survival advantage.",
+      "whyWrong": {
+        "A": "Furosemide improves symptoms but has NO mortality benefit.",
+        "B": "Digoxin reduces hospitalizations but has NO mortality benefit.",
+        "D": "Spironolactone reduces mortality by 30% (RALES trial) but beta-blockers have stronger evidence.",
+        "E": "ACE inhibitors reduce mortality by 16-27% but beta-blockers have greater impact."
+      },
+      "clinicalPearl": "Mortality benefit in HFrEF: Beta-blockers > ACEi/ARB > MRA > SGLT2i. Always maximize beta-blockers before adding other agents."
+    },
+    "references": ["MERIT-HF Trial", "COPERNICUS Trial", "CIBIS-II Trial"],
+    "highYield": true,
+    "timeAllocated": 72
+  },
+  {
+    "id": "board_cardio_003",
+    "specialty": "cardiology",
+    "topic": "Atrial Fibrillation",
+    "difficulty": "hard",
+    "vignette": "A 75-year-old male with hypertension, diabetes, and prior stroke (1 year ago) presents with palpitations. ECG shows atrial fibrillation with ventricular rate of 130 bpm. He is hemodynamically stable. CHA₂DS₂-VASc score is 6. He has been on warfarin but his INR today is 1.4. What is the MOST appropriate management?",
+    "options": [
+      { "id": "A", "text": "Electrical cardioversion immediately" },
+      { "id": "B", "text": "Start dabigatran and perform TEE-guided cardioversion" },
+      { "id": "C", "text": "Start amiodarone for rhythm control and continue warfarin" },
+      { "id": "D", "text": "Start metoprolol for rate control and bridge with enoxaparin" },
+      { "id": "E", "text": "Start diltiazem drip and schedule elective cardioversion in 4 weeks" }
+    ],
+    "correctOptionId": "B",
+    "explanation": {
+      "whyCorrect": "Patient with AF >48 hours or unknown duration needs anticoagulation for 3 weeks before cardioversion OR TEE to rule out LA thrombus. Since INR is subtherapeutic (1.4), start a DOAC (dabigatran) and perform TEE-guided cardioversion. CHA₂DS₂-VASc 6 = high stroke risk.",
+      "whyWrong": {
+        "A": "Cardioversion without anticoagulation risks embolic stroke from LA thrombus.",
+        "C": "Amiodarone alone without proper anticoagulation does not prevent thromboembolism.",
+        "D": "Rate control is appropriate but bridging with enoxaparin is inferior to starting a DOAC.",
+        "E": "Waiting 4 weeks without proper anticoagulation in a high-risk patient is dangerous."
+      },
+      "clinicalPearl": "AF >48 hours: Need 3 weeks anticoagulation OR TEE before cardioversion. AF <48 hours: Can cardiovert immediately."
+    },
+    "references": ["AHA/ACC/HRS AF Guidelines 2023", "RE-LY Trial"],
+    "highYield": true,
+    "timeAllocated": 72
+  },
+  {
+    "id": "board_cardio_004",
+    "specialty": "cardiology",
+    "topic": "Valvular Disease",
+    "difficulty": "hard",
+    "vignette": "A 68-year-old male with known aortic stenosis presents with syncope during exertion. Echocardiogram shows aortic valve area 0.7 cm², mean gradient 55 mmHg, and LVEF 55%. He has hypertension and CKD stage 3. Which of the following is the BEST management?",
+    "options": [
+      { "id": "A", "text": "Start metoprolol and repeat echo in 6 months" },
+      { "id": "B", "text": "Surgical aortic valve replacement (SAVR)" },
+      { "id": "C", "text": "Transcatheter aortic valve replacement (TAVR)" },
+      { "id": "D", "text": "Balloon aortic valvuloplasty" },
+      { "id": "E", "text": "Start furosemide and hydralazine" }
+    ],
+    "correctOptionId": "C",
+    "explanation": {
+      "whyCorrect": "Patient has severe symptomatic AS (AVA <1.0 cm², syncope = Class D1). TAVR is preferred over SAVR in patients >65 years or with intermediate-high surgical risk. CKD stage 3 increases surgical risk, making TAVR the preferred choice.",
+      "whyWrong": {
+        "A": "Medical management for symptomatic severe AS is inappropriate. Mortality is 50% at 2 years without intervention.",
+        "B": "SAVR is an option but TAVR is preferred given age >65 and comorbidities.",
+        "D": "Balloon valvuloplasty is palliative (restenosis in 6-12 months) and reserved for bridge to definitive therapy.",
+        "E": "Vasodilators can be dangerous in severe AS as they reduce afterload and can cause hypotension."
+      },
+      "clinicalPearl": "Symptomatic severe AS = AVR (TAVR or SAVR). Syncope in AS indicates critical obstruction and is a Class I indication for intervention."
+    },
+    "references": ["ACC/AHA Valve Guidelines 2020", "PARTNER Trials"],
+    "highYield": true,
+    "timeAllocated": 72
+  },
+  {
+    "id": "board_cardio_005",
+    "specialty": "cardiology",
+    "topic": "Pericardial Disease",
+    "difficulty": "medium",
+    "vignette": "A 25-year-old female presents with sharp chest pain that improves when sitting forward and worsens when lying down. She had a viral upper respiratory infection 1 week ago. ECG shows diffuse ST elevation in all leads except aVR and V1, with PR depression. Troponin is mildly elevated. What is the BEST treatment?",
+    "options": [
+      { "id": "A", "text": "Emergent cardiac catheterization" },
+      { "id": "B", "text": "NSAIDs + Colchicine for 3-6 months" },
+      { "id": "C", "text": "Prednisone 60mg daily" },
+      { "id": "D", "text": "Antibiotics for 14 days" },
+      { "id": "E", "text": "Pericardiocentesis" }
+    ],
+    "correctOptionId": "B",
+    "explanation": {
+      "whyCorrect": "This is acute pericarditis (positional chest pain, diffuse ST elevation with PR depression, viral prodrome). First-line treatment: NSAIDs (ibuprofen 600mg TID) + Colchicine 0.5mg BID for 3-6 months. Colchicine reduces recurrence by 50%.",
+      "whyWrong": {
+        "A": "Cardiac catheterization is for STEMI, not pericarditis. ECG shows diffuse (not territorial) ST elevation.",
+        "C": "Steroids increase recurrence risk and should be avoided as first-line therapy.",
+        "D": "Viral pericarditis does not require antibiotics.",
+        "E": "Pericardiocentesis is only indicated if cardiac tamponade is present."
+      },
+      "clinicalPearl": "Pericarditis: Positional chest pain + Diffuse ST elevation + PR depression. Treatment: NSAIDs + Colchicine. NEVER steroids first-line."
+    },
+    "references": ["ESC Pericarditis Guidelines", "CORP Trial", "ICAP Trial"],
+    "highYield": true,
+    "timeAllocated": 72
+  },
+  {
+    "id": "board_cardio_006",
+    "specialty": "cardiology",
+    "topic": "Hypertension",
+    "difficulty": "easy",
+    "vignette": "A 48-year-old African American male is diagnosed with hypertension. BP readings over 3 visits average 155/95 mmHg. He has no other medical conditions and is not on any medications. Which of the following is the MOST appropriate initial monotherapy?",
+    "options": [
+      { "id": "A", "text": "Lisinopril 10mg daily" },
+      { "id": "B", "text": "Amlodipine 5mg daily" },
+      { "id": "C", "text": "Hydrochlorothiazide 12.5mg daily" },
+      { "id": "D", "text": "Metoprolol 50mg daily" },
+      { "id": "E", "text": "Losartan 50mg daily" }
+    ],
+    "correctOptionId": "B",
+    "explanation": {
+      "whyCorrect": "In African American patients, thiazide diuretics and calcium channel blockers (CCBs) are first-line as monotherapy. ACE inhibitors and ARBs are less effective as monotherapy in this population due to lower renin levels. Amlodipine (CCB) or HCTZ (thiazide) are preferred.",
+      "whyWrong": {
+        "A": "ACE inhibitors are less effective as monotherapy in African Americans due to low-renin hypertension.",
+        "C": "HCTZ is also first-line but amlodipine is often better tolerated with fewer metabolic side effects.",
+        "D": "Beta-blockers are NOT first-line for uncomplicated hypertension (JNC 8, ACC/AHA 2017).",
+        "E": "ARBs have the same limitation as ACE inhibitors in African Americans."
+      },
+      "clinicalPearl": "African American HTN: First-line = CCB or Thiazide. Avoid ACEi/ARB monotherapy (less effective due to low renin)."
+    },
+    "references": ["ACC/AHA HTN Guidelines 2017", "ALLHAT Trial"],
+    "highYield": true,
+    "timeAllocated": 72
+  },
+  {
+    "id": "board_cardio_007",
+    "specialty": "cardiology",
+    "topic": "Heart Failure",
+    "difficulty": "hard",
+    "vignette": "A 68-year-old male with ischemic cardiomyopathy (EF 25%) presents with worsening dyspnea and 5kg weight gain over 2 weeks. He is on lisinopril 20mg, carvedilol 25mg BID, spironolactone 25mg, and furosemide 40mg BID. BP is 95/60, HR 68, JVP elevated to angle of jaw, bilateral crackles to mid-lung fields, and 3+ pitting edema. Cr increased from 1.2 to 1.8. What is the BEST next step?",
+    "options": [
+      { "id": "A", "text": "Add digoxin 0.125mg daily" },
+      { "id": "B", "text": "Add hydralazine + isosorbide dinitrate" },
+      { "id": "C", "text": "Stop spironolactone and reduce furosemide" },
+      { "id": "D", "text": "Start IV dobutamine and admit to CICU" },
+      { "id": "E", "text": "Start IV furosemide and check electrolytes" }
+    ],
+    "correctOptionId": "E",
+    "explanation": {
+      "whyCorrect": "Acute decompensated HF with volume overload. First step: IV loop diuretics (furosemide) to relieve congestion. Monitor renal function and electrolytes closely. GDMT (lisinopril, carvedilol, spironolactone) should be continued if possible.",
+      "whyWrong": {
+        "A": "Digoxin reduces hospitalizations but does NOT treat acute volume overload.",
+        "B": "Hydralazine/ISDN is for patients who cannot tolerate ACEi/ARB (e.g., severe CKD). Not first-line for acute decompensation.",
+        "C": "Stopping GDMT during acute decompensation is not recommended unless contraindicated.",
+        "D": "Inotropes (dobutamine) are for cardiogenic shock with hypoperfusion, not for volume overload with normal BP."
+      },
+      "clinicalPearl": "Acute decompensated HF: IV diuretics first. Continue GDMT unless contraindicated. Inotropes ONLY for low output states."
+    },
+    "references": ["AHA/ACC HF Guidelines 2022", "DOSE Trial"],
+    "highYield": true,
+    "timeAllocated": 72
+  },
+  {
+    "id": "board_cardio_008",
+    "specialty": "cardiology",
+    "topic": "Acute Coronary Syndrome",
+    "difficulty": "medium",
+    "vignette": "A 55-year-old female presents with intermittent chest pain for 24 hours. ECG shows T-wave inversion in V1-V4. Initial troponin I is 0.08 ng/mL (normal <0.04). Repeat troponin I 3 hours later is 0.45 ng/mL. She is pain-free now. BP 135/80, HR 72. What is the BEST management?",
+    "options": [
+      { "id": "A", "text": "Discharge with outpatient stress test" },
+      { "id": "B", "text": "Admit, start aspirin + ticagrelor + heparin, cardiology consult" },
+      { "id": "C", "text": "Emergency cardiac catheterization within 90 minutes" },
+      { "id": "D", "text": "Start aspirin + clopidogrel and discharge" },
+      { "id": "E", "text": "Observe for 6 hours and repeat troponin" }
+    ],
+    "correctOptionId": "B",
+    "explanation": {
+      "whyCorrect": "NSTEMI (T-wave inversion + rising troponin >99th percentile). Management: Admit, dual antiplatelet therapy (aspirin + ticagrelor/clopidogrel), anticoagulation (heparin/enoxaparin), and cardiology consult for risk stratification. Early invasive strategy (within 24h) if high risk (GRACE score >140).",
+      "whyWrong": {
+        "A": "Rising troponin = NSTEMI, not stable angina. Cannot discharge.",
+        "C": "Immediate cath (<2h) is for STEMI or refractory ischemia, not stable NSTEMI.",
+        "D": "NSTEMI requires admission, not discharge.",
+        "E": "Troponin already elevated and rising. No need for further observation."
+      },
+      "clinicalPearl": "NSTEMI: DAPT + Anticoagulation + Early invasive strategy (within 24h). STEMI: Immediate PCI (<90 min)."
+    },
+    "references": ["ACC/AHA NSTEMI Guidelines 2020", "GRACE Risk Score"],
+    "highYield": true,
+    "timeAllocated": 72
+  },
+  {
+    "id": "board_cardio_009",
+    "specialty": "cardiology",
+    "topic": "Arrhythmia",
+    "difficulty": "hard",
+    "vignette": "A 62-year-old male post-MI day 3 develops sustained ventricular tachycardia (VT) with a pulse. BP is 85/50, HR 180, he is confused and diaphoretic. What is the IMMEDIATE next step?",
+    "options": [
+      { "id": "A", "text": "IV amiodarone 150mg over 10 minutes" },
+      { "id": "B", "text": "IV lidocaine 100mg bolus" },
+      { "id": "C", "text": "Synchronized cardioversion" },
+      { "id": "D", "text": "Defibrillation (unsynchronized)" },
+      { "id": "E", "text": "Transcutaneous pacing" }
+    ],
+    "correctOptionId": "C",
+    "explanation": {
+      "whyCorrect": "Unstable VT (hypotension, confusion, chest pain) = SYNCHRONIZED cardioversion. Start at 100J and escalate. If pulseless VT → defibrillation (unsynchronized). Stable VT → antiarrhythmics (amiodarone, lidocaine).",
+      "whyWrong": {
+        "A": "Amiodarone is for STABLE VT. Unstable VT needs immediate cardioversion.",
+        "B": "Lidocaine is second-line for stable VT.",
+        "D": "Defibrillation is for pulseless VT/VF. Patient has a pulse.",
+        "E": "Pacing is for bradyarrhythmias, not tachyarrhythmias."
+      },
+      "clinicalPearl": "Unstable tachyarrhythmia = SYNCHRONIZED cardioversion. Pulseless VT/VF = DEFIBRILLATION. Stable = medications."
+    },
+    "references": ["ACLS Guidelines 2020", "AHA Tachycardia Algorithm"],
+    "highYield": true,
+    "timeAllocated": 72
+  },
+  {
+    "id": "board_cardio_010",
+    "specialty": "cardiology",
+    "topic": "Valvular Disease",
+    "difficulty": "medium",
+    "vignette": "A 72-year-old female with severe mitral regurgitation (MR) presents with progressive dyspnea. Echo shows EF 58%, LVESD 42mm, flail posterior leaflet. She is asymptomatic at rest but dyspneic with moderate activity. What is the BEST management?",
+    "options": [
+      { "id": "A", "text": "Medical management with furosemide and annual echo" },
+      { "id": "B", "text": "Mitral valve repair surgery" },
+      { "id": "C", "text": "Mitral valve replacement with mechanical valve" },
+      { "id": "D", "text": "Transcatheter mitral valve repair (MitraClip)" },
+      { "id": "E", "text": "Start lisinopril and carvedilol" }
+    ],
+    "correctOptionId": "B",
+    "explanation": {
+      "whyCorrect": "Severe primary MR (flail leaflet) with symptoms (Class I indication) + LVESD approaching 40mm = mitral valve SURGERY. Repair is preferred over replacement (preserves LV function, no need for lifelong anticoagulation). MitraClip is for high surgical risk patients.",
+      "whyWrong": {
+        "A": "Symptomatic severe MR requires intervention, not medical management.",
+        "C": "Replacement is second choice after repair (requires anticoagulation).",
+        "D": "MitraClip is reserved for high/prohibitive surgical risk or functional MR.",
+        "E": "Afterload reduction may temporarily help but does not address the mechanical problem."
+      },
+      "clinicalPearl": "Severe primary MR + symptoms or LV dysfunction = Surgery. Repair > Replacement. MitraClip for high surgical risk."
+    },
+    "references": ["ACC/AHA Valve Guidelines 2020", "EVEREST II Trial"],
+    "highYield": true,
+    "timeAllocated": 72
+  },
+  {
+    "id": "board_cardio_011",
+    "specialty": "cardiology",
+    "topic": "Pericardial Disease",
+    "difficulty": "hard",
+    "vignette": "A 48-year-old male with history of mediastinal radiation for Hodgkin lymphoma 20 years ago presents with progressive dyspnea, ascites, and lower extremity edema. JVP is elevated with prominent y descent. Echo shows thickened pericardium, septal bounce, and respiratory variation in mitral inflow >25%. What is the BEST treatment?",
+    "options": [
+      { "id": "A", "text": "High-dose NSAIDs + colchicine" },
+      { "id": "B", "text": "Pericardiocentesis" },
+      { "id": "C", "text": "Pericardiectomy" },
+      { "id": "D", "text": "Prednisone 1mg/kg daily" },
+      { "id": "E", "text": "Furosemide and salt restriction" }
+    ],
+    "correctOptionId": "C",
+    "explanation": {
+      "whyCorrect": "Constrictive pericarditis (thickened pericardium, septal bounce, respiratory variation >25%, prominent y descent, history of radiation). Definitive treatment: Pericardiectomy (surgical removal of constricting pericardium). Medical management is temporizing only.",
+      "whyWrong": {
+        "A": "NSAIDs + colchicine treat acute pericarditis, not chronic constrictive pericarditis.",
+        "B": "Pericardiocentesis is for cardiac tamponade (effusion), not constriction (thickened pericardium, no effusion).",
+        "D": "Steroids may help transient inflammation but do not treat the mechanical constriction.",
+        "E": "Diuretics provide symptomatic relief only. Definitive treatment is surgical."
+      },
+      "clinicalPearl": "Constrictive pericarditis: Radiation, TB, cardiac surgery. Treatment: PERICARDIECTOMY. Diuretics for symptom relief only."
+    },
+    "references": ["ESC Pericardial Diseases Guidelines", "Mayo Clinic Constrictive Pericarditis"],
+    "highYield": true,
+    "timeAllocated": 72
+  },
+  {
+    "id": "board_cardio_012",
+    "specialty": "cardiology",
+    "topic": "Congenital Heart Disease",
+    "difficulty": "medium",
+    "vignette": "A 24-year-old female with known congenital heart disease presents with dyspnea and cyanosis that worsens with exercise but improves with squatting. She has clubbing and a harsh systolic murmur at the left upper sternal border. CXR shows a boot-shaped heart. What is the MOST likely diagnosis?",
+    "options": [
+      { "id": "A", "text": "Atrial septal defect" },
+      { "id": "B", "text": "Ventricular septal defect" },
+      { "id": "C", "text": "Tetralogy of Fallot" },
+      { "id": "D", "text": "Transposition of great arteries" },
+      { "id": "E", "text": "Patent ductus arteriosus" }
+    ],
+    "correctOptionId": "C",
+    "explanation": {
+      "whyCorrect": "Tetralogy of Fallot: VSD + Pulmonary stenosis + Overriding aorta + RVH. Squatting improves cyanosis by increasing SVR → less R→L shunt. Boot-shaped heart (coeur en sabot) on CXR is classic.",
+      "whyWrong": {
+        "A": "ASD causes fixed split S2, not cyanosis.",
+        "B": "VSD causes holosystolic murmur, not cyanosis unless Eisenmenger.",
+        "D": "TGA presents in neonatal period with severe cyanosis.",
+        "E": "PDA causes continuous machinery murmur, not cyanosis."
+      },
+      "clinicalPearl": "Tet spells: Squatting increases SVR → decreases R→L shunt → improves cyanosis. Boot-shaped heart on CXR."
+    },
+    "references": ["ACC/AHA ACHD Guidelines 2018", "Congenital Heart Disease"],
+    "highYield": true,
+    "timeAllocated": 72
+  }
+]
+[
+  {
+    "id": "board_cardio_013",
+    "specialty": "cardiology",
+    "topic": "Cardiomyopathy",
+    "difficulty": "hard",
+    "vignette": "A 45-year-old African American male presents with progressive dyspnea and palpitations. Echo shows severe biventricular dilation, EF 20%, global hypokinesis. Coronary angiography is normal. What is the MOST likely diagnosis?",
+    "options": [
+      { "id": "A", "text": "Ischemic cardiomyopathy" },
+      { "id": "B", "text": "Idiopathic dilated cardiomyopathy" },
+      { "id": "C", "text": "Hypertrophic cardiomyopathy" },
+      { "id": "D", "text": "Restrictive cardiomyopathy" },
+      { "id": "E", "text": "Arrhythmogenic right ventricular dysplasia" }
+    ],
+    "correctOptionId": "B",
+    "explanation": {
+      "whyCorrect": "Idiopathic dilated cardiomyopathy: Biventricular dilation, severely reduced EF, normal coronaries. More common and more aggressive in African Americans. Family history often positive (20-35% familial).",
+      "whyWrong": {
+        "A": "Ischemic would have CAD on angiography.",
+        "C": "HCM has asymmetric septal hypertrophy, not biventricular dilation.",
+        "D": "Restrictive has normal LV size/function with diastolic dysfunction.",
+        "E": "ARVD affects primarily right ventricle with fatty infiltration."
+      },
+      "clinicalPearl": "Dilated cardiomyopathy: LV dilation + reduced EF + normal coronaries. African Americans: Higher risk, worse prognosis."
+    },
+    "references": ["AHA Cardiomyopathy Guidelines"],
+    "highYield": true,
+    "timeAllocated": 72
+  },
+  {
+    "id": "board_cardio_014",
+    "specialty": "cardiology",
+    "topic": "Syncope",
+    "difficulty": "medium",
+    "vignette": "A 70-year-old male presents with syncope while shaving. He recalls feeling his heart 'racing' before losing consciousness. ECG shows sinus rhythm with right bundle branch block and ST elevation in V1-V3. What is the MOST likely cause?",
+    "options": [
+      { "id": "A", "text": "Vasovagal syncope" },
+      { "id": "B", "text": "Brugada syndrome" },
+      { "id": "C", "text": "Aortic stenosis" },
+      { "id": "D", "text": "Long QT syndrome" },
+      { "id": "E", "text": "Orthostatic hypotension" }
+    ],
+    "correctOptionId": "B",
+    "explanation": {
+      "whyCorrect": "Brugada syndrome: RBBB pattern + ST elevation in V1-V3 + syncope/ventricular arrhythmias. Autosomal dominant, more common in Asian males. Triggers: Fever, vagal stimuli (shaving), large meals. Treatment: ICD for symptomatic patients.",
+      "whyWrong": {
+        "A": "Vasovagal has prodrome (nausea, diaphoresis), no ECG findings.",
+        "C": "AS syncope occurs with exertion, characteristic systolic murmur.",
+        "D": "Long QT has prolonged QTc, not ST elevation.",
+        "E": "Orthostatic hypotension has postural BP drop, normal ECG."
+      },
+      "clinicalPearl": "Brugada: RBBB + ST elevation V1-V3 + Syncope/VT. ICD if symptomatic. Avoid drugs that worsen ST elevation."
+    },
+    "references": ["Brugada Syndrome Consensus Document"],
+    "highYield": true,
+    "timeAllocated": 72
+  },
+  {
+    "id": "board_cardio_015",
+    "specialty": "cardiology",
+    "topic": "Lipid Management",
+    "difficulty": "medium",
+    "vignette": "A 55-year-old male with diabetes and hypertension has LDL-C 180 mg/dL despite high-intensity atorvastatin 80mg. He had an MI 6 months ago. What is the BEST next step?",
+    "options": [
+      { "id": "A", "text": "Switch to rosuvastatin 40mg" },
+      { "id": "B", "text": "Add ezetimibe 10mg daily" },
+      { "id": "C", "text": "Start PCSK9 inhibitor (evolocumab)" },
+      { "id": "D", "text": "Add fenofibrate" },
+      { "id": "E", "text": "Continue current therapy, LDL is acceptable" }
+    ],
+    "correctOptionId": "B",
+    "explanation": {
+      "whyCorrect": "ASCVD + DM + LDL >70 on max statin: Add ezetimibe first (IMPROVE-IT trial). If LDL still >70 on statin + ezetimibe → Add PCSK9 inhibitor (FOURIER, ODYSSEY trials).",
+      "whyWrong": {
+        "A": "Switching between statins provides minimal additional LDL reduction.",
+        "C": "PCSK9 inhibitors are third-line after statin + ezetimibe (cost, access).",
+        "D": "Fibrates lower TG, not LDL. Not indicated for LDL reduction.",
+        "E": "ASCVD + DM goal is LDL <70 (preferably <55). LDL 180 is far above target."
+      },
+      "clinicalPearl": "Very high-risk ASCVD: LDL goal <70 (<55 in extreme risk). Step therapy: Statin → +Ezetimibe → +PCSK9i."
+    },
+    "references": ["ACC/AHA Cholesterol Guidelines 2018", "IMPROVE-IT Trial"],
+    "highYield": true,
+    "timeAllocated": 72
+  }
+]
+[
+  {
+    "id": "board_cardio_016",
+    "specialty": "cardiology",
+    "topic": "Pacemakers",
+    "difficulty": "medium",
+    "vignette": "A 75-year-old male with sick sinus syndrome and a dual-chamber pacemaker presents with palpitations. ECG shows pacing spikes followed by wide QRS complexes at 150 bpm. What is this arrhythmia?",
+    "options": [
+      { "id": "A", "text": "Pacemaker-mediated tachycardia (PMT)" },
+      { "id": "B", "text": "Ventricular tachycardia" },
+      { "id": "C", "text": "Atrial fibrillation with rapid ventricular response" },
+      { "id": "D", "text": "Sinus tachycardia" },
+      { "id": "E", "text": "Atrial flutter" }
+    ],
+    "correctOptionId": "A",
+    "explanation": {
+      "whyCorrect": "PMT: Endless-loop tachycardia caused by retrograde P wave sensed by atrial lead → triggers ventricular pacing → retrograde conduction → cycle repeats. Rate typically at upper tracking limit. Treatment: Magnet over pacemaker (stops tracking, reveals underlying rhythm), reprogram PMT algorithms.",
+      "whyWrong": {
+        "B": "VT would not have pacing spikes before each QRS.",
+        "C": "AF would be irregular, not at fixed rate.",
+        "D": "Sinus tachycardia would not have pacing spikes.",
+        "E": "Atrial flutter would show flutter waves, not pacing spikes."
+      },
+      "clinicalPearl": "PMT: Pacing spikes + wide QRS at upper rate limit. Magnet application = diagnostic and therapeutic. Reprogram to prevent."
+    },
+    "references": ["HRS Pacemaker Guidelines"],
+    "highYield": true,
+    "timeAllocated": 72
+  },
+  {
+    "id": "board_cardio_017",
+    "specialty": "cardiology",
+    "topic": "Pregnancy and Heart Disease",
+    "difficulty": "hard",
+    "vignette": "A 28-year-old pregnant female (32 weeks) presents with progressive dyspnea and orthopnea. She has no prior cardiac history. Echo shows LVEF 25%, global hypokinesis, LV dilation. She is normotensive. What is the MOST likely diagnosis?",
+    "options": [
+      { "id": "A", "text": "Peripartum cardiomyopathy" },
+      { "id": "B", "text": "Preeclampsia-induced heart failure" },
+      { "id": "C", "text": "Acute myocardial infarction" },
+      { "id": "D", "text": "Amniotic fluid embolism" },
+      { "id": "E", "text": "Pulmonary embolism" }
+    ],
+    "correctOptionId": "A",
+    "explanation": {
+      "whyCorrect": "Peripartum cardiomyopathy: New HF with EF <45% in last month of pregnancy to 5 months postpartum. No other cause identified. Risk factors: Age >30, African descent, multiple gestations, preeclampsia. Treatment: Similar to HFrEF but avoid ACEi/ARBs (teratogenic).",
+      "whyWrong": {
+        "B": "Preeclampsia causes diastolic dysfunction, preserved EF, with hypertension.",
+        "C": "MI would have ECG changes, troponin elevation, and regional WMA.",
+        "D": "AFE causes sudden cardiovascular collapse during labor/delivery.",
+        "E": "PE causes RV dilation, not LV dilation with reduced EF."
+      },
+      "clinicalPearl": "Peripartum cardiomyopathy: New HF in last month to 5 months postpartum. Avoid ACEi/ARB in pregnancy. Hydralazine + Nitrates instead."
+    },
+    "references": ["ESC Pregnancy and Heart Disease Guidelines"],
+    "highYield": true,
+    "timeAllocated": 72
+  }
+]
+[
+  {
+    "id": "board_cardio_018",
+    "specialty": "cardiology",
+    "topic": "Infective Endocarditis Prophylaxis",
+    "difficulty": "medium",
+    "vignette": "A 55-year-old male with a mechanical mitral valve needs a dental cleaning. He has no known drug allergies. What is the appropriate prophylaxis?",
+    "options": [
+      { "id": "A", "text": "No prophylaxis needed" },
+      { "id": "B", "text": "Amoxicillin 2g PO 1 hour before procedure" },
+      { "id": "C", "text": "Clindamycin 600mg PO 1 hour before procedure" },
+      { "id": "D", "text": "Cephalexin 2g PO 1 hour before procedure" },
+      { "id": "E", "text": "Gentamicin 1.5mg/kg IV 30 minutes before procedure" }
+    ],
+    "correctOptionId": "B",
+    "explanation": {
+      "whyCorrect": "High-risk patients for IE: Prosthetic valves, prior IE, congenital heart disease (unrepaired cyanotic, repaired with prosthetic material <6 months, repaired with residual defects), cardiac transplant with valve regurgitation. Dental procedures requiring prophylaxis: Manipulation of gingival tissue or periapical region. Amoxicillin 2g PO is first-line.",
+      "whyWrong": {
+        "A": "Mechanical valve = HIGHEST risk. Prophylaxis is mandatory.",
+        "C": "Clindamycin is for penicillin-allergic patients.",
+        "D": "Cephalexin is not recommended for IE prophylaxis.",
+        "E": "IV gentamicin is no longer recommended for IE prophylaxis."
+      },
+      "clinicalPearl": "IE prophylaxis: Only for HIGH-RISK patients undergoing DENTAL procedures with manipulation of gingiva. Amoxicillin 2g PO."
+    },
+    "references": ["AHA IE Prophylaxis Guidelines 2021"],
+    "highYield": true,
+    "timeAllocated": 72
+  },
+  {
+    "id": "board_cardio_019",
+    "specialty": "cardiology",
+    "topic": "Cardiac Transplant",
+    "difficulty": "hard",
+    "vignette": "A 50-year-old male cardiac transplant recipient (6 months post-transplant) presents with fatigue and dyspnea. Cardiac biopsy shows lymphocytic infiltrate with myocyte damage. What is the diagnosis?",
+    "options": [
+      { "id": "A", "text": "Hyperacute rejection" },
+      { "id": "B", "text": "Acute cellular rejection" },
+      { "id": "C", "text": "Antibody-mediated rejection" },
+      { "id": "D", "text": "Cardiac allograft vasculopathy" },
+      { "id": "E", "text": "Cytomegalovirus myocarditis" }
+    ],
+    "correctOptionId": "B",
+    "explanation": {
+      "whyCorrect": "Acute cellular rejection (ACR): Most common in first 6-12 months. Lymphocytic infiltrate with myocyte damage on biopsy. Graded by ISHLT (1R, 2R, 3R). Treatment: Steroid pulse, increase immunosuppression.",
+      "whyWrong": {
+        "A": "Hyperacute: Minutes to hours, preformed antibodies, rare now with crossmatching.",
+        "C": "AMR: C4d deposition on biopsy, donor-specific antibodies (DSA) positive.",
+        "D": "CAV: Chronic rejection, diffuse coronary narrowing, occurs years later.",
+        "E": "CMV would show viral inclusions, not lymphocytic infiltrate."
+      },
+      "clinicalPearl": "Acute cellular rejection (6-12mo post-transplant): Lymphocytic infiltrate + Myocyte damage. Treat with steroids."
+    },
+    "references": ["ISHLT Cardiac Transplant Guidelines"],
+    "highYield": true,
+    "timeAllocated": 72
+  },
+  {
+    "id": "board_cardio_020",
+    "specialty": "cardiology",
+    "topic": "Stress Testing",
+    "difficulty": "medium",
+    "vignette": "A 45-year-old female with atypical chest pain undergoes exercise stress testing. She achieves 10 METs, no chest pain. ECG at peak exercise shows 2mm horizontal ST depression in leads V4-V6. What is the MOST appropriate next step?",
+    "options": [
+      { "id": "A", "text": "Reassurance, no further testing needed" },
+      { "id": "B", "text": "CT coronary angiography" },
+      { "id": "C", "text": "Stress echocardiography or nuclear perfusion imaging" },
+      { "id": "D", "text": "Invasive coronary angiography" },
+      { "id": "E", "text": "Start empiric metoprolol" }
+    ],
+    "correctOptionId": "C",
+    "explanation": {
+      "whyCorrect": "Equivocal stress ECG (ST depression without symptoms, good exercise capacity) + Intermediate pretest probability: Next step = Stress imaging (echo or nuclear). Duke Treadmill Score would help risk-stratify. If high-risk imaging → angiography.",
+      "whyWrong": {
+        "A": "ST depression of 2mm is significant even without symptoms.",
+        "B": "CT coronary angiography shows anatomy, not functional significance.",
+        "D": "Invasive angiography is for high-risk findings or failed non-invasive testing.",
+        "E": "Empiric treatment without confirming diagnosis is inappropriate."
+      },
+      "clinicalPearl": "Equivocal stress ECG → Stress imaging (echo or nuclear). Anatomy vs function: CCTA shows plaque, stress imaging shows ischemia."
+    },
+    "references": ["ACC/AHA Chest Pain Guidelines 2021"],
+    "highYield": true,
+    "timeAllocated": 72
+  }
+]
+[
+  {
+    "id": "board_cardio_021",
+    "specialty": "cardiology",
+    "topic": "Stress Cardiomyopathy",
+    "difficulty": "hard",
+    "vignette": "A 68-year-old female presents with acute chest pain and dyspnea after hearing news of her husband's death. ECG shows ST elevation in anterior leads. Emergency coronary angiography shows NO obstructive CAD. Left ventriculogram shows apical ballooning with hypercontractile base. What is the MOST likely diagnosis?",
+    "options": [
+      { "id": "A", "text": "Acute anterior STEMI" },
+      { "id": "B", "text": "Takotsubo cardiomyopathy" },
+      { "id": "C", "text": "Myocarditis" },
+      { "id": "D", "text": "Pericarditis" },
+      { "id": "E", "text": "Coronary artery spasm" }
+    ],
+    "correctOptionId": "B",
+    "explanation": {
+      "whyCorrect": "Takotsubo (stress) cardiomyopathy: Emotional trigger, apical ballooning, clean coronaries. Post-menopausal women most affected. Catecholamine surge → myocardial stunning. Usually recovers in weeks. Treatment: Supportive (beta-blockers, ACEi if LV dysfunction).",
+      "whyWrong": {
+        "A": "Clean coronaries rule out STEMI.",
+        "C": "Myocarditis would show diffuse hypokinesis, not apical ballooning.",
+        "D": "Pericarditis has diffuse ST elevation, not anterior only.",
+        "E": "Coronary spasm would show reversible focal WMA, not apical ballooning."
+      },
+      "clinicalPearl": "Takotsubo: Emotional stress + Apical ballooning + Clean coronaries + Post-menopausal female. Treatment: Supportive, usually resolves in weeks."
+    },
+    "references": ["Mayo Clinic Takotsubo Criteria", "InterTAK Registry"],
+    "highYield": true,
+    "timeAllocated": 72
+  },
+  {
+    "id": "board_cardio_022",
+    "specialty": "cardiology",
+    "topic": "Cardiac Tumors",
+    "difficulty": "hard",
+    "vignette": "A 45-year-old female presents with dyspnea, positional syncope, and a diastolic 'tumor plop' on auscultation. Echocardiogram shows a large mobile mass in the left atrium attached to the interatrial septum. What is the MOST likely diagnosis?",
+    "options": [
+      { "id": "A", "text": "Left atrial thrombus" },
+      { "id": "B", "text": "Cardiac myxoma" },
+      { "id": "C", "text": "Rhabdomyosarcoma" },
+      { "id": "D", "text": "Papillary fibroelastoma" },
+      { "id": "E", "text": "Metastatic tumor" }
+    ],
+    "correctOptionId": "B",
+    "explanation": {
+      "whyCorrect": "Cardiac myxoma: Most common primary cardiac tumor. Usually left atrium, attached to fossa ovalis (interatrial septum). Symptoms: Obstruction (syncope, dyspnea), emboli, constitutional (fever, weight loss). Tumor plop = classic auscultatory finding. Treatment: Surgical resection.",
+      "whyWrong": {
+        "A": "Thrombus usually in LA appendage, not attached to septum.",
+        "C": "Rhabdomyosarcoma is malignant, rare, and invasive.",
+        "D": "Papillary fibroelastoma is on valves (not septum), smaller.",
+        "E": "Metastases are more common than primary tumors but usually multiple, not solitary mass."
+      },
+      "clinicalPearl": "Cardiac myxoma: LA mass attached to septum + Tumor plop + Constitutional symptoms. Most common primary cardiac tumor."
+    },
+    "references": ["WHO Cardiac Tumor Classification"],
+    "highYield": true,
+    "timeAllocated": 72
+  },
+  {
+    "id": "board_cardio_023",
+    "specialty": "cardiology",
+    "topic": "Pericardial Effusion",
+    "difficulty": "medium",
+    "vignette": "A 55-year-old female with breast cancer presents with progressive dyspnea and orthopnea. Exam: Hypotension, JVD, muffled heart sounds, and pulsus paradoxus of 18mmHg. ECG shows electrical alternans. What is the NEXT best step?",
+    "options": [
+      { "id": "A", "text": "IV fluids bolus" },
+      { "id": "B", "text": "Emergency pericardiocentesis" },
+      { "id": "C", "text": "Pericardial window surgery" },
+      { "id": "D", "text": "Start dobutamine" },
+      { "id": "E", "text": "CT chest" }
+    ],
+    "correctOptionId": "B",
+    "explanation": {
+      "whyCorrect": "Cardiac tamponade: Beck triad (hypotension, JVD, muffled heart sounds) + Pulsus paradoxus >10mmHg + Electrical alternans. EMERGENCY: Pericardiocentesis (needle drainage). IV fluids are temporizing only while preparing for drainage.",
+      "whyWrong": {
+        "A": "Fluids are temporizing while preparing for pericardiocentesis.",
+        "C": "Pericardial window is for recurrent effusions, not acute tamponade.",
+        "D": "Inotropes do not treat tamponade (obstructive shock).",
+        "E": "CT delays definitive treatment. Diagnosis is clinical + bedside echo."
+      },
+      "clinicalPearl": "Cardiac tamponade: Beck triad + Pulsus paradoxus >10mmHg + Electrical alternans = EMERGENCY pericardiocentesis."
+    },
+    "references": ["ESC Pericardial Diseases Guidelines"],
+    "highYield": true,
+    "timeAllocated": 72
+  },
+  {
+    "id": "board_cardio_024",
+    "specialty": "cardiology",
+    "topic": "Congenital Heart Disease - Adult",
+    "difficulty": "medium",
+    "vignette": "A 30-year-old female with a history of repaired tetralogy of Fallot in childhood presents with palpitations and near-syncope. ECG shows wide QRS tachycardia at 180 bpm. What is she at highest risk for?",
+    "options": [
+      { "id": "A", "text": "Atrial fibrillation" },
+      { "id": "B", "text": "Ventricular tachycardia" },
+      { "id": "C", "text": "Atrial flutter" },
+      { "id": "D", "text": "Sinus tachycardia" },
+      { "id": "E", "text": "AV nodal reentrant tachycardia" }
+    ],
+    "correctOptionId": "B",
+    "explanation": {
+      "whyCorrect": "Repaired TOF: Residual pulmonary regurgitation → RV dilation → Scar around ventriculotomy/patches → Reentrant VT. VT is the leading cause of sudden cardiac death in adult TOF patients. Risk factors: QRS >180ms, LV dysfunction, RV scar. ICD may be indicated.",
+      "whyWrong": {
+        "A": "AF is common but less life-threatening than VT in TOF.",
+        "C": "Atrial flutter is common post-atriotomy but wide QRS tachycardia = VT.",
+        "D": "Wide QRS tachycardia at 180 bpm is VT, not sinus.",
+        "E": "AVNRT is typically narrow complex."
+      },
+      "clinicalPearl": "Repaired TOF + Wide QRS tachycardia = VT until proven otherwise. Leading cause of SCD in adult CHD."
+    },
+    "references": ["ACC/AHA ACHD Guidelines 2018"],
+    "highYield": true,
+    "timeAllocated": 72
+  },
+  {
+    "id": "board_cardio_025",
+    "specialty": "cardiology",
+    "topic": "Pregnancy and Cardiac Disease",
+    "difficulty": "hard",
+    "vignette": "A 28-year-old pregnant female (34 weeks) with known mitral stenosis (moderate, valve area 1.3 cm²) presents with acute dyspnea, orthopnea, and hemoptysis. HR 130 (irregularly irregular), BP 100/70. What is the BEST management?",
+    "options": [
+      { "id": "A", "text": "Emergency mitral valve replacement" },
+      { "id": "B", "text": "Rate control + diuretics + delivery planning" },
+      { "id": "C", "text": "Immediate delivery via C-section" },
+      { "id": "D", "text": "Electrical cardioversion" },
+      { "id": "E", "text": "Percutaneous mitral balloon valvuloplasty" }
+    ],
+    "correctOptionId": "B",
+    "explanation": {
+      "whyCorrect": "MS worsens in pregnancy (increased blood volume + tachycardia shortens diastolic filling time). AF with rapid ventricular response is common trigger for decompensation. Management: Rate control (beta-blockers, digoxin), diuretics for pulmonary edema, and plan delivery. Avoid cardioversion if stable.",
+      "whyWrong": {
+        "A": "Valve surgery during pregnancy has high fetal mortality (20-30%).",
+        "C": "Delivery is premature at 34 weeks without stabilization first.",
+        "D": "Cardioversion if hemodynamically unstable. She is stable (BP 100/70).",
+        "E": "BMV is for severe symptomatic MS (valve area <1.0 cm²) with favorable anatomy."
+      },
+      "clinicalPearl": "MS in pregnancy: Rate control is CRITICAL (prolong diastole). Beta-blockers are safe. Avoid hypovolemia (diuretics carefully)."
+    },
+    "references": ["ESC Pregnancy and Heart Disease Guidelines 2018"],
+    "highYield": true,
+    "timeAllocated": 72
+  }
+]
+[
+  {
+    "id": "board_cardio_026",
+    "specialty": "cardiology",
+    "topic": "Cardiac Rehabilitation",
+    "difficulty": "easy",
+    "vignette": "A 60-year-old male post-CABG asks about cardiac rehabilitation. When should it begin and what does it include?",
+    "options": [
+      { "id": "A", "text": "Begin 6 weeks after surgery, includes exercise only" },
+      { "id": "B", "text": "Begin during hospitalization (phase 1), includes exercise, education, risk factor modification" },
+      { "id": "C", "text": "Begin after 3 months of home rest, includes diet counseling only" },
+      { "id": "D", "text": "Cardiac rehabilitation is optional and has no proven benefit" },
+      { "id": "E", "text": "Begin 1 year after surgery to ensure full recovery" }
+    ],
+    "correctOptionId": "B",
+    "explanation": {
+      "whyCorrect": "Cardiac rehabilitation starts during hospitalization (Phase 1: inpatient mobilization). Phase 2: Outpatient monitored exercise (3x/week x12 weeks). Includes: Exercise training, nutrition counseling, smoking cessation, psychosocial support, medication optimization. Reduces mortality by 25-30%.",
+      "whyWrong": {
+        "A": "Should begin inpatient, not wait 6 weeks.",
+        "C": "Early mobilization reduces complications, not prolonged rest.",
+        "D": "Cardiac rehab has STRONG mortality benefit (Class IA recommendation).",
+        "E": "Delaying 1 year loses the benefit window."
+      },
+      "clinicalPearl": "Cardiac rehab: Begins INPATIENT (Phase 1) → Outpatient (Phase 2). Reduces mortality 25-30%. Highest benefit in first 3 months post-event."
+    },
+    "references": ["AHA/ACC Cardiac Rehab Guidelines"],
+    "highYield": true,
+    "timeAllocated": 72
+  },
+  {
+    "id": "board_cardio_027",
+    "specialty": "cardiology",
+    "topic": "Cardiac Trauma",
+    "difficulty": "hard",
+    "vignette": "A 25-year-old male presents after a motor vehicle accident with steering wheel impact to chest. He is hypotensive, has distended neck veins, and muffled heart sounds. FAST scan shows pericardial fluid. What is the diagnosis?",
+    "options": [
+      { "id": "A", "text": "Tension pneumothorax" },
+      { "id": "B", "text": "Cardiac tamponade from myocardial contusion" },
+      { "id": "C", "text": "Aortic dissection" },
+      { "id": "D", "text": "Hemothorax" },
+      { "id": "E", "text": "Diaphragmatic rupture" }
+    ],
+    "correctOptionId": "B",
+    "explanation": {
+      "whyCorrect": "Blunt cardiac trauma: Steering wheel impact → Myocardial contusion → Pericardial hemorrhage → Cardiac tamponade. Beck triad: Hypotension + JVD + Muffled heart sounds. FAST scan confirms pericardial fluid. Treatment: Emergency pericardiocentesis or thoracotomy.",
+      "whyWrong": {
+        "A": "Tension pneumothorax: Tracheal deviation, absent breath sounds, hyperresonance.",
+        "C": "Aortic dissection: Widened mediastinum, differential BP in arms.",
+        "D": "Hemothorax: Dullness, decreased breath sounds, no muffled heart sounds.",
+        "E": "Diaphragmatic rupture: Bowel sounds in chest, not Beck triad."
+      },
+      "clinicalPearl": "Blunt chest trauma + Beck triad + Pericardial fluid = Cardiac tamponade. Emergency pericardiocentesis."
+    },
+    "references": ["ATLS Guidelines", "Cardiac Trauma Management"],
+    "highYield": true,
+    "timeAllocated": 72
+  }
+]

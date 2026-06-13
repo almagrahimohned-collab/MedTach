@@ -3,7 +3,6 @@ import * as Device from 'expo-device';
 import { Platform } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-const NOTIFICATION_SETTINGS_KEY = 'notification_settings';
 const LAST_NOTIFICATION_KEY = 'last_notification_date';
 
 Notifications.setNotificationHandler({
@@ -16,22 +15,21 @@ Notifications.setNotificationHandler({
   }),
 });
 
-export const requestNotificationPermissions = async (): Promise<boolean> => {
+export async function requestPermissions(): Promise<boolean> {
   if (!Device.isDevice) {
     console.log('Notifications only work on physical devices');
     return false;
   }
 
-  const { status: existingStatus } = await Notifications.getPermissionsAsync();
-  let finalStatus = existingStatus;
+  const { status: existing } = await Notifications.getPermissionsAsync();
+  let final = existing;
 
-  if (existingStatus !== 'granted') {
+  if (existing !== 'granted') {
     const { status } = await Notifications.requestPermissionsAsync();
-    finalStatus = status;
+    final = status;
   }
 
-  if (finalStatus !== 'granted') {
-    console.log('Notification permission not granted');
+  if (final !== 'granted') {
     return false;
   }
 
@@ -43,21 +41,25 @@ export const requestNotificationPermissions = async (): Promise<boolean> => {
       lightColor: '#38BDF8',
       sound: 'default',
     });
+
+    await Notifications.setNotificationChannelAsync('achievements', {
+      name: 'Achievements',
+      importance: Notifications.AndroidImportance.DEFAULT,
+      sound: 'default',
+    });
   }
 
   return true;
-};
+}
 
-export const scheduleDailyReminder = async (hour: number = 9, minute: number = 0) => {
-  const hasPermission = await requestNotificationPermissions();
-  if (!hasPermission) return;
-
+export async function scheduleDailyReminder(hour = 9, minute = 0) {
   await cancelAllNotifications();
 
+  // تذكير الصباح
   await Notifications.scheduleNotificationAsync({
     content: {
       title: '🩺 Daily Challenge Waiting!',
-      body: 'Your daily diagnostic challenge is ready. Come solve a case and earn bonus points!',
+      body: 'Your daily diagnostic challenge is ready. Solve a case and earn bonus points!',
       data: { screen: 'daily-challenge' },
       sound: 'default',
       badge: 1,
@@ -69,13 +71,13 @@ export const scheduleDailyReminder = async (hour: number = 9, minute: number = 0
     },
   });
 
+  // تذكير الظهر
   await Notifications.scheduleNotificationAsync({
     content: {
       title: '📚 Learning Reminder',
-      body: 'Sharpen your diagnostic skills with a new case study today!',
+      body: 'Take a break and sharpen your diagnostic skills with a new case!',
       data: { screen: 'specialties' },
       sound: 'default',
-      badge: 1,
     },
     trigger: {
       type: Notifications.SchedulableTriggerInputTypes.DAILY,
@@ -84,13 +86,13 @@ export const scheduleDailyReminder = async (hour: number = 9, minute: number = 0
     },
   });
 
+  // تذكير المساء
   await Notifications.scheduleNotificationAsync({
     content: {
       title: '🌙 Evening Practice',
       body: 'End your day with a quick diagnostic challenge. Consistency is key!',
       data: { screen: 'cases' },
       sound: 'default',
-      badge: 1,
     },
     trigger: {
       type: Notifications.SchedulableTriggerInputTypes.DAILY,
@@ -100,12 +102,9 @@ export const scheduleDailyReminder = async (hour: number = 9, minute: number = 0
   });
 
   await AsyncStorage.setItem(LAST_NOTIFICATION_KEY, new Date().toISOString());
-};
+}
 
-export const scheduleWeeklyChallengeReminder = async () => {
-  const hasPermission = await requestNotificationPermissions();
-  if (!hasPermission) return;
-
+export async function scheduleWeeklyReminder() {
   await Notifications.scheduleNotificationAsync({
     content: {
       title: '🏆 Weekly Challenge!',
@@ -120,37 +119,40 @@ export const scheduleWeeklyChallengeReminder = async () => {
       minute: 0,
     },
   });
-};
+}
 
-export const sendInstantNotification = async (title: string, body: string) => {
-  const hasPermission = await requestNotificationPermissions();
+export async function sendInstantNotification(title: string, body: string) {
+  const hasPermission = await requestPermissions();
   if (!hasPermission) return;
 
   await Notifications.scheduleNotificationAsync({
-    content: {
-      title,
-      body,
-      sound: 'default',
-      badge: 1,
-    },
+    content: { title, body, sound: 'default', badge: 1 },
     trigger: null,
   });
-};
+}
 
-export const cancelAllNotifications = async () => {
+export async function sendBadgeNotification(badge: string) {
+  await sendInstantNotification(
+    '🏆 New Badge Earned!',
+    `Congratulations! You earned: ${badge}`
+  );
+}
+
+export async function cancelAllNotifications() {
   await Notifications.cancelAllScheduledNotificationsAsync();
-};
+}
 
-export const getPendingNotifications = async () => {
-  return await Notifications.getAllScheduledNotificationsAsync();
-};
-
-export const addNotificationResponseListener = (
+export function addNotificationListener(
   callback: (response: Notifications.NotificationResponse) => void
-) => {
+) {
   return Notifications.addNotificationResponseReceivedListener(callback);
-};
+}
 
-export const getLastNotificationDate = async (): Promise<string | null> => {
-  return await AsyncStorage.getItem(LAST_NOTIFICATION_KEY);
-};
+export async function getBadgeCount(): Promise<number> {
+  const notifications = await Notifications.getBadgeCountAsync();
+  return notifications;
+}
+
+export async function clearBadge() {
+  await Notifications.setBadgeCountAsync(0);
+}

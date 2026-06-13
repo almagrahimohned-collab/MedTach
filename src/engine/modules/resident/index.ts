@@ -1,0 +1,1 @@
+export { registerResidentModule } from './ResidentModule';

@@ -1,0 +1,458 @@
+[
+  {
+    "id": "board_nephro_001",
+    "specialty": "nephrology",
+    "topic": "Acute Kidney Injury",
+    "difficulty": "medium",
+    "vignette": "A 70-year-old male with CKD stage 3 undergoes cardiac catheterization. He receives 150mL of contrast. 48 hours later, his Cr rises from 1.8 to 3.2. Urine sodium is 12 mEq/L, FeNa 0.8%. Urinalysis shows muddy brown casts. What is the MOST likely cause of AKI?",
+    "options": [
+      { "id": "A", "text": "Contrast-induced nephropathy (ATN)" },
+      { "id": "B", "text": "Prerenal AKI from hypovolemia" },
+      { "id": "C", "text": "Acute interstitial nephritis" },
+      { "id": "D", "text": "Cholesterol emboli syndrome" },
+      { "id": "E", "text": "Acute glomerulonephritis" }
+    ],
+    "correctOptionId": "A",
+    "explanation": {
+      "whyCorrect": "Contrast-induced nephropathy = ATN: Recent contrast, rise in Cr within 48-72h, muddy brown casts.",
+      "whyWrong": {
+        "B": "Prerenal AKI has FeNa <1% and bland urine sediment.",
+        "C": "AIN has WBC casts, eosinophiluria.",
+        "D": "Cholesterol emboli have livedo reticularis, eosinophilia.",
+        "E": "AGN has dysmorphic RBCs, RBC casts."
+      },
+      "clinicalPearl": "Muddy brown casts = ATN. Prevention of contrast nephropathy: IV NS before and after."
+    },
+    "references": ["KDIGO AKI Guidelines"],
+    "highYield": true,
+    "timeAllocated": 72
+  },
+  {
+    "id": "board_nephro_002",
+    "specialty": "nephrology",
+    "topic": "Electrolytes",
+    "difficulty": "hard",
+    "vignette": "A 65-year-old male with small cell lung cancer presents with confusion. Labs: Na 118, serum osmolality 250, urine osmolality 600, urine sodium 80. He is euvolemic. What is the BEST treatment?",
+    "options": [
+      { "id": "A", "text": "Fluid restriction to <800mL/day" },
+      { "id": "B", "text": "Hypertonic saline (3%) infusion" },
+      { "id": "C", "text": "Normal saline infusion" },
+      { "id": "D", "text": "Tolvaptan (vasopressin antagonist)" },
+      { "id": "E", "text": "Demeclocycline" }
+    ],
+    "correctOptionId": "A",
+    "explanation": {
+      "whyCorrect": "SIADH. First-line: Fluid restriction. If severe symptoms → hypertonic saline.",
+      "whyWrong": {
+        "B": "Hypertonic saline is for severe symptomatic hyponatremia.",
+        "C": "NS would worsen hyponatremia in SIADH.",
+        "D": "Tolvaptan is second-line.",
+        "E": "Demeclocycline is rarely used now."
+      },
+      "clinicalPearl": "SIADH: Fluid restrict. Correct Na by <8-10 mEq/day to avoid osmotic demyelination."
+    },
+    "references": ["European Hyponatremia Guidelines"],
+    "highYield": true,
+    "timeAllocated": 72
+  },
+  {
+    "id": "board_nephro_003",
+    "specialty": "nephrology",
+    "topic": "Acid-Base",
+    "difficulty": "hard",
+    "vignette": "A 30-year-old male with Type 1 DM presents with ABG: pH 7.28, PaCO2 28, HCO3 12. Na 138, Cl 105. Anion gap is 21. What is the acid-base disorder?",
+    "options": [
+      { "id": "A", "text": "Anion gap metabolic acidosis with appropriate respiratory compensation" },
+      { "id": "B", "text": "Anion gap metabolic acidosis with respiratory alkalosis" },
+      { "id": "C", "text": "Non-anion gap metabolic acidosis" },
+      { "id": "D", "text": "Mixed metabolic acidosis and respiratory acidosis" },
+      { "id": "E", "text": "Metabolic alkalosis with respiratory compensation" }
+    ],
+    "correctOptionId": "A",
+    "explanation": {
+      "whyCorrect": "Winter formula: Expected PaCO2 = 1.5(HCO3) + 8 ± 2 = 26 ± 2. Actual PaCO2 28 = appropriate compensation.",
+      "whyWrong": {
+        "B": "PaCO2 28 is appropriate, not lower than expected.",
+        "C": "Anion gap is 21 (elevated).",
+        "D": "PaCO2 28 is lower than 40 (not higher).",
+        "E": "pH is acidotic and HCO3 is low."
+      },
+      "clinicalPearl": "Winter formula: Expected PaCO2 = 1.5(HCO3) + 8 ± 2."
+    },
+    "references": ["Acid-Base Physiology"],
+    "highYield": true,
+    "timeAllocated": 72
+  },
+  {
+    "id": "board_nephro_004",
+    "specialty": "nephrology",
+    "topic": "Glomerulonephritis",
+    "difficulty": "hard",
+    "vignette": "A 22-year-old male presents with coca-cola colored urine, hypertension (160/95), and periorbital edema 2 weeks after a sore throat. Labs: Cr 1.8, C3 low, C4 normal, ASO elevated. What is the MOST likely diagnosis?",
+    "options": [
+      { "id": "A", "text": "Post-streptococcal glomerulonephritis" },
+      { "id": "B", "text": "IgA nephropathy" },
+      { "id": "C", "text": "Membranoproliferative GN" },
+      { "id": "D", "text": "Lupus nephritis" },
+      { "id": "E", "text": "Goodpasture syndrome" }
+    ],
+    "correctOptionId": "A",
+    "explanation": {
+      "whyCorrect": "Post-strep GN: 1-4 weeks post-GAS, low C3, normal C4, elevated ASO.",
+      "whyWrong": {
+        "B": "IgA nephropathy occurs 1-3 days post-infection.",
+        "C": "MPGN has persistent low C3.",
+        "D": "Lupus has low C3 AND C4.",
+        "E": "Goodpasture has pulmonary hemorrhage + anti-GBM."
+      },
+      "clinicalPearl": "Post-strep GN: 1-4 weeks post-GAS, low C3, normal C4."
+    },
+    "references": ["KDIGO GN Guidelines"],
+    "highYield": true,
+    "timeAllocated": 72
+  },
+  {
+    "id": "board_nephro_005",
+    "specialty": "nephrology",
+    "topic": "CKD Management",
+    "difficulty": "easy",
+    "vignette": "A 65-year-old male with CKD stage 3b (eGFR 38) has: Hb 9.8, Ferritin 45, TSAT 12%. What is the BEST treatment for his anemia?",
+    "options": [
+      { "id": "A", "text": "Oral ferrous sulfate 325mg TID" },
+      { "id": "B", "text": "IV iron sucrose 200mg" },
+      { "id": "C", "text": "Darbepoetin alfa 0.45mcg/kg SC monthly" },
+      { "id": "D", "text": "Blood transfusion" },
+      { "id": "E", "text": "Combined IV iron + darbepoetin alfa" }
+    ],
+    "correctOptionId": "A",
+    "explanation": {
+      "whyCorrect": "Iron deficiency in CKD: First step = Oral iron trial. ESA after iron stores replete and Hb <10.",
+      "whyWrong": {
+        "B": "IV iron is second-line if oral fails.",
+        "C": "ESA is NOT first-line. Iron deficiency must be corrected first.",
+        "D": "Transfusion only for severe symptomatic anemia.",
+        "E": "ESA is added AFTER iron correction."
+      },
+      "clinicalPearl": "CKD anemia: Iron first (oral → IV) → If Hb <10 after iron → Add ESA."
+    },
+    "references": ["KDIGO Anemia in CKD Guidelines 2024"],
+    "highYield": true,
+    "timeAllocated": 72
+  }
+]
+[
+  {
+    "id": "board_nephro_006",
+    "specialty": "nephrology",
+    "topic": "Nephrolithiasis",
+    "difficulty": "medium",
+    "vignette": "A 45-year-old male presents with severe left flank pain radiating to the groin, hematuria, and nausea. CT shows a 6mm stone in the proximal ureter. What is the MOST appropriate initial management?",
+    "options": [
+      { "id": "A", "text": "Emergency ureteroscopy" },
+      { "id": "B", "text": "Pain control + IV fluids + tamsulosin" },
+      { "id": "C", "text": "Extracorporeal shock wave lithotripsy (ESWL)" },
+      { "id": "D", "text": "Percutaneous nephrolithotomy" },
+      { "id": "E", "text": "Observation with increased water intake" }
+    ],
+    "correctOptionId": "B",
+    "explanation": {
+      "whyCorrect": "Ureteral stone 6mm (≤10mm): Medical expulsive therapy (MET). Pain control (NSAIDs/opioids) + IV fluids + tamsulosin (alpha blocker, relaxes ureteral smooth muscle). 80% pass spontaneously within 4 weeks.",
+      "whyWrong": {
+        "A": "Ureteroscopy for: Stone >10mm, refractory pain, obstruction with infection, renal failure.",
+        "C": "ESWL for: Proximal stones 5-20mm, not for distal ureteral stones.",
+        "D": "PCNL for: Large renal stones >2cm.",
+        "E": "Observation alone without MET has lower success rate."
+      },
+      "clinicalPearl": "Ureteral stone ≤10mm: Tamsulosin + Pain control. >10mm or complications: Ureteroscopy."
+    },
+    "references": ["AUA Nephrolithiasis Guidelines"],
+    "highYield": true,
+    "timeAllocated": 72
+  },
+  {
+    "id": "board_nephro_007",
+    "specialty": "nephrology",
+    "topic": "Hypertension",
+    "difficulty": "hard",
+    "vignette": "A 30-year-old female with resistant hypertension (on 3 drugs) has hypokalemia (K+ 2.8), metabolic alkalosis (HCO3 30), and elevated aldosterone with suppressed renin. Adrenal CT shows bilateral adrenal hyperplasia. What is the BEST treatment?",
+    "options": [
+      { "id": "A", "text": "Spironolactone" },
+      { "id": "B", "text": "Unilateral adrenalectomy" },
+      { "id": "C", "text": "Bilateral adrenalectomy" },
+      { "id": "D", "text": "ACE inhibitor" },
+      { "id": "E", "text": "Amiloride" }
+    ],
+    "correctOptionId": "A",
+    "explanation": {
+      "whyCorrect": "Primary hyperaldosteronism (Conn syndrome): HTN + hypokalemia + metabolic alkalosis + high aldosterone + low renin. Bilateral hyperplasia = Medical treatment: Spironolactone or Eplerenone (mineralocorticoid receptor antagonists).",
+      "whyWrong": {
+        "B": "Unilateral adrenalectomy is for ADENOMA (not hyperplasia).",
+        "C": "Bilateral adrenalectomy causes adrenal insufficiency (not recommended).",
+        "D": "ACEi does not address the underlying hyperaldosteronism.",
+        "E": "Amiloride is alternative but spironolactone is first-line."
+      },
+      "clinicalPearl": "Primary hyperaldosteronism: Adenoma → Surgery. Hyperplasia → Spironolactone/Eplerenone."
+    },
+    "references": ["Endocrine Society Primary Aldosteronism Guidelines"],
+    "highYield": true,
+    "timeAllocated": 72
+  },
+  {
+    "id": "board_nephro_008",
+    "specialty": "nephrology",
+    "topic": "Electrolyte Disorders",
+    "difficulty": "hard",
+    "vignette": "A 60-year-old male with small cell lung cancer presents with confusion and seizures. Na is 112 mEq/L. What is the SAFE rate of sodium correction?",
+    "options": [
+      { "id": "A", "text": "Increase Na by 4-6 mEq/L in first 24 hours, not to exceed 8 mEq/L" },
+      { "id": "B", "text": "Increase Na to 135 mEq/L as quickly as possible" },
+      { "id": "C", "text": "Increase Na by 1-2 mEq/L per hour until 125 mEq/L" },
+      { "id": "D", "text": "Increase Na by 10-12 mEq/L in first 24 hours" },
+      { "id": "E", "text": "No correction needed, treat underlying cancer" }
+    ],
+    "correctOptionId": "C",
+    "explanation": {
+      "whyCorrect": "Severe symptomatic hyponatremia (seizures, confusion): Urgent correction with hypertonic saline (3%). Goal: Increase Na by 1-2 mEq/L/hr for first 3-4 hours (or until symptoms resolve). Max correction: 8-10 mEq/L in 24 hours. Overcorrection → Osmotic demyelination syndrome (central pontine myelinolysis).",
+      "whyWrong": {
+        "A": "4-6 in 24h is for ASYMPTOMATIC hyponatremia, not symptomatic.",
+        "B": "Rapid correction to normal is DANGEROUS (osmotic demyelination).",
+        "D": "10-12 in 24h exceeds safe limits and risks permanent brain damage.",
+        "E": "Symptomatic hyponatremia requires urgent treatment."
+      },
+      "clinicalPearl": "Symptomatic hyponatremia: 1-2 mEq/L/hr x3-4h (max 8-10 in 24h). Asymptomatic: 4-6 in 24h. Overcorrection = irreversible brain damage."
+    },
+    "references": ["European Hyponatremia Guidelines"],
+    "highYield": true,
+    "timeAllocated": 72
+  }
+]
+[
+  {
+    "id": "board_nephro_009",
+    "specialty": "nephrology",
+    "topic": "Renal Replacement Therapy",
+    "difficulty": "medium",
+    "vignette": "A 65-year-old male with septic shock and AKI requires RRT. He is on norepinephrine 0.3 mcg/kg/min. BP is 90/55. Which modality of RRT is PREFERRED in hemodynamically unstable patients?",
+    "options": [
+      { "id": "A", "text": "Intermittent hemodialysis (IHD)" },
+      { "id": "B", "text": "Continuous renal replacement therapy (CRRT)" },
+      { "id": "C", "text": "Sustained low-efficiency dialysis (SLED)" },
+      { "id": "D", "text": "Peritoneal dialysis" },
+      { "id": "E", "text": "Plasmapheresis" }
+    ],
+    "correctOptionId": "B",
+    "explanation": {
+      "whyCorrect": "CRRT is preferred in hemodynamically unstable patients (on vasopressors) because it provides gradual fluid removal and avoids rapid fluid shifts. IHD can cause hypotension due to rapid ultrafiltration.",
+      "whyWrong": {
+        "A": "IHD causes rapid fluid shifts and hypotension in unstable patients.",
+        "C": "SLED is intermediate between IHD and CRRT, but CRRT is preferred for true instability.",
+        "D": "Peritoneal dialysis is rarely used in ICU (infection risk, less effective).",
+        "E": "Plasmapheresis is for specific diseases (Goodpasture, TTP, myasthenia), not for AKI in sepsis."
+      },
+      "clinicalPearl": "Hemodynamically unstable patient needing RRT = CRRT. Stable patient = IHD. Always consider vasopressor support during RRT."
+    },
+    "references": ["KDIGO AKI Guidelines", "STARRT-AKI Trial"],
+    "highYield": true,
+    "timeAllocated": 72
+  },
+  {
+    "id": "board_nephro_010",
+    "specialty": "nephrology",
+    "topic": "Glomerular Disease",
+    "difficulty": "hard",
+    "vignette": "A 45-year-old female presents with nephrotic syndrome (proteinuria 6g/day, hypoalbuminemia 2.5, edema). Renal biopsy shows membranous nephropathy. Anti-PLA2R antibody is positive. What is the BEST initial treatment?",
+    "options": [
+      { "id": "A", "text": "Prednisone alone" },
+      { "id": "B", "text": "Cyclophosphamide + Prednisone" },
+      { "id": "C", "text": "Rituximab" },
+      { "id": "D", "text": "ACE inhibitor alone" },
+      { "id": "E", "text": "Mycophenolate mofetil" }
+    ],
+    "correctOptionId": "D",
+    "explanation": {
+      "whyCorrect": "Membranous nephropathy with nephrotic syndrome: Initial management is supportive (ACEi/ARB, statin, diuretics, salt restriction) for 3-6 months. Up to 30% achieve spontaneous remission. Immunosuppression (rituximab, cyclophosphamide) if: Proteinuria >4g persists >6 months, rising Cr, or complications.",
+      "whyWrong": {
+        "A": "Steroids alone are ineffective in membranous nephropathy.",
+        "B": "Ponticelli regimen (steroids + cyclophosphamide) is for high-risk patients after supportive care fails.",
+        "C": "Rituximab is first-line immunosuppression but only after failing supportive care.",
+        "E": "Mycophenolate is second-line (less effective than rituximab or cyclophosphamide)."
+      },
+      "clinicalPearl": "Membranous nephropathy: Supportive care first (ACEi/ARB). If no remission in 6 months → Rituximab or Cyclophosphamide + Steroids."
+    },
+    "references": ["KDIGO Glomerular Disease Guidelines 2021", "MENTOR Trial"],
+    "highYield": true,
+    "timeAllocated": 72
+  },
+  {
+    "id": "board_nephro_011",
+    "specialty": "nephrology",
+    "topic": "Acute Kidney Injury",
+    "difficulty": "hard",
+    "vignette": "A 70-year-old male develops AKI (Cr 3.5, baseline 1.0) after receiving IV contrast for CTA. Urine output is 200mL in 24 hours. Urine sodium is 70, FeNa 3.5%. Urinalysis shows muddy brown casts. What phase of ATN is he MOST likely in?",
+    "options": [
+      { "id": "A", "text": "Initiation phase" },
+      { "id": "B", "text": "Oliguric phase" },
+      { "id": "C", "text": "Diuretic phase" },
+      { "id": "D", "text": "Recovery phase" },
+      { "id": "E", "text": "Prerenal phase" }
+    ],
+    "correctOptionId": "B",
+    "explanation": {
+      "whyCorrect": "ATN with oliguria (<400mL/day), FeNa >2%, muddy brown casts = Oliguric phase. This phase lasts 1-3 weeks and requires careful fluid/electrolyte management. Dialysis often needed. Followed by diuretic phase (increasing UO) and recovery phase.",
+      "whyWrong": {
+        "A": "Initiation phase: Hours to days, Cr begins rising, still may respond to fluids.",
+        "C": "Diuretic phase: UO >400mL/day, Cr begins falling.",
+        "D": "Recovery phase: Cr returning to baseline, UO normalizing.",
+        "E": "Prerenal has FeNa <1%, no casts, rapidly reversible with fluids."
+      },
+      "clinicalPearl": "ATN phases: Initiation → Oliguric (1-3wk) → Diuretic → Recovery. Oliguric phase = highest mortality, often needs dialysis."
+    },
+    "references": ["ATN Pathophysiology and Management"],
+    "highYield": true,
+    "timeAllocated": 72
+  }
+]
+[
+  {
+    "id": "board_nephro_012",
+    "specialty": "nephrology",
+    "topic": "Renal Artery Stenosis",
+    "difficulty": "hard",
+    "vignette": "A 65-year-old male with resistant hypertension (on 3 drugs) and recurrent flash pulmonary edema has an abdominal bruit. Renal artery duplex shows >75% bilateral renal artery stenosis. What is the BEST management?",
+    "options": [
+      { "id": "A", "text": "Increase antihypertensive medications" },
+      { "id": "B", "text": "Bilateral renal artery stenting" },
+      { "id": "C", "text": "Surgical revascularization" },
+      { "id": "D", "text": "Continue medical therapy, stenting has no benefit" },
+      { "id": "E", "text": "Nephrectomy" }
+    ],
+    "correctOptionId": "B",
+    "explanation": {
+      "whyCorrect": "Renal artery stenosis with high-risk features (flash pulmonary edema, resistant hypertension, bilateral disease): Renal artery stenting is indicated. CORAL trial showed no benefit for unselected patients but flash pulmonary edema and bilateral high-grade stenosis are exceptions.",
+      "whyWrong": {
+        "A": "Medical therapy alone is insufficient for flash pulmonary edema.",
+        "C": "Surgery is reserved for failed stenting or complex anatomy.",
+        "D": "CORAL trial does NOT apply to patients with flash pulmonary edema.",
+        "E": "Nephrectomy is last resort for non-functioning kidney."
+      },
+      "clinicalPearl": "Renal artery stenosis: Stenting if flash pulmonary edema, bilateral high-grade stenosis, or resistant HTN despite 3+ drugs."
+    },
+    "references": ["CORAL Trial", "ACC/AHA PAD Guidelines"],
+    "highYield": true,
+    "timeAllocated": 72
+  },
+  {
+    "id": "board_nephro_013",
+    "specialty": "nephrology",
+    "topic": "Bartter and Gitelman",
+    "difficulty": "hard",
+    "vignette": "A 25-year-old female presents with muscle cramps, fatigue, and paresthesias. BP is 100/65. Labs: K+ 2.8, Mg 1.2, Ca 8.5 (normal), HCO3 30. Urine Ca is LOW. What is the MOST likely diagnosis?",
+    "options": [
+      { "id": "A", "text": "Bartter syndrome" },
+      { "id": "B", "text": "Gitelman syndrome" },
+      { "id": "C", "text": "Liddle syndrome" },
+      { "id": "D", "text": "Primary hyperaldosteronism" },
+      { "id": "E", "text": "Diuretic abuse" }
+    ],
+    "correctOptionId": "B",
+    "explanation": {
+      "whyCorrect": "Gitelman syndrome: NCC cotransporter defect in DCT (like thiazide effect). Features: Hypokalemia + Hypomagnesemia + LOW urine Ca + Metabolic alkalosis. Milder than Bartter. Presents in adolescence/adulthood. Treatment: K+/Mg++ replacement, spironolactone.",
+      "whyWrong": {
+        "A": "Bartter: NKCC2 defect in TAL (like furosemide). HIGH urine Ca, normal Mg. Presents in childhood.",
+        "C": "Liddle: ENaC gain-of-function, hypertension, hypokalemia, metabolic alkalosis.",
+        "D": "Primary hyperaldosteronism: Hypertension, not hypotension.",
+        "E": "Diuretic abuse: Similar labs but history of diuretic use, urine drug screen positive."
+      },
+      "clinicalPearl": "Gitelman: Hypokalemia + Hypomagnesemia + LOW urine Ca. Bartter: Hypokalemia + Normal Mg + HIGH urine Ca."
+    },
+    "references": ["Inherited Tubulopathies"],
+    "highYield": true,
+    "timeAllocated": 72
+  },
+  {
+    "id": "board_nephro_014",
+    "specialty": "nephrology",
+    "topic": "Onconephrology",
+    "difficulty": "medium",
+    "vignette": "A 60-year-old male with multiple myeloma develops AKI with an elevated FLC ratio (kappa > lambda) and positive Bence-Jones protein in urine. Kidney biopsy shows eosinophilic, PAS-negative casts with giant cell reaction. What is this pattern called?",
+    "options": [
+      { "id": "A", "text": "Minimal change disease" },
+      { "id": "B", "text": "Membranous nephropathy" },
+      { "id": "C", "text": "Cast nephropathy (myeloma kidney)" },
+      { "id": "D", "text": "AL amyloidosis" },
+      { "id": "E", "text": "Focal segmental glomerulosclerosis" }
+    ],
+    "correctOptionId": "C",
+    "explanation": {
+      "whyCorrect": "Cast nephropathy (myeloma kidney): Most common renal manifestation of multiple myeloma. Eosinophilic casts with giant cell reaction (PAS-negative). Caused by precipitation of light chains with Tamm-Horsfall protein in tubules. Treatment: Hydration + Treat underlying myeloma (Bortezomib-based).",
+      "whyWrong": {
+        "A": "MCD: Podocyte effacement, no casts, selective proteinuria.",
+        "B": "MN: Thickened GBM, subepithelial deposits, PLA2R+.",
+        "D": "AL amyloidosis: Congo red positive, apple-green birefringence, lambda > kappa.",
+        "E": "FSGS: Segmental sclerosis on light microscopy, not casts."
+      },
+      "clinicalPearl": "Myeloma kidney (cast nephropathy): Eosinophilic casts + Giant cell reaction. Hydration + Treat myeloma. Avoid nephrotoxins."
+    },
+    "references": ["KDIGO Myeloma Guidelines"],
+    "highYield": true,
+    "timeAllocated": 72
+  }
+]
+[
+  {
+    "id": "board_nephro_015",
+    "specialty": "nephrology",
+    "topic": "Cystic Kidney Disease",
+    "difficulty": "medium",
+    "vignette": "A 40-year-old male with ADPKD presents with sudden severe flank pain, hematuria, and low-grade fever. CT shows a new hypodense lesion in a cyst with high attenuation fluid. What is the MOST likely complication?",
+    "options": [
+      { "id": "A", "text": "Cyst hemorrhage" },
+      { "id": "B", "text": "Cyst infection" },
+      { "id": "C", "text": "Renal cell carcinoma" },
+      { "id": "D", "text": "Cyst rupture" },
+      { "id": "E", "text": "Nephrolithiasis" }
+    ],
+    "correctOptionId": "A",
+    "explanation": {
+      "whyCorrect": "Cyst hemorrhage in ADPKD: Acute flank pain + Hematuria + High-attenuation fluid in cyst (blood products). Conservative management (rest, hydration, analgesia). Usually self-limited (resolves in 1-2 weeks). If severe: Angioembolization rarely needed.",
+      "whyWrong": {
+        "B": "Cyst infection: High fever, positive urine/blood cultures, thick-walled cyst with debris.",
+        "C": "RCC: Enhancing solid component, not just hemorrhagic cyst.",
+        "D": "Cyst rupture: Severe pain, hypotension if large, free fluid on CT.",
+        "E": "Nephrolithiasis: Pain radiates to groin, stone seen on CT."
+      },
+      "clinicalPearl": "ADPKD cyst hemorrhage: Pain + Hematuria + High-attenuation cyst fluid. Conservative management. Infection: Fever + Positive culture."
+    },
+    "references": ["ADPKD Complications Management"],
+    "highYield": true,
+    "timeAllocated": 72
+  },
+  {
+    "id": "board_nephro_016",
+    "specialty": "nephrology",
+    "topic": "Pregnancy and Kidney Disease",
+    "difficulty": "hard",
+    "vignette": "A 30-year-old pregnant female (34 weeks) presents with hypertension (160/100), proteinuria (3.5g/day), and edema. She has no prior history of HTN or renal disease. Labs: Cr 1.8, Platelets 80K, AST 120, LDH elevated. What is the diagnosis?",
+    "options": [
+      { "id": "A", "text": "Gestational hypertension" },
+      { "id": "B", "text": "Preeclampsia with severe features" },
+      { "id": "C", "text": "HELLP syndrome only" },
+      { "id": "D", "text": "Acute fatty liver of pregnancy" },
+      { "id": "E", "text": "Thrombotic thrombocytopenic purpura" }
+    ],
+    "correctOptionId": "B",
+    "explanation": {
+      "whyCorrect": "Preeclampsia with severe features: HTN (>160/110) + Proteinuria >3g + Thrombocytopenia (<100K) + Elevated LFTs (AST, ALT) + Renal insufficiency. Overlaps with HELLP (Hemolysis, Elevated Liver enzymes, Low Platelets). Treatment: Delivery (definitive) + Magnesium for seizure prophylaxis.",
+      "whyWrong": {
+        "A": "Gestational HTN lacks proteinuria and end-organ damage.",
+        "C": "HELLP is a variant of severe preeclampsia with hemolysis markers.",
+        "D": "AFLP: Hypoglycemia, coagulopathy, minimal HTN, more hepatic failure.",
+        "E": "TTP: ADAMTS13 deficiency, fever, neurologic, minimal HTN/proteinuria."
+      },
+      "clinicalPearl": "Severe preeclampsia: HTN >160/110 + Proteinuria + Thrombocytopenia + LFT elevation. Treatment: DELIVERY + Magnesium."
+    },
+    "references": ["ACOG Preeclampsia Guidelines 2020"],
+    "highYield": true,
+    "timeAllocated": 72
+  }
+]

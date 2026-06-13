@@ -1,0 +1,206 @@
+export interface Patient {
+  id: string;
+  name: string;
+  age: number;
+  gender: string;
+  complaint: string;
+  priority: 'critical' | 'urgent' | 'stable';
+  requiredActions: Action[];
+  deteriorationTimer: number;
+  currentState: string;
+  completedActions: string[];
+  status: 'waiting' | 'in-progress' | 'stable' | 'deteriorated' | 'transferred' | 'died';
+}
+
+export interface Action {
+  id: string;
+  name: string;
+  timeCost: number;
+  resultTime: number;
+  result?: string;
+  ordered: boolean;
+  completed: boolean;
+  resultAt?: number;
+}
+
+export interface ConsultRequest {
+  id: string;
+  from: string;
+  patient: string;
+  description: string;
+  timeCost: number;
+  repReward: number;
+  accepted: boolean;
+  completed: boolean;
+}
+
+export interface ShiftState {
+  timeElapsed: number;
+  focus: number;
+  reputation: number;
+  xp: number;
+  patients: Patient[];
+  consults: ConsultRequest[];
+  events: string[];
+  level: 'intern' | 'junior' | 'senior' | 'chief';
+  shiftsCompleted: number;
+}
+
+export function createInitialShift(level: string): ShiftState {
+  const patientCount = level === 'intern' ? 4 : level === 'junior' ? 6 : level === 'senior' ? 8 : 10;
+  
+  const allPatients: Patient[] = [
+    {
+      id: 'p1', name: 'Mr. Ahmed', age: 55, gender: 'male',
+      complaint: 'Chest pain radiating to left arm for 2 hours',
+      priority: 'critical', requiredActions: [
+        { id: 'ecg', name: 'ECG', timeCost: 10, resultTime: 5, ordered: false, completed: false },
+        { id: 'troponin', name: 'Troponin', timeCost: 5, resultTime: 30, ordered: false, completed: false },
+        { id: 'history', name: 'History Taking', timeCost: 5, resultTime: 0, ordered: false, completed: false },
+      ],
+      deteriorationTimer: 8, currentState: 'Waiting in ER bed 1', completedActions: [], status: 'waiting',
+    },
+    {
+      id: 'p2', name: 'Mrs. Fatima', age: 65, gender: 'female',
+      complaint: 'Fever 39°C, productive cough for 5 days',
+      priority: 'urgent', requiredActions: [
+        { id: 'cxr', name: 'Chest X-Ray', timeCost: 15, resultTime: 20, ordered: false, completed: false },
+        { id: 'cbc', name: 'CBC', timeCost: 5, resultTime: 30, ordered: false, completed: false },
+        { id: 'history', name: 'History Taking', timeCost: 5, resultTime: 0, ordered: false, completed: false },
+      ],
+      deteriorationTimer: 20, currentState: 'Waiting in ER bed 2', completedActions: [], status: 'waiting',
+    },
+    {
+      id: 'p3', name: 'Mr. Khalid', age: 72, gender: 'male',
+      complaint: 'BP 70/40, confused, febrile',
+      priority: 'critical', requiredActions: [
+        { id: 'fluids', name: 'IV Fluids', timeCost: 10, resultTime: 0, ordered: false, completed: false },
+        { id: 'abg', name: 'ABG', timeCost: 10, resultTime: 10, ordered: false, completed: false },
+        { id: 'antibiotics', name: 'Start Antibiotics', timeCost: 5, resultTime: 0, ordered: false, completed: false },
+      ],
+      deteriorationTimer: 5, currentState: 'Crashing in ER bed 3', completedActions: [], status: 'waiting',
+    },
+    {
+      id: 'p4', name: 'Child Nour', age: 6, gender: 'female',
+      complaint: 'Fever 38.5°C, sore throat',
+      priority: 'stable', requiredActions: [
+        { id: 'exam', name: 'Physical Exam', timeCost: 5, resultTime: 0, ordered: false, completed: false },
+        { id: 'rapid_strep', name: 'Rapid Strep Test', timeCost: 5, resultTime: 15, ordered: false, completed: false },
+      ],
+      deteriorationTimer: 60, currentState: 'Waiting with mother', completedActions: [], status: 'waiting',
+    },
+  ];
+
+  return {
+    timeElapsed: 0,
+    focus: 100,
+    reputation: 500,
+    xp: 0,
+    patients: allPatients.slice(0, patientCount),
+    consults: [],
+    events: ['Shift started at 7:00 AM. ' + patientCount + ' patients waiting.'],
+    level: level as any,
+    shiftsCompleted: 0,
+  };
+}
+
+export function updateShift(state: ShiftState): ShiftState {
+  const newState = { ...state, timeElapsed: state.timeElapsed + 1 };
+  const events = [...state.events];
+
+  // تدهور المرضى
+  newState.patients = state.patients.map(p => {
+    if (p.status === 'died' || p.status === 'transferred') return p;
+    
+    const newTimer = p.deteriorationTimer - 1;
+    let newStatus = p.status;
+    
+    if (newTimer <= 0 && p.status !== 'stable') {
+      newStatus = 'deteriorated';
+      events.push(`⚠️ ${p.name} has deteriorated! Immediate action required!`);
+    }
+    if (newTimer <= -5 && newStatus === 'deteriorated') {
+      newStatus = 'died';
+      events.push(`💀 ${p.name} has died from delayed treatment.`);
+    }
+    
+    // إذا اكتملت كل الإجراءات ← مستقر
+    const allDone = p.requiredActions.every(a => a.completed);
+    if (allDone && p.status === 'waiting') {
+      newStatus = 'stable';
+      events.push(`✅ ${p.name} is now stable.`);
+    }
+    
+    return { ...p, deteriorationTimer: newTimer, status: newStatus };
+  });
+
+  // تحديث نتائج الفحوصات
+  newState.patients = newState.patients.map(p => ({
+    ...p,
+    requiredActions: p.requiredActions.map(a => {
+      if (a.ordered && !a.completed && a.resultAt && newState.timeElapsed >= a.resultAt) {
+        return { ...a, completed: true, result: `${a.name} result: Normal/Abnormal findings.` };
+      }
+      return a;
+    }),
+  }));
+
+  // استشارات عشوائية
+  if (state.timeElapsed % 15 === 0 && state.timeElapsed > 0) {
+    const departments = ['Surgery', 'OB/GYN', 'Pediatrics', 'Orthopedics', 'Neurology'];
+    const dept = departments[Math.floor(Math.random() * departments.length)];
+    const consult: ConsultRequest = {
+      id: `c${state.timeElapsed}`,
+      from: dept,
+      patient: `Patient in ${dept}`,
+      description: `Post-op tachycardia evaluation needed`,
+      timeCost: 20,
+      repReward: 15,
+      accepted: false,
+      completed: false,
+    };
+    newState.consults = [...state.consults, consult];
+    events.push(`📞 Consult from ${dept}: ${consult.description}`);
+  }
+
+  // الإرهاق
+  if (state.timeElapsed % 60 === 0 && state.timeElapsed > 0) {
+    newState.focus = Math.max(30, state.focus - 3);
+  }
+
+  newState.events = events;
+  return newState;
+}
+
+export function performAction(state: ShiftState, patientId: string, actionId: string): ShiftState {
+  return {
+    ...state,
+    patients: state.patients.map(p => {
+      if (p.id !== patientId) return p;
+      return {
+        ...p,
+        completedActions: [...p.completedActions, actionId],
+        requiredActions: p.requiredActions.map(a => {
+          if (a.id !== actionId) return a;
+          const resultAt = a.resultTime > 0 ? state.timeElapsed + a.resultTime : state.timeElapsed;
+          return { ...a, ordered: true, resultAt, completed: a.resultTime === 0 };
+        }),
+        status: 'in-progress' as const,
+        deteriorationTimer: Math.max(1, p.deteriorationTimer + (p.priority === 'critical' ? 5 : p.priority === 'urgent' ? 10 : 20)),
+      };
+    }),
+    timeElapsed: state.timeElapsed + (state.patients.find(p => p.id === patientId)?.requiredActions.find(a => a.id === actionId)?.timeCost || 5),
+    focus: Math.max(20, state.focus - 2),
+    events: [...state.events, `[${state.timeElapsed}m] Performed ${actionId} for ${state.patients.find(p => p.id === patientId)?.name}`],
+  };
+}
+
+export function acceptConsult(state: ShiftState, consultId: string): ShiftState {
+  return {
+    ...state,
+    consults: state.consults.map(c => c.id === consultId ? { ...c, accepted: true } : c),
+    reputation: state.reputation + 15,
+    xp: state.xp + 20,
+    events: [...state.events, `✅ Accepted consult from ${state.consults.find(c => c.id === consultId)?.from}`],
+  };
+}

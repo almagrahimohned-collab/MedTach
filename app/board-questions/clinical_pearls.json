@@ -1,0 +1,460 @@
+[
+  {
+    "id": "board_pearls_001",
+    "specialty": "quick_review",
+    "topic": "Preventive Medicine",
+    "difficulty": "easy",
+    "vignette": "A 55-year-old male with no significant medical history asks about age-appropriate cancer screenings. He is a never-smoker. Which screening is recommended for him?",
+    "options": [
+      { "id": "A", "text": "Low-dose CT chest for lung cancer" },
+      { "id": "B", "text": "Colonoscopy for colorectal cancer" },
+      { "id": "C", "text": "PSA for prostate cancer" },
+      { "id": "D", "text": "Abdominal ultrasound for AAA" },
+      { "id": "E", "text": "No screenings needed until age 60" }
+    ],
+    "correctOptionId": "B",
+    "explanation": {
+      "whyCorrect": "CRC screening starts at 45. Lung cancer screening is for smokers ≥20 pack-years.",
+      "whyWrong": {
+        "A": "Lung cancer screening is only for heavy smokers.",
+        "C": "PSA requires shared decision-making.",
+        "D": "AAA screening is for males 65-75 who ever smoked.",
+        "E": "CRC screening starts at 45, not 60."
+      },
+      "clinicalPearl": "Screenings at 50: CRC (colonoscopy), Lung (if smoker), Breast (mammogram if female)."
+    },
+    "references": ["USPSTF Screening Guidelines"],
+    "highYield": true,
+    "timeAllocated": 72
+  },
+  {
+    "id": "board_pearls_002",
+    "specialty": "quick_review",
+    "topic": "Medical Ethics",
+    "difficulty": "medium",
+    "vignette": "A 78-year-old male with advanced dementia is admitted with aspiration pneumonia. His daughter (healthcare proxy) requests 'everything possible be done.' The medical team believes this would be futile. What is the BEST approach?",
+    "options": [
+      { "id": "A", "text": "Follow the daughter's wishes and intubate if needed" },
+      { "id": "B", "text": "Refuse to intubate as it is medically futile" },
+      { "id": "C", "text": "Consult the ethics committee and arrange a family meeting" },
+      { "id": "D", "text": "Transfer care to another physician" },
+      { "id": "E", "text": "Ask the daughter to prove the patient would want this" }
+    ],
+    "correctOptionId": "C",
+    "explanation": {
+      "whyCorrect": "Futility disputes: Ethics consult + Family meeting. Focus on patient's values.",
+      "whyWrong": {
+        "A": "Blindly following futile wishes violates ethical duty.",
+        "B": "Unilaterally refusing damages relationship.",
+        "D": "Transfer avoids the problem.",
+        "E": "Confrontational approach escalates conflict."
+      },
+      "clinicalPearl": "Futility disputes: Ethics consult + Family meeting. Time-limited trials can help."
+    },
+    "references": ["AMA Code of Medical Ethics"],
+    "highYield": true,
+    "timeAllocated": 72
+  },
+  {
+    "id": "board_pearls_003",
+    "specialty": "quick_review",
+    "topic": "Statistics",
+    "difficulty": "hard",
+    "vignette": "A diagnostic test has sensitivity 95% and specificity 90% for a disease with 2% prevalence. If a patient tests positive, what is the approximate probability they actually have the disease?",
+    "options": [
+      { "id": "A", "text": "95%" },
+      { "id": "B", "text": "90%" },
+      { "id": "C", "text": "50%" },
+      { "id": "D", "text": "16%" },
+      { "id": "E", "text": "84%" }
+    ],
+    "correctOptionId": "D",
+    "explanation": {
+      "whyCorrect": "PPV = (0.95 × 0.02) / [0.95×0.02 + (0.10)(0.98)] = 0.019/0.117 = 16.2%.",
+      "whyWrong": {
+        "A": "95% is sensitivity, not PPV.",
+        "B": "90% is specificity, not PPV.",
+        "C": "50% would require higher prevalence.",
+        "E": "84% is closer to NPV."
+      },
+      "clinicalPearl": "PPV depends on PREVALENCE! Even excellent tests have low PPV when disease is rare."
+    },
+    "references": ["Biostatistics", "Bayes Theorem"],
+    "highYield": true,
+    "timeAllocated": 72
+  }
+]
+[
+  {
+    "id": "board_pearls_004",
+    "specialty": "quick_review",
+    "topic": "Fluid Management",
+    "difficulty": "medium",
+    "vignette": "A 70-year-old male with septic shock receives 30mL/kg IV crystalloid. He remains hypotensive (BP 78/45) despite fluids. What is the BEST next step?",
+    "options": [
+      { "id": "A", "text": "Give another 30mL/kg fluid bolus" },
+      { "id": "B", "text": "Start norepinephrine infusion" },
+      { "id": "C", "text": "Start dobutamine infusion" },
+      { "id": "D", "text": "Start hydrocortisone" },
+      { "id": "E", "text": "Transfuse packed RBCs" }
+    ],
+    "correctOptionId": "B",
+    "explanation": {
+      "whyCorrect": "Persistent hypotension after initial fluid resuscitation = Start vasopressors. Norepinephrine is FIRST-LINE (alpha + beta agonist). Target MAP ≥65 mmHg.",
+      "whyWrong": {
+        "A": "Additional fluids without vasopressors will not restore perfusion.",
+        "C": "Dobutamine is for cardiogenic shock with low cardiac output.",
+        "D": "Hydrocortisone is for refractory shock (despite vasopressors).",
+        "E": "Transfusion only if Hb <7 and evidence of inadequate oxygen delivery."
+      },
+      "clinicalPearl": "Septic shock: Fluids → Norepinephrine (MAP ≥65) → Vasopressin (2nd line) → Hydrocortisone (refractory)."
+    },
+    "references": ["Surviving Sepsis Campaign 2021"],
+    "highYield": true,
+    "timeAllocated": 72
+  },
+  {
+    "id": "board_pearls_005",
+    "specialty": "quick_review",
+    "topic": "ECG Interpretation",
+    "difficulty": "hard",
+    "vignette": "An ECG shows PR interval 220ms, QRS 140ms with a 'slurred upstroke' (delta wave) in lead II. What is the diagnosis?",
+    "options": [
+      { "id": "A", "text": "First-degree AV block" },
+      { "id": "B", "text": "LBBB" },
+      { "id": "C", "text": "Wolff-Parkinson-White syndrome" },
+      { "id": "D", "text": "Hyperkalemia" },
+      { "id": "E", "text": "Brugada syndrome" }
+    ],
+    "correctOptionId": "C",
+    "explanation": {
+      "whyCorrect": "WPW: Short PR (<120ms), wide QRS (>120ms), delta wave (slurred QRS upstroke). Accessory pathway (Bundle of Kent) bypasses AV node causing pre-excitation.",
+      "whyWrong": {
+        "A": "First-degree AV block has PROLONGED PR (>200ms), not short PR.",
+        "B": "LBBB has wide QRS but no delta wave and normal PR.",
+        "D": "Hyperkalemia causes peaked T waves, loss of P waves.",
+        "E": "Brugada has ST elevation in V1-V3 with RBBB pattern."
+      },
+      "clinicalPearl": "WPW triad: Short PR + Delta wave + Wide QRS. Risk of sudden death if AF develops (rapid conduction via accessory pathway)."
+    },
+    "references": ["ACC/AHA ECG Interpretation"],
+    "highYield": true,
+    "timeAllocated": 72
+  },
+  {
+    "id": "board_pearls_006",
+    "specialty": "quick_review",
+    "topic": "Blood Gas Analysis",
+    "difficulty": "hard",
+    "vignette": "A patient with COPD on home O2 presents with ABG: pH 7.28, PaCO2 75, HCO3 34. What is the acid-base disorder?",
+    "options": [
+      { "id": "A", "text": "Acute respiratory acidosis" },
+      { "id": "B", "text": "Chronic respiratory acidosis with acute exacerbation" },
+      { "id": "C", "text": "Metabolic acidosis" },
+      { "id": "D", "text": "Mixed respiratory and metabolic acidosis" },
+      { "id": "E", "text": "Acute respiratory alkalosis" }
+    ],
+    "correctOptionId": "B",
+    "explanation": {
+      "whyCorrect": "Chronic respiratory acidosis: Expected HCO3 increase = 4 mEq/L per 10mmHg PaCO2 rise. Baseline PaCO2 ~50, HCO3 ~30. Now: PaCO2 75 (acute rise of 25) with HCO3 34 (appropriate chronic compensation + partial acute). pH 7.28 indicates acute-on-chronic.",
+      "whyWrong": {
+        "A": "Acute resp acidosis: pH ↓ 0.08 per 10 PaCO2 rise. HCO3 would be near normal.",
+        "C": "pH is acidotic but PaCO2 is elevated (respiratory, not metabolic).",
+        "D": "HCO3 is appropriately elevated for chronic compensation.",
+        "E": "pH is acidotic, not alkalotic."
+      },
+      "clinicalPearl": "COPD: Chronic CO2 retainer with compensated HCO3. Acute rise in CO2 = acute-on-chronic respiratory acidosis."
+    },
+    "references": ["Acid-Base Physiology", "COPD Management"],
+    "highYield": true,
+    "timeAllocated": 72
+  }
+]
+[
+  {
+    "id": "board_pearls_007",
+    "specialty": "quick_review",
+    "topic": "Chest Pain DDx",
+    "difficulty": "medium",
+    "vignette": "A 35-year-old male presents with sharp chest pain worse with lying down and improved with leaning forward. He had a cold last week. ECG: Diffuse ST elevation. What is the BEST next step?",
+    "options": [
+      { "id": "A", "text": "Emergent cardiac catheterization" },
+      { "id": "B", "text": "Ibuprofen 600mg TID + Colchicine 0.5mg BID" },
+      { "id": "C", "text": "CT chest to rule out PE" },
+      { "id": "D", "text": "Echocardiogram" },
+      { "id": "E", "text": "Omeprazole 40mg daily" }
+    ],
+    "correctOptionId": "B",
+    "explanation": {
+      "whyCorrect": "Acute pericarditis: Positional chest pain + Diffuse ST elevation + Viral prodrome. Treatment: NSAIDs + Colchicine (3 months). Do NOT use steroids first-line.",
+      "whyWrong": {
+        "A": "Diffuse (not territorial) ST elevation = pericarditis, not STEMI.",
+        "C": "PE would cause dyspnea, tachycardia, and normal CXR.",
+        "D": "Echo may show effusion but diagnosis is clinical + ECG.",
+        "E": "PPI treats GERD, not pericarditis."
+      },
+      "clinicalPearl": "Pericarditis: Positional CP + Diffuse STE + PR depression. Tx: NSAIDs + Colchicine. NEVER steroids first."
+    },
+    "references": ["ESC Pericarditis Guidelines"],
+    "highYield": true,
+    "timeAllocated": 72
+  },
+  {
+    "id": "board_pearls_008",
+    "specialty": "quick_review",
+    "topic": "Delirium vs Dementia",
+    "difficulty": "easy",
+    "vignette": "An 80-year-old male is 2 days post-hip surgery. He is agitated, disoriented, and trying to pull out his IV lines. His son says 'he was fine yesterday.' Symptoms fluctuate throughout the day. What is the BEST diagnosis?",
+    "options": [
+      { "id": "A", "text": "Alzheimer dementia" },
+      { "id": "B", "text": "Delirium" },
+      { "id": "C", "text": "Lewy body dementia" },
+      { "id": "D", "text": "Vascular dementia" },
+      { "id": "E", "text": "Frontotemporal dementia" }
+    ],
+    "correctOptionId": "B",
+    "explanation": {
+      "whyCorrect": "Delirium: Acute onset (hours-days), fluctuating course, inattention, altered consciousness. Often triggered by surgery, medications, infection, or metabolic disturbance. Reversible if underlying cause treated.",
+      "whyWrong": {
+        "A": "Alzheimer: Chronic, progressive, insidious onset over years.",
+        "C": "Lewy body: Visual hallucinations, parkinsonism, fluctuating cognition (chronic).",
+        "D": "Vascular: Stepwise deterioration, focal neurological signs.",
+        "E": "FTD: Personality/behavior changes, younger onset."
+      },
+      "clinicalPearl": "Delirium = Acute + Fluctuating + Inattention. Dementia = Chronic + Progressive + Memory. Delirium is a medical emergency."
+    },
+    "references": ["DSM-5 Delirium Criteria"],
+    "highYield": true,
+    "timeAllocated": 72
+  }
+]
+[
+  {
+    "id": "board_pearls_009",
+    "specialty": "quick_review",
+    "topic": "Shock Management",
+    "difficulty": "hard",
+    "vignette": "A patient in septic shock remains hypotensive (MAP 58) despite norepinephrine 0.5 mcg/kg/min. What is the BEST second-line vasopressor?",
+    "options": [
+      { "id": "A", "text": "Dopamine" },
+      { "id": "B", "text": "Dobutamine" },
+      { "id": "C", "text": "Vasopressin 0.03 units/min" },
+      { "id": "D", "text": "Phenylephrine" },
+      { "id": "E", "text": "Milrinone" }
+    ],
+    "correctOptionId": "C",
+    "explanation": {
+      "whyCorrect": "Refractory septic shock on high-dose norepinephrine: Add vasopressin (0.03 units/min fixed dose). Vasopressin is a non-catecholamine vasopressor that potentiates norepinephrine effect and reduces norepinephrine requirements.",
+      "whyWrong": {
+        "A": "Dopamine is second-line (more arrhythmias than norepinephrine).",
+        "B": "Dobutamine is an inotrope (for low cardiac output), not a vasopressor.",
+        "D": "Phenylephrine is pure alpha-agonist, less effective than vasopressin in sepsis.",
+        "E": "Milrinone is an inodilator (for cardiogenic shock), would worsen hypotension."
+      },
+      "clinicalPearl": "Septic shock: Norepinephrine (1st) → Vasopressin (2nd) → Epinephrine (3rd). Hydrocortisone if refractory to vasopressors."
+    },
+    "references": ["Surviving Sepsis Campaign 2021", "VASST Trial"],
+    "highYield": true,
+    "timeAllocated": 72
+  },
+  {
+    "id": "board_pearls_010",
+    "specialty": "quick_review",
+    "topic": "End-of-Life Care",
+    "difficulty": "medium",
+    "vignette": "A 85-year-old with metastatic pancreatic cancer is in severe pain despite oral morphine. He develops myoclonus and confusion. What is the BEST management?",
+    "options": [
+      { "id": "A", "text": "Increase morphine dose" },
+      { "id": "B", "text": "Rotate to hydromorphone" },
+      { "id": "C", "text": "Add naloxone" },
+      { "id": "D", "text": "Add midazolam" },
+      { "id": "E", "text": "Stop all opioids" }
+    ],
+    "correctOptionId": "B",
+    "explanation": {
+      "whyCorrect": "Opioid-induced neurotoxicity (OIN): Myoclonus, hyperalgesia, delirium. Caused by morphine metabolite (M3G) accumulation, especially in renal impairment. Rotate to a different opioid (hydromorphone, fentanyl) that lacks neurotoxic metabolites.",
+      "whyWrong": {
+        "A": "Increasing dose would worsen neurotoxicity.",
+        "C": "Naloxone reverses pain control and causes withdrawal crisis.",
+        "D": "Midazolam treats symptoms but not the underlying cause.",
+        "E": "Stopping all opioids leaves patient in severe pain (unethical)."
+      },
+      "clinicalPearl": "Opioid neurotoxicity: Rotate to different opioid. Hydromorphone/fentanyl have less neurotoxic metabolites than morphine."
+    },
+    "references": ["NCCN Palliative Care Guidelines"],
+    "highYield": true,
+    "timeAllocated": 72
+  }
+]
+[
+  {
+    "id": "board_pearls_011",
+    "specialty": "quick_review",
+    "topic": "Quality Improvement",
+    "difficulty": "medium",
+    "vignette": "A hospital wants to reduce catheter-associated UTIs (CAUTI). Which intervention has the STRONGEST evidence for prevention?",
+    "options": [
+      { "id": "A", "text": "Antibiotic-coated catheters" },
+      { "id": "B", "text": "Daily assessment of catheter necessity and prompt removal" },
+      { "id": "C", "text": "Prophylactic antibiotics while catheter in place" },
+      { "id": "D", "text": "Silver-coated catheters" },
+      { "id": "E", "text": "Bladder irrigation with antiseptic solution" }
+    ],
+    "correctOptionId": "B",
+    "explanation": {
+      "whyCorrect": "The MOST effective CAUTI prevention: AVOID unnecessary catheters and REMOVE as soon as possible. Daily assessment of necessity + Nurse-driven removal protocols reduce CAUTI by 50-70%. Antibiotic/silver coatings provide modest additional benefit.",
+      "whyWrong": {
+        "A": "Antibiotic coatings reduce CAUTI but less impact than removal strategies.",
+        "C": "Prophylactic antibiotics increase resistance and C. diff without clear benefit.",
+        "D": "Silver coatings have mixed evidence, minimal benefit in large trials.",
+        "E": "Bladder irrigation does NOT prevent CAUTI and may increase infection."
+      },
+      "clinicalPearl": "CAUTI prevention: Avoid unnecessary catheters + Remove ASAP. Daily assessment with nurse-driven protocols = Most effective."
+    },
+    "references": ["CDC CAUTI Prevention Guidelines", "SHEA/IDSA HAI Prevention"],
+    "highYield": true,
+    "timeAllocated": 72
+  },
+  {
+    "id": "board_pearls_012",
+    "specialty": "quick_review",
+    "topic": "Patient Safety",
+    "difficulty": "medium",
+    "vignette": "A nurse calls you concerned about a patient's potassium level of 6.2 mEq/L. You order treatment over the phone but the nurse later states 'I thought you said calcium chloride, not calcium gluconate.' This is an example of what type of error?",
+    "options": [
+      { "id": "A", "text": "Medication error (wrong drug)" },
+      { "id": "B", "text": "Communication error (verbal order misheard)" },
+      { "id": "C", "text": "Diagnostic error" },
+      { "id": "D", "text": "System error" },
+      { "id": "E", "text": "Equipment error" }
+    ],
+    "correctOptionId": "B",
+    "explanation": {
+      "whyCorrect": "Verbal orders are high-risk for miscommunication (sound-alike drugs: calcium gluconate vs calcium chloride). Best practice: Use computerized order entry (CPOE), read-back verification for verbal orders. 'Write it down, read it back, confirm it.'",
+      "whyWrong": {
+        "A": "Both are calcium salts (same drug class), the error is communication, not wrong medication class.",
+        "C": "This is not a diagnostic error (diagnosis of hyperkalemia was correct).",
+        "D": "System error contributed but primary error is communication.",
+        "E": "No equipment involved."
+      },
+      "clinicalPearl": "Verbal orders: High risk for error. Use CPOE whenever possible. If verbal, use 'write down → read back → confirm' protocol."
+    },
+    "references": ["Joint Commission Patient Safety Goals"],
+    "highYield": true,
+    "timeAllocated": 72
+  },
+  {
+    "id": "board_pearls_013",
+    "specialty": "quick_review",
+    "topic": "Health Disparities",
+    "difficulty": "easy",
+    "vignette": "Studies consistently show that African American patients with ACS are less likely to receive cardiac catheterization than Caucasian patients with similar presentations. This is an example of:",
+    "options": [
+      { "id": "A", "text": "Genetic difference in ACS presentation" },
+      { "id": "B", "text": "Racial disparity in healthcare delivery" },
+      { "id": "C", "text": "Patient preference for less invasive care" },
+      { "id": "D", "text": "Biological difference in CAD severity" },
+      { "id": "E", "text": "Insurance coverage limitations" }
+    ],
+    "correctOptionId": "B",
+    "explanation": {
+      "whyCorrect": "Racial disparities in cardiac catheterization are well-documented (IOM Unequal Treatment 2003). African Americans with similar insurance, severity, and presentation are 30-40% less likely to receive cath. Unconscious bias, access, and system factors contribute. Not explained by patient preference or biology.",
+      "whyWrong": {
+        "A": "Not a genetic difference - studies control for disease severity.",
+        "C": "Studies controlling for patient preference still show disparity.",
+        "D": "Not biological - disparity persists after controlling for severity.",
+        "E": "Insurance is a factor but disparity persists in equal-access systems (VA)."
+      },
+      "clinicalPearl": "Racial disparities in ACS care: African Americans 30-40% less likely to receive cardiac cath. Multifactorial: Unconscious bias, access, system factors."
+    },
+    "references": ["IOM Unequal Treatment Report", "NEJM Racial Disparities in CAD"],
+    "highYield": true,
+    "timeAllocated": 72
+  }
+]
+[
+  {
+    "id": "board_pearls_014",
+    "specialty": "quick_review",
+    "topic": "Medical Education",
+    "difficulty": "easy",
+    "vignette": "A medical student is struggling to retain information from lectures. Research shows which study technique has the STRONGEST evidence for long-term retention?",
+    "options": [
+      { "id": "A", "text": "Re-reading notes multiple times" },
+      { "id": "B", "text": "Active recall (testing yourself) with spaced repetition" },
+      { "id": "C", "text": "Highlighting key points in textbooks" },
+      { "id": "D", "text": "Summarizing lectures in your own words" },
+      { "id": "E", "text": "Group study discussions" }
+    ],
+    "correctOptionId": "B",
+    "explanation": {
+      "whyCorrect": "Active recall (retrieval practice) + Spaced repetition = MOST effective evidence-based learning technique. The 'testing effect' shows that testing yourself is superior to re-reading. Spaced repetition (increasing intervals) optimizes memory consolidation.",
+      "whyWrong": {
+        "A": "Re-reading is one of the LEAST effective techniques (fluency illusion).",
+        "C": "Highlighting has minimal benefit (passive activity).",
+        "D": "Summarizing is better than re-reading but inferior to active recall.",
+        "E": "Group study is variable; depends on whether active recall is used."
+      },
+      "clinicalPearl": "Best study technique: Active recall (testing) + Spaced repetition. Re-reading and highlighting are ineffective (give illusion of mastery)."
+    },
+    "references": ["Dunlosky et al. 2013 - Improving Students' Learning"],
+    "highYield": true,
+    "timeAllocated": 72
+  },
+  {
+    "id": "board_pearls_015",
+    "specialty": "quick_review",
+    "topic": "Clinical Decision Rules",
+    "difficulty": "medium",
+    "vignette": "A 45-year-old male presents with acute cough, fever 38.0°C, HR 90, RR 18. He has no confusion, BUN 15, BP 120/80. CXR shows right lower lobe infiltrate. What is his CURB-65 score and disposition?",
+    "options": [
+      { "id": "A", "text": "CURB-65 = 0, outpatient treatment" },
+      { "id": "B", "text": "CURB-65 = 1 (age 45), outpatient treatment" },
+      { "id": "C", "text": "CURB-65 = 2, admit to ward" },
+      { "id": "D", "text": "CURB-65 = 3, consider ICU" },
+      { "id": "E", "text": "CURB-65 = 4, ICU admission" }
+    ],
+    "correctOptionId": "A",
+    "explanation": {
+      "whyCorrect": "CURB-65: Confusion (no) = 0, Urea >7 (BUN 15 = normal) = 0, RR ≥30 (18) = 0, BP <90/60 (120/80) = 0, Age ≥65 (45) = 0. Total = 0. Outpatient treatment appropriate. CURB-65 0-1 = Outpatient, 2 = Inpatient, ≥3 = ICU.",
+      "whyWrong": {
+        "B": "Age criteria is ≥65, not 45.",
+        "C": "Score is 0, not 2.",
+        "D": "Score is 0, not 3.",
+        "E": "Score is 0, not 4."
+      },
+      "clinicalPearl": "CURB-65: Score 0-1 = Outpatient. Score 2 = Inpatient ward. Score ≥3 = ICU. Use clinical judgment (hypoxia, comorbidities) in addition to score."
+    },
+    "references": ["CURB-65 Score Validation"],
+    "highYield": true,
+    "timeAllocated": 72
+  },
+  {
+    "id": "board_pearls_016",
+    "specialty": "quick_review",
+    "topic": "Emergency Response",
+    "difficulty": "hard",
+    "vignette": "You are the first responder to an unresponsive patient. You check for responsiveness, call for help, and check pulse and breathing. No pulse, no breathing. What is the FIRST step in BLS?",
+    "options": [
+      { "id": "A", "text": "Start chest compressions immediately" },
+      { "id": "B", "text": "Give 2 rescue breaths" },
+      { "id": "C", "text": "Retrieve AED/defibrillator" },
+      { "id": "D", "text": "Check for foreign body in airway" },
+      { "id": "E", "text": "Call 911 first, then start compressions" }
+    ],
+    "correctOptionId": "A",
+    "explanation": {
+      "whyCorrect": "BLS 2020: C-A-B (Compressions, Airway, Breathing). Start chest compressions IMMEDIATELY (at least 100-120/min, 2 inches deep). Do NOT delay for rescue breaths or AED. After 30 compressions → open airway → 2 breaths. AED as soon as available.",
+      "whyWrong": {
+        "B": "Compressions come BEFORE breaths (C-A-B sequence since 2010).",
+        "C": "AED is obtained after starting compressions (or by second rescuer).",
+        "D": "Routine foreign body check is not recommended unless suspect aspiration.",
+        "E": "In-hospital: Call code blue while starting compressions. Out-of-hospital: Call 911 first if alone, then start CPR."
+      },
+      "clinicalPearl": "BLS: C-A-B. Compressions first (push hard, push fast, allow full recoil). Minimize interruptions. AED as soon as available."
+    },
+    "references": ["AHA BLS Guidelines 2020"],
+    "highYield": true,
+    "timeAllocated": 72
+  }
+]

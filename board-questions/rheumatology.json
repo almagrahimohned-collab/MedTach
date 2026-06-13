@@ -1,0 +1,770 @@
+[
+  {
+    "id": "board_rheum_001",
+    "specialty": "rheumatology",
+    "topic": "Rheumatoid Arthritis",
+    "difficulty": "medium",
+    "vignette": "A 45-year-old female presents with symmetric polyarthritis of MCP, PIP, and wrists for 3 months. Morning stiffness lasts 2 hours. Labs: RF positive, Anti-CCP positive. X-rays show periarticular osteopenia and erosions. What is the BEST initial DMARD?",
+    "options": [
+      { "id": "A", "text": "Prednisone 10mg daily" },
+      { "id": "B", "text": "Methotrexate 15mg weekly + Folic acid" },
+      { "id": "C", "text": "Hydroxychloroquine" },
+      { "id": "D", "text": "Adalimumab (anti-TNF)" },
+      { "id": "E", "text": "Sulfasalazine" }
+    ],
+    "correctOptionId": "B",
+    "explanation": {
+      "whyCorrect": "RA with erosions = Moderate-severe disease. Methotrexate is FIRST-LINE DMARD (anchor drug). Start 15mg weekly and escalate to 25mg. Always give folic acid to reduce side effects. If inadequate response at 3-6 months → Add biologic (anti-TNF first-line).",
+      "whyWrong": {
+        "A": "Steroids are for short-term symptom control while DMARD takes effect (bridge therapy).",
+        "C": "Hydroxychloroquine is for mild RA or combination therapy, not moderate-severe with erosions.",
+        "D": "Biologics are second-line after MTX failure (treat-to-target).",
+        "E": "Sulfasalazine is alternative for mild RA or combination therapy."
+      },
+      "clinicalPearl": "RA: Methotrexate first-line (anchor drug). Add biologic if inadequate response. Treat-to-target (remission or low disease activity)."
+    },
+    "references": ["ACR RA Guidelines 2021"],
+    "highYield": true,
+    "timeAllocated": 72
+  },
+  {
+    "id": "board_rheum_002",
+    "specialty": "rheumatology",
+    "topic": "Systemic Lupus Erythematosus",
+    "difficulty": "hard",
+    "vignette": "A 25-year-old African American female presents with malar rash, oral ulcers, arthritis, and pleuritic chest pain. Labs: ANA 1:640, Anti-dsDNA positive, C3/C4 low, Proteinuria 1.5g/day. What is the BEST treatment for her nephritis?",
+    "options": [
+      { "id": "A", "text": "Prednisone alone" },
+      { "id": "B", "text": "Mycophenolate mofetil + Prednisone" },
+      { "id": "C", "text": "Cyclophosphamide (NIH regimen)" },
+      { "id": "D", "text": "Rituximab" },
+      { "id": "E", "text": "Belimumab" }
+    ],
+    "correctOptionId": "B",
+    "explanation": {
+      "whyCorrect": "Class III/IV lupus nephritis (proteinuria >0.5g/day + active sediment): Induction therapy = Mycophenolate mofetil (MMF) + Prednisone (or Cyclophosphamide + Prednisone). MMF is preferred (ALMS trial) due to better safety profile. Maintenance: MMF or Azathioprine.",
+      "whyWrong": {
+        "A": "Prednisone alone is insufficient for proliferative nephritis.",
+        "C": "Cyclophosphamide is alternative but MMF is preferred first-line.",
+        "D": "Rituximab is for refractory disease (LUNAR trial showed no benefit for induction).",
+        "E": "Belimumab is add-on therapy for active SLE, not first-line for nephritis."
+      },
+      "clinicalPearl": "Lupus nephritis Class III/IV: Mycophenolate mofetil + Prednisone (induction) → MMF or AZA (maintenance)."
+    },
+    "references": ["ACR Lupus Nephritis Guidelines", "ALMS Trial"],
+    "highYield": true,
+    "timeAllocated": 72
+  },
+  {
+    "id": "board_rheum_003",
+    "specialty": "rheumatology",
+    "topic": "Gout",
+    "difficulty": "medium",
+    "vignette": "A 55-year-old obese male presents with acute-onset severe pain, erythema, and swelling of the first MTP joint (podagra). He had a similar episode last year. Joint aspiration shows negatively birefringent needle-shaped crystals. What is the BEST treatment for the acute attack?",
+    "options": [
+      { "id": "A", "text": "Allopurinol 300mg daily" },
+      { "id": "B", "text": "NSAIDs + Colchicine + Intra-articular steroids" },
+      { "id": "C", "text": "Start allopurinol immediately" },
+      { "id": "D", "text": "Probenecid" },
+      { "id": "E", "text": "Febuxostat" }
+    ],
+    "correctOptionId": "B",
+    "explanation": {
+      "whyCorrect": "Acute gout attack: Anti-inflammatory therapy first! NSAIDs (naproxen, indomethacin) OR Colchicine (low-dose: 1.2mg then 0.6mg 1h later) OR Steroids (oral or intra-articular). Do NOT start or change urate-lowering therapy (ULT) during acute attack (prolongs flare).",
+      "whyWrong": {
+        "A": "Starting ULT during acute attack worsens and prolongs the flare.",
+        "C": "Never start ULT during acute attack. Treat flare first, then start ULT 2-4 weeks later.",
+        "D": "Probenecid is for chronic management (under-excretors), not acute attacks.",
+        "E": "Febuxostat is ULT (second-line), not for acute attacks."
+      },
+      "clinicalPearl": "Acute gout: Treat inflammation FIRST (NSAIDs/Colchicine/Steroids). Start ULT (allopurinol) 2-4 weeks AFTER flare resolves."
+    },
+    "references": ["ACR Gout Guidelines 2020"],
+    "highYield": true,
+    "timeAllocated": 72
+  },
+  {
+    "id": "board_rheum_004",
+    "specialty": "rheumatology",
+    "topic": "Systemic Sclerosis",
+    "difficulty": "hard",
+    "vignette": "A 50-year-old female presents with Raynaud phenomenon, skin thickening on her hands (sclerodactyly), and dysphagia. She has positive Anti-Scl-70 (anti-topoisomerase I) antibodies. What is the MOST concerning complication?",
+    "options": [
+      { "id": "A", "text": "Interstitial lung disease (ILD)" },
+      { "id": "B", "text": "Pulmonary arterial hypertension" },
+      { "id": "C", "text": "Scleroderma renal crisis" },
+      { "id": "D", "text": "Digital ulcers" },
+      { "id": "E", "text": "Esophageal dysmotility" }
+    ],
+    "correctOptionId": "C",
+    "explanation": {
+      "whyCorrect": "Scleroderma renal crisis: Sudden onset severe HTN + AKI + Microangiopathic hemolytic anemia (MAHA). Most concerning because it can be RAPIDLY FATAL. Associated with Anti-RNA polymerase III antibody. Treatment: ACE inhibitors (captopril) - LIFE-SAVING. Avoid high-dose steroids (increase risk).",
+      "whyWrong": {
+        "A": "ILD is common and serious but progresses slowly.",
+        "B": "PAH is more common in limited SSc (CREST), not diffuse (anti-Scl70+).",
+        "D": "Digital ulcers are painful but not acutely life-threatening.",
+        "E": "Esophageal dysmotility affects quality of life but not mortality."
+      },
+      "clinicalPearl": "Scleroderma renal crisis: Sudden HTN + AKI + MAHA. Emergency! ACE inhibitors are life-saving. Check anti-RNA pol III antibody."
+    },
+    "references": ["Scleroderma Renal Crisis Management"],
+    "highYield": true,
+    "timeAllocated": 72
+  },
+  {
+    "id": "board_rheum_005",
+    "specialty": "rheumatology",
+    "topic": "Ankylosing Spondylitis",
+    "difficulty": "medium",
+    "vignette": "A 25-year-old male presents with chronic low back pain for 2 years. Pain is worse in the morning, improves with exercise, and wakes him at night. He has limited spinal mobility. HLA-B27 is positive. Sacroiliac joint X-ray shows erosions and ankylosis. What is the BEST initial biologic?",
+    "options": [
+      { "id": "A", "text": "Adalimumab (anti-TNF)" },
+      { "id": "B", "text": "Secukinumab (anti-IL17)" },
+      { "id": "C", "text": "Tofacitinib (JAK inhibitor)" },
+      { "id": "D", "text": "Abatacept" },
+      { "id": "E", "text": "Rituximab" }
+    ],
+    "correctOptionId": "A",
+    "explanation": {
+      "whyCorrect": "Ankylosing spondylitis (axial spondyloarthritis): Anti-TNF (adalimumab, infliximab, etanercept, golimumab, certolizumab) is FIRST-LINE biologic after NSAID failure. Anti-IL17 (secukinumab, ixekizumab) is second-line or alternative. JAK inhibitors are for TNF failure.",
+      "whyWrong": {
+        "B": "Anti-IL17 is second-line (after anti-TNF failure).",
+        "C": "JAK inhibitors for refractory disease (third-line).",
+        "D": "Abatacept is not effective for axial disease (works in peripheral PsA).",
+        "E": "Rituximab has NO role in SpA."
+      },
+      "clinicalPearl": "Axial SpA: NSAIDs first → Anti-TNF (first-line biologic) → Anti-IL17 (second-line) → JAK inhibitor (third-line)."
+    },
+    "references": ["ASAS/EULAR Axial SpA Guidelines"],
+    "highYield": true,
+    "timeAllocated": 72
+  }
+]
+[
+  {
+    "id": "board_rheum_006",
+    "specialty": "rheumatology",
+    "topic": "Giant Cell Arteritis",
+    "difficulty": "hard",
+    "vignette": "A 72-year-old female presents with new-onset headache, scalp tenderness, jaw claudication, and visual changes (blurred vision). ESR is 110 mm/hr. What is the MOST critical next step?",
+    "options": [
+      { "id": "A", "text": "Start high-dose prednisone 60mg daily immediately" },
+      { "id": "B", "text": "Temporal artery biopsy first, then start steroids" },
+      { "id": "C", "text": "Start methotrexate" },
+      { "id": "D", "text": "MRI brain to rule out stroke" },
+      { "id": "E", "text": "Start tocilizumab" }
+    ],
+    "correctOptionId": "A",
+    "explanation": {
+      "whyCorrect": "GCA with visual symptoms is a MEDICAL EMERGENCY! Start high-dose steroids IMMEDIATELY to prevent irreversible blindness. Temporal artery biopsy should be done within 2 weeks of starting steroids. Do NOT delay steroids for biopsy. Tocilizumab is steroid-sparing for maintenance.",
+      "whyWrong": {
+        "B": "Never delay steroids for biopsy when vision is threatened.",
+        "C": "Methotrexate is steroid-sparing (second-line), not for acute management.",
+        "D": "MRI may be normal in GCA; do not delay steroids for imaging.",
+        "E": "Tocilizumab is for maintenance, not acute management."
+      },
+      "clinicalPearl": "GCA + Visual symptoms = EMERGENCY! Start steroids IMMEDIATELY (before biopsy). Irreversible blindness can occur within hours."
+    },
+    "references": ["ACR GCA Guidelines"],
+    "highYield": true,
+    "timeAllocated": 72
+  },
+  {
+    "id": "board_rheum_007",
+    "specialty": "rheumatology",
+    "topic": "Osteoarthritis",
+    "difficulty": "easy",
+    "vignette": "A 65-year-old obese female presents with knee pain that worsens with activity and improves with rest. She has morning stiffness lasting 15 minutes. X-rays show joint space narrowing and osteophytes. What is the BEST first-line treatment?",
+    "options": [
+      { "id": "A", "text": "Total knee arthroplasty" },
+      { "id": "B", "text": "Weight loss, exercise, and acetaminophen" },
+      { "id": "C", "text": "Intra-articular corticosteroids" },
+      { "id": "D", "text": "Hyaluronic acid injections" },
+      { "id": "E", "text": "Opioid analgesics" }
+    ],
+    "correctOptionId": "B",
+    "explanation": {
+      "whyCorrect": "Knee OA: First-line = Non-pharmacologic (weight loss, exercise, physical therapy, biomechanical interventions) + Acetaminophen or topical NSAIDs. Oral NSAIDs if inadequate. Intra-articular steroids for acute flares. Surgery for end-stage refractory to conservative therapy.",
+      "whyWrong": {
+        "A": "Surgery is last resort after conservative measures fail.",
+        "C": "IA steroids for acute flares, not first-line maintenance.",
+        "D": "Hyaluronic acid has limited evidence, not recommended by major guidelines.",
+        "E": "Opioids should be AVOIDED for chronic OA (addiction risk, side effects)."
+      },
+      "clinicalPearl": "OA: Weight loss + Exercise + Acetaminophen/NSAIDs. Joint replacement for end-stage refractory disease."
+    },
+    "references": ["ACR OA Guidelines 2019"],
+    "highYield": true,
+    "timeAllocated": 72
+  },
+  {
+    "id": "board_rheum_008",
+    "specialty": "rheumatology",
+    "topic": "Antiphospholipid Syndrome",
+    "difficulty": "hard",
+    "vignette": "A 35-year-old female with SLE presents with recurrent miscarriages (3 first-trimester losses) and a DVT. Labs: Lupus anticoagulant positive on 2 occasions 12 weeks apart. What is the BEST management during her next pregnancy?",
+    "options": [
+      { "id": "A", "text": "Aspirin alone" },
+      { "id": "B", "text": "Low molecular weight heparin (LMWH) + Low-dose aspirin" },
+      { "id": "C", "text": "Warfarin throughout pregnancy" },
+      { "id": "D", "text": "No anticoagulation, pregnancy is safe" },
+      { "id": "E", "text": "Clopidogrel + Aspirin" }
+    ],
+    "correctOptionId": "B",
+    "explanation": {
+      "whyCorrect": "Obstetric APS (recurrent pregnancy loss + thrombosis + positive LA): LMWH + Low-dose aspirin during pregnancy and 6 weeks postpartum. Reduces pregnancy loss from 80% to 20-30%. Warfarin is TERATOGENIC (avoid in pregnancy). Continue aspirin lifelong for thrombotic risk.",
+      "whyWrong": {
+        "A": "Aspirin alone is insufficient for obstetric APS with thrombosis.",
+        "C": "Warfarin is contraindicated in pregnancy (embryopathy in 1st trimester).",
+        "D": "Untreated obstetric APS has 80% pregnancy loss rate.",
+        "E": "Clopidogrel is not standard for APS."
+      },
+      "clinicalPearl": "Obstetric APS: LMWH + Aspirin during pregnancy. Warfarin contraindicated. Dramatically improves live birth rates."
+    },
+    "references": ["ACR APS Guidelines"],
+    "highYield": true,
+    "timeAllocated": 72
+  },
+  {
+    "id": "board_rheum_009",
+    "specialty": "rheumatology",
+    "topic": "Polymyalgia Rheumatica",
+    "difficulty": "medium",
+    "vignette": "A 70-year-old female presents with bilateral shoulder and hip girdle pain and stiffness for 1 month. Morning stiffness lasts 2 hours. She has low-grade fever and fatigue. ESR is 85 mm/hr. What is the BEST initial treatment?",
+    "options": [
+      { "id": "A", "text": "Ibuprofen 600mg TID" },
+      { "id": "B", "text": "Prednisone 15mg daily" },
+      { "id": "C", "text": "Methotrexate 15mg weekly" },
+      { "id": "D", "text": "Tocilizumab" },
+      { "id": "E", "text": "Hydroxychloroquine" }
+    ],
+    "correctOptionId": "B",
+    "explanation": {
+      "whyCorrect": "PMR: Bilateral shoulder/hip girdle pain + Morning stiffness + Elevated ESR/CRP + Age >50 + Rapid response to low-dose steroids (prednisone 12.5-25mg daily). Dramatic improvement within 24-72 hours is diagnostic. Taper slowly over 12-18 months. Rule out GCA (ask about headache, vision, jaw claudication).",
+      "whyWrong": {
+        "A": "NSAIDs provide minimal relief for PMR.",
+        "C": "Methotrexate is steroid-sparing for refractory or relapsing PMR.",
+        "D": "Tocilizumab is for refractory PMR (third-line).",
+        "E": "Hydroxychloroquine has no role in PMR."
+      },
+      "clinicalPearl": "PMR: Shoulder/hip girdle pain + High ESR + Age >50 + Dramatic response to low-dose prednisone. Rule out GCA!"
+    },
+    "references": ["ACR/EULAR PMR Guidelines"],
+    "highYield": true,
+    "timeAllocated": 72
+  },
+  {
+    "id": "board_rheum_010",
+    "specialty": "rheumatology",
+    "topic": "Sjögren Syndrome",
+    "difficulty": "medium",
+    "vignette": "A 50-year-old female presents with dry eyes, dry mouth, and parotid gland enlargement. She has difficulty swallowing dry food. Labs: ANA positive, Anti-SSA (Ro) positive, Anti-SSB (La) positive. What is the MOST serious complication to monitor?",
+    "options": [
+      { "id": "A", "text": "Interstitial lung disease" },
+      { "id": "B", "text": "Non-Hodgkin lymphoma" },
+      { "id": "C", "text": "Renal tubular acidosis" },
+      { "id": "D", "text": "Peripheral neuropathy" },
+      { "id": "E", "text": "Primary biliary cholangitis" }
+    ],
+    "correctOptionId": "B",
+    "explanation": {
+      "whyCorrect": "Sjögren syndrome: Lymphoma risk is 16-44x higher than general population. Non-Hodgkin lymphoma (usually MALT type) in parotid glands. Warning signs: Persistent parotid enlargement, splenomegaly, lymphadenopathy, cryoglobulinemia, low C4. Monitor clinically.",
+      "whyWrong": {
+        "A": "ILD occurs but is not the most serious complication.",
+        "C": "RTA type 1 occurs in Sjögren but is manageable.",
+        "D": "Peripheral neuropathy is common but not life-threatening.",
+        "E": "PBC can co-exist but is not the most serious."
+      },
+      "clinicalPearl": "Sjögren: Highest lymphoma risk among autoimmune diseases (16-44x). Monitor for persistent parotid swelling, splenomegaly, lymphadenopathy."
+    },
+    "references": ["Sjögren Syndrome Foundation Guidelines"],
+    "highYield": true,
+    "timeAllocated": 72
+  }
+]
+[
+  {
+    "id": "board_rheum_011",
+    "specialty": "rheumatology",
+    "topic": "Behçet Disease",
+    "difficulty": "hard",
+    "vignette": "A 30-year-old male from Turkey presents with recurrent painful oral ulcers (>3/year), genital ulcers, and uveitis. He also has papulopustular skin lesions and a positive pathergy test. What is the diagnosis?",
+    "options": [
+      { "id": "A", "text": "Crohn disease" },
+      { "id": "B", "text": "Behçet disease" },
+      { "id": "C", "text": "Reactive arthritis" },
+      { "id": "D", "text": "Pemphigus vulgaris" },
+      { "id": "E", "text": "Erythema multiforme" }
+    ],
+    "correctOptionId": "B",
+    "explanation": {
+      "whyCorrect": "Behçet disease: Recurrent oral ulcers + Genital ulcers + Uveitis + Skin lesions + Positive pathergy test. Associated with HLA-B51. Most common along Silk Road (Turkey, Middle East, East Asia). Treatment: Colchicine, steroids, azathioprine, TNF inhibitors for severe.",
+      "whyWrong": {
+        "A": "Crohn: GI symptoms, fistulas, not oral/genital ulcers as primary.",
+        "C": "Reactive arthritis: Urethritis + Conjunctivitis + Arthritis (not ulcers).",
+        "D": "Pemphigus: Flaccid blisters, not aphthous ulcers.",
+        "E": "Erythema multiforme: Target lesions, not recurrent oral/genital ulcers."
+      },
+      "clinicalPearl": "Behçet: Oral + Genital ulcers + Uveitis + Pathergy + HLA-B51. Colchicine first-line for mucocutaneous."
+    },
+    "references": ["EULAR Behçet Disease Guidelines"],
+    "highYield": true,
+    "timeAllocated": 72
+  },
+  {
+    "id": "board_rheum_012",
+    "specialty": "rheumatology",
+    "topic": "Fibromyalgia",
+    "difficulty": "medium",
+    "vignette": "A 40-year-old female presents with chronic widespread pain (>3 months), fatigue, and unrefreshing sleep. She has multiple tender points on exam. All labs (CBC, ESR, CRP, ANA, RF) are normal. What is the BEST initial treatment?",
+    "options": [
+      { "id": "A", "text": "Opioids for pain" },
+      { "id": "B", "text": "Graded exercise + Cognitive behavioral therapy + Low-dose amitriptyline or duloxetine" },
+      { "id": "C", "text": "Prednisone 20mg daily" },
+      { "id": "D", "text": "Methotrexate" },
+      { "id": "E", "text": "Gabapentin alone" }
+    ],
+    "correctOptionId": "B",
+    "explanation": {
+      "whyCorrect": "Fibromyalgia: Multimodal approach = Exercise (graded aerobic) + CBT + Pharmacotherapy (duloxetine, milnacipran, pregabalin, or low-dose amitriptyline). Opioids should be AVOIDED (no benefit, risk of dependence). Steroids and DMARDs are ineffective (not inflammatory).",
+      "whyWrong": {
+        "A": "Opioids are contraindicated in fibromyalgia (ineffective, risk of hyperalgesia).",
+        "C": "Steroids have no benefit (not inflammatory).",
+        "D": "DMARDs have no role (no synovitis or joint damage).",
+        "E": "Gabapentin/pregabalin are one option but multimodal approach is superior."
+      },
+      "clinicalPearl": "Fibromyalgia: Exercise + CBT + Neuropathic pain medications. Avoid opioids and steroids. Normal labs help differentiate from inflammatory arthritis."
+    },
+    "references": ["ACR Fibromyalgia Criteria 2016"],
+    "highYield": true,
+    "timeAllocated": 72
+  },
+  {
+    "id": "board_rheum_013",
+    "specialty": "rheumatology",
+    "topic": "Scleroderma",
+    "difficulty": "hard",
+    "vignette": "A 55-year-old female presents with Raynaud phenomenon, puffy fingers, and positive anti-centromere antibodies. What is the MOST likely subtype and associated complication?",
+    "options": [
+      { "id": "A", "text": "Diffuse scleroderma - Interstitial lung disease" },
+      { "id": "B", "text": "Limited scleroderma (CREST) - Pulmonary arterial hypertension" },
+      { "id": "C", "text": "Diffuse scleroderma - Renal crisis" },
+      { "id": "D", "text": "Limited scleroderma - Esophageal dysmotility" },
+      { "id": "E", "text": "Systemic lupus erythematosus" }
+    ],
+    "correctOptionId": "B",
+    "explanation": {
+      "whyCorrect": "Limited scleroderma (CREST): Calcinosis + Raynaud + Esophageal dysmotility + Sclerodactyly + Telangiectasias. Anti-centromere antibody. HIGH RISK for PAH (pulmonary arterial hypertension). Screen with annual PFT + Echo. Diffuse SSc has anti-Scl70 and risk for ILD and renal crisis.",
+      "whyWrong": {
+        "A": "Diffuse SSc has anti-Scl70, risk for ILD, not anti-centromere.",
+        "C": "Renal crisis is more common in diffuse SSc with anti-RNA pol III.",
+        "D": "Esophageal dysmotility occurs in both subtypes.",
+        "E": "SLE has different autoantibodies (anti-dsDNA, anti-Smith)."
+      },
+      "clinicalPearl": "CREST (limited SSc): Anti-centromere + PAH risk. Diffuse SSc: Anti-Scl70 + ILD risk. Screen PAH annually in limited SSc."
+    },
+    "references": ["ACR/EULAR Scleroderma Classification"],
+    "highYield": true,
+    "timeAllocated": 72
+  }
+]
+[
+  {
+    "id": "board_rheum_014",
+    "specialty": "rheumatology",
+    "topic": "Lupus Nephritis",
+    "difficulty": "hard",
+    "vignette": "A 30-year-old female with SLE has proteinuria 2.5g/day, active urinary sediment (RBC casts), and elevated anti-dsDNA with low C3/C4. Renal biopsy shows diffuse proliferative glomerulonephritis (Class IV). What is the BEST maintenance therapy after induction?",
+    "options": [
+      { "id": "A", "text": "Prednisone alone" },
+      { "id": "B", "text": "Mycophenolate mofetil or Azathioprine" },
+      { "id": "C", "text": "Cyclophosphamide" },
+      { "id": "D", "text": "Rituximab" },
+      { "id": "E", "text": "Belimumab alone" }
+    ],
+    "correctOptionId": "B",
+    "explanation": {
+      "whyCorrect": "Class IV lupus nephritis: Induction (MMF or CYC + Steroids) → Maintenance (MMF or AZA). MMF is preferred (ALMS maintenance trial). Duration: At least 3-5 years of maintenance. Taper steroids slowly. Monitor urine protein, renal function, serology.",
+      "whyWrong": {
+        "A": "Prednisone alone is insufficient for maintenance.",
+        "C": "Cyclophosphamide is for INDUCTION, not maintenance (toxicity).",
+        "D": "Rituximab for refractory (not first-line maintenance).",
+        "E": "Belimumab is add-on, not monotherapy for nephritis."
+      },
+      "clinicalPearl": "Lupus nephritis maintenance: MMF or AZA x3-5 years after induction. Taper steroids slowly. Monitor proteinuria and renal function."
+    },
+    "references": ["KDIGO Lupus Nephritis Guidelines", "ALMS Trial"],
+    "highYield": true,
+    "timeAllocated": 72
+  },
+  {
+    "id": "board_rheum_015",
+    "specialty": "rheumatology",
+    "topic": "Septic Arthritis",
+    "difficulty": "hard",
+    "vignette": "A 70-year-old male with knee osteoarthritis presents with acute onset monoarticular knee pain, swelling, erythema, and fever (39.0°C). Joint aspiration shows WBC 85,000/μL (95% neutrophils). Gram stain shows gram-positive cocci in clusters. What is the BEST management?",
+    "options": [
+      { "id": "A", "text": "Oral antibiotics and outpatient follow-up" },
+      { "id": "B", "text": "IV Vancomycin + Surgical drainage/washout" },
+      { "id": "C", "text": "Intra-articular antibiotics" },
+      { "id": "D", "text": "IV Ceftriaxone alone" },
+      { "id": "E", "text": "Oral prednisone" }
+    ],
+    "correctOptionId": "B",
+    "explanation": {
+      "whyCorrect": "Septic arthritis (S. aureus): WBC >50K (often >100K), >90% neutrophils, gram-positive cocci clusters. EMERGENCY! IV Vancomycin (MRSA coverage) + EMERGENT surgical drainage/washout. Delay in drainage destroys cartilage within 24-48h. Serial aspirations if surgery not available.",
+      "whyWrong": {
+        "A": "Septic arthritis requires IV antibiotics and drainage, not oral outpatient.",
+        "C": "Intra-articular antibiotics are unnecessary and may cause chemical synovitis.",
+        "D": "Ceftriaxone does not cover MRSA or all gram-positives adequately.",
+        "E": "Steroids would worsen infection."
+      },
+      "clinicalPearl": "Septic arthritis: EMERGENCY! IV antibiotics + Surgical drainage. WBC >50K with >90% neutrophils. S. aureus most common."
+    },
+    "references": ["IDSA Septic Arthritis Guidelines"],
+    "highYield": true,
+    "timeAllocated": 72
+  },
+  {
+    "id": "board_rheum_016",
+    "specialty": "rheumatology",
+    "topic": "Pseudogout",
+    "difficulty": "medium",
+    "vignette": "A 75-year-old female presents with acute knee pain, swelling, and erythema. Joint aspiration shows positively birefringent rhomboid-shaped crystals. What is the diagnosis?",
+    "options": [
+      { "id": "A", "text": "Gout" },
+      { "id": "B", "text": "Pseudogout (CPPD)" },
+      { "id": "C", "text": "Septic arthritis" },
+      { "id": "D", "text": "Osteoarthritis" },
+      { "id": "E", "text": "Rheumatoid arthritis" }
+    ],
+    "correctOptionId": "B",
+    "explanation": {
+      "whyCorrect": "Pseudogout (CPPD arthropathy): Calcium pyrophosphate crystals = POSITIVELY birefringent, rhomboid-shaped. Gout: Negatively birefringent, needle-shaped (monosodium urate). Treatment: NSAIDs, Colchicine (less effective than gout), intra-articular steroids.",
+      "whyWrong": {
+        "A": "Gout: Negatively birefringent needle-shaped crystals (urate).",
+        "C": "Septic arthritis: WBC >50K, positive Gram stain/culture.",
+        "D": "OA: Non-inflammatory, no crystals on aspiration.",
+        "E": "RA: Inflammatory, no crystals, RF/anti-CCP positive."
+      },
+      "clinicalPearl": "Gout: Negative birefringence, needle-shaped. Pseudogout: POSITIVE birefringence, rhomboid-shaped. Remember: 'P'ositive = 'P'seudogout."
+    },
+    "references": ["ACR CPPD Guidelines"],
+    "highYield": true,
+    "timeAllocated": 72
+  },
+  {
+    "id": "board_rheum_017",
+    "specialty": "rheumatology",
+    "topic": "Reactive Arthritis",
+    "difficulty": "medium",
+    "vignette": "A 25-year-old male presents with asymmetric oligoarthritis (knees, ankles), conjunctivitis, and dysuria 2 weeks after a diarrheal illness. He is HLA-B27 positive. What is the MOST likely diagnosis?",
+    "options": [
+      { "id": "A", "text": "Gonococcal arthritis" },
+      { "id": "B", "text": "Reactive arthritis (Reiter syndrome)" },
+      { "id": "C", "text": "Rheumatoid arthritis" },
+      { "id": "D", "text": "Ankylosing spondylitis" },
+      { "id": "E", "text": "Psoriatic arthritis" }
+    ],
+    "correctOptionId": "B",
+    "explanation": {
+      "whyCorrect": "Reactive arthritis: 'Can't see, can't pee, can't bend the knee.' Triad: Arthritis + Conjunctivitis/Uveitis + Urethritis. Post-infectious (Chlamydia, Salmonella, Shigella, Campylobacter, Yersinia). HLA-B27 associated. Treatment: NSAIDs, treat underlying infection. Steroids/DMARDs if severe.",
+      "whyWrong": {
+        "A": "Gonococcal: Migratory polyarthralgia, tenosynovitis, pustular skin lesions.",
+        "C": "RA: Symmetric, MCP/PIP, RF/anti-CCP positive.",
+        "D": "AS: Axial involvement (spine/SI joints), not peripheral with conjunctivitis/urethritis.",
+        "E": "PsA: Skin psoriasis, nail changes, dactylitis."
+      },
+      "clinicalPearl": "Reactive arthritis: Arthritis + Conjunctivitis + Urethritis post-infection. HLA-B27. NSAIDs first-line."
+    },
+    "references": ["EULAR Reactive Arthritis Guidelines"],
+    "highYield": true,
+    "timeAllocated": 72
+  },
+  {
+    "id": "board_rheum_018",
+    "specialty": "rheumatology",
+    "topic": "Granulomatosis with Polyangiitis",
+    "difficulty": "hard",
+    "vignette": "A 50-year-old male presents with chronic sinusitis, cough with hemoptysis, and hematuria with RBC casts. CXR shows bilateral nodules and cavitary lesions. c-ANCA (PR3) is positive. What is the diagnosis?",
+    "options": [
+      { "id": "A", "text": "Goodpasture syndrome" },
+      { "id": "B", "text": "Granulomatosis with polyangiitis (GPA)" },
+      { "id": "C", "text": "Eosinophilic granulomatosis with polyangiitis (EGPA)" },
+      { "id": "D", "text": "Microscopic polyangiitis (MPA)" },
+      { "id": "E", "text": "Sarcoidosis" }
+    ],
+    "correctOptionId": "B",
+    "explanation": {
+      "whyCorrect": "GPA (Wegener): Upper respiratory (sinusitis) + Lower respiratory (nodules, hemoptysis) + Renal (RPGN with RBC casts) + c-ANCA (PR3). Treatment: Steroids + Cyclophosphamide or Rituximab (RAVE trial). Life-threatening without treatment.",
+      "whyWrong": {
+        "A": "Goodpasture: Anti-GBM antibody, pulmonary hemorrhage + GN, no sinus involvement.",
+        "C": "EGPA (Churg-Strauss): Asthma + Eosinophilia + p-ANCA (MPO).",
+        "D": "MPA: p-ANCA (MPO), no granulomas, no sinus involvement.",
+        "E": "Sarcoidosis: BHL, non-caseating granulomas, no hemoptysis or RPGN."
+      },
+      "clinicalPearl": "GPA: Sinus + Lung + Kidney + c-ANCA (PR3). Treatment: Rituximab or Cyclophosphamide + Steroids."
+    },
+    "references": ["ACR/VF Vasculitis Guidelines", "RAVE Trial"],
+    "highYield": true,
+    "timeAllocated": 72
+  }
+]
+[
+  {
+    "id": "board_rheum_019",
+    "specialty": "rheumatology",
+    "topic": "Osteomyelitis",
+    "difficulty": "medium",
+    "vignette": "A 60-year-old diabetic male with a foot ulcer that probes to bone. MRI shows osteomyelitis of the 1st metatarsal. What is the BEST diagnostic test?",
+    "options": [
+      { "id": "A", "text": "MRI alone is sufficient" },
+      { "id": "B", "text": "Bone biopsy with culture and histopathology" },
+      { "id": "C", "text": "Wound swab culture" },
+      { "id": "D", "text": "X-ray" },
+      { "id": "E", "text": "Blood cultures" }
+    ],
+    "correctOptionId": "B",
+    "explanation": {
+      "whyCorrect": "Osteomyelitis: Bone biopsy is the GOLD STANDARD for diagnosis and identifying the causative organism. Culture guides antibiotic therapy (6 weeks). MRI is excellent for diagnosis but does not provide microbiology. Wound swabs correlate poorly with bone pathogens.",
+      "whyWrong": {
+        "A": "MRI cannot identify the organism or antibiotic sensitivities.",
+        "C": "Wound swabs have poor correlation with bone cultures.",
+        "D": "X-ray has low sensitivity (changes take 2-4 weeks).",
+        "E": "Blood cultures positive in only 25-50%."
+      },
+      "clinicalPearl": "Osteomyelitis: Bone biopsy = Gold standard. Guides 6 weeks of targeted antibiotics. Wound swabs are unreliable."
+    },
+    "references": ["IDSA Osteomyelitis Guidelines"],
+    "highYield": true,
+    "timeAllocated": 72
+  },
+  {
+    "id": "board_rheum_020",
+    "specialty": "rheumatology",
+    "topic": "Sarcoidosis",
+    "difficulty": "medium",
+    "vignette": "A 30-year-old African American female presents with cough, dyspnea, erythema nodosum, and bilateral hilar lymphadenopathy on CXR. What is the diagnosis?",
+    "options": [
+      { "id": "A", "text": "Tuberculosis" },
+      { "id": "B", "text": "Sarcoidosis" },
+      { "id": "C", "text": "Lymphoma" },
+      { "id": "D", "text": "Histoplasmosis" },
+      { "id": "E", "text": "Lung cancer" }
+    ],
+    "correctOptionId": "B",
+    "explanation": {
+      "whyCorrect": "Sarcoidosis: BHL + Erythema nodosum + African American female = Lofgren syndrome (good prognosis). Non-caseating granulomas on biopsy. Elevated ACE levels (not diagnostic). Treatment: NSAIDs for mild, Prednisone for pulmonary/ocular/cardiac involvement.",
+      "whyWrong": {
+        "A": "TB: Cavitary lesions, caseating granulomas, positive AFB.",
+        "C": "Lymphoma: Anterior mediastinal mass, not symmetric BHL.",
+        "D": "Histoplasmosis: Calcified granulomas, not BHL with erythema nodosum.",
+        "E": "Lung cancer: Mass, not symmetric BHL."
+      },
+      "clinicalPearl": "Lofgren syndrome: BHL + Erythema nodosum = Sarcoidosis with excellent prognosis. NSAIDs for symptom control."
+    },
+    "references": ["ATS Sarcoidosis Guidelines"],
+    "highYield": true,
+    "timeAllocated": 72
+  },
+  {
+    "id": "board_rheum_021",
+    "specialty": "rheumatology",
+    "topic": "Polymyositis vs Dermatomyositis",
+    "difficulty": "medium",
+    "vignette": "A 50-year-old male presents with progressive proximal muscle weakness (difficulty standing from chair) and elevated CK (3000). He has NO rash. EMG shows myopathic changes. Anti-Jo-1 antibody is positive. What is the diagnosis?",
+    "options": [
+      { "id": "A", "text": "Dermatomyositis" },
+      { "id": "B", "text": "Polymyositis" },
+      { "id": "C", "text": "Inclusion body myositis" },
+      { "id": "D", "text": "Statin-induced myopathy" },
+      { "id": "E", "text": "Polymyalgia rheumatica" }
+    ],
+    "correctOptionId": "B",
+    "explanation": {
+      "whyCorrect": "Polymyositis: Proximal weakness + Elevated CK + Anti-Jo-1 (anti-synthetase syndrome) + NO rash. If rash present (Gottron, heliotrope) = Dermatomyositis. Anti-Jo-1 associated with ILD, mechanic's hands, Raynaud, arthritis. Treatment: Steroids + Methotrexate or Azathioprine.",
+      "whyWrong": {
+        "A": "Dermatomyositis has characteristic rash.",
+        "C": "IBM: Distal > proximal, forearm flexors, CK normal-mild.",
+        "D": "Statin myopathy: Improves with discontinuation, CK moderately elevated.",
+        "E": "PMR: Shoulder/hip girdle pain, normal CK, age >50, responds to low-dose steroids."
+      },
+      "clinicalPearl": "Polymyositis: Proximal weakness + High CK + Anti-Jo1 + No rash. Dermatomyositis: Same + Characteristic rash."
+    },
+    "references": ["ACR/EULAR Myositis Classification"],
+    "highYield": true,
+    "timeAllocated": 72
+  }
+]
+[
+  {
+    "id": "board_rheum_022",
+    "specialty": "rheumatology",
+    "topic": "Adult-Onset Still Disease",
+    "difficulty": "hard",
+    "vignette": "A 30-year-old female presents with daily spiking fevers (>39°C), evanescent salmon-pink rash, arthritis, and sore throat. Labs: Leukocytosis, elevated ferritin (>5000), negative ANA and RF. What is the diagnosis?",
+    "options": [
+      { "id": "A", "text": "SLE" },
+      { "id": "B", "text": "Adult-onset Still disease" },
+      { "id": "C", "text": "Rheumatoid arthritis" },
+      { "id": "D", "text": "Gout" },
+      { "id": "E", "text": "Septic arthritis" }
+    ],
+    "correctOptionId": "B",
+    "explanation": {
+      "whyCorrect": "Adult-onset Still disease: Yamaguchi criteria. Daily spiking fevers + Salmon-pink evanescent rash (appears with fever) + Arthritis + Sore throat + Leukocytosis + Ferritin >1000 (often >5000) + Negative ANA/RF. Treatment: NSAIDs, steroids, anakinra (IL-1 inhibitor) for refractory.",
+      "whyWrong": {
+        "A": "SLE: Malar rash, ANA/dsDNA positive, not daily spiking fevers.",
+        "C": "RA: Symmetric polyarthritis, RF/anti-CCP positive, no spiking fevers.",
+        "D": "Gout: Acute monoarthritis, no systemic symptoms.",
+        "E": "Septic: Monoarthritis with positive cultures."
+      },
+      "clinicalPearl": "Still disease: Spiking fevers + Salmon-pink rash + Ferritin >5000. Anakinra (anti-IL1) for refractory. Rule out HLH."
+    },
+    "references": ["Yamaguchi Criteria for Still Disease"],
+    "highYield": true,
+    "timeAllocated": 72
+  },
+  {
+    "id": "board_rheum_023",
+    "specialty": "rheumatology",
+    "topic": "Cryoglobulinemia",
+    "difficulty": "hard",
+    "vignette": "A 50-year-old male with chronic HCV presents with palpable purpura on his legs, peripheral neuropathy, and glomerulonephritis (hematuria, proteinuria). C4 is low, C3 is normal. Rheumatoid factor is positive. What is the diagnosis?",
+    "options": [
+      { "id": "A", "text": "IgA vasculitis (HSP)" },
+      { "id": "B", "text": "Mixed cryoglobulinemia" },
+      { "id": "C", "text": "Granulomatosis with polyangiitis" },
+      { "id": "D", "text": "Microscopic polyangiitis" },
+      { "id": "E", "text": "SLE" }
+    ],
+    "correctOptionId": "B",
+    "explanation": {
+      "whyCorrect": "Mixed cryoglobulinemia (Type II): HCV-associated. Triad: Palpable purpura + Peripheral neuropathy + Glomerulonephritis (MPGN pattern). Labs: Low C4 (classic pathway activation), normal C3, positive RF (IgM anti-IgG). Treatment: Treat underlying HCV (DAA therapy) + Immunosuppression if severe.",
+      "whyWrong": {
+        "A": "HSP: IgA deposition, follows URI, more common in children.",
+        "C": "GPA: c-ANCA/PR3 positive, sinus/lung involvement.",
+        "D": "MPA: p-ANCA/MPO positive, no HCV association.",
+        "E": "SLE: Low C3 AND C4, ANA/dsDNA positive."
+      },
+      "clinicalPearl": "Cryoglobulinemia: HCV + Purpura + Neuropathy + GN + Low C4 (normal C3) + Positive RF. Treat HCV first!"
+    },
+    "references": ["EULAR Cryoglobulinemia Guidelines"],
+    "highYield": true,
+    "timeAllocated": 72
+  },
+  {
+    "id": "board_rheum_024",
+    "specialty": "rheumatology",
+    "topic": "Ehlers-Danlos Syndrome",
+    "difficulty": "medium",
+    "vignette": "A 25-year-old female presents with hypermobile joints, skin hyperextensibility, and atrophic scarring. She has a history of joint dislocations. What type of EDS is this?",
+    "options": [
+      { "id": "A", "text": "Vascular type (Type IV)" },
+      { "id": "B", "text": "Classical type (Type I/II)" },
+      { "id": "C", "text": "Hypermobile type (Type III)" },
+      { "id": "D", "text": "Kyphoscoliotic type" },
+      { "id": "E", "text": "Arthrochalasia type" }
+    ],
+    "correctOptionId": "B",
+    "explanation": {
+      "whyCorrect": "Classical EDS (COL5A1, COL5A2): Skin hyperextensibility + Atrophic scarring + Joint hypermobility. Vascular EDS (COL3A1): Thin translucent skin, arterial/organ rupture, characteristic facies. Hypermobile EDS: Joint hypermobility without significant skin findings. No cure. Avoid contact sports.",
+      "whyWrong": {
+        "A": "Vascular: Arterial rupture, thin skin, no atrophic scarring.",
+        "C": "Hypermobile: Joint hypermobility, minimal skin involvement.",
+        "D": "Kyphoscoliotic: Severe scoliosis, ocular fragility.",
+        "E": "Arthrochalasia: Congenital hip dislocation."
+      },
+      "clinicalPearl": "Classical EDS: Skin hyperextensibility + Atrophic scars + Joint hypermobility. COL5A1/COL5A2. Vascular EDS: COL3A1, arterial rupture."
+    },
+    "references": ["International EDS Classification"],
+    "highYield": true,
+    "timeAllocated": 72
+  }
+]
+[
+  {
+    "id": "board_rheum_025",
+    "specialty": "rheumatology",
+    "topic": "Dermatomyositis Malignancy",
+    "difficulty": "hard",
+    "vignette": "A 55-year-old female with dermatomyositis (Gottron papules, heliotrope, proximal weakness, elevated CK) should be screened for which associated malignancy?",
+    "options": [
+      { "id": "A", "text": "Colorectal cancer" },
+      { "id": "B", "text": "Ovarian, breast, lung, and GI cancers" },
+      { "id": "C", "text": "Melanoma" },
+      { "id": "D", "text": "Prostate cancer" },
+      { "id": "E", "text": "No malignancy risk" }
+    ],
+    "correctOptionId": "B",
+    "explanation": {
+      "whyCorrect": "Dermatomyositis in adults (>40) = HIGH malignancy risk (15-25%). Screen for: Ovarian, breast, lung, GI (especially ovarian in women, lung in men). Most malignancies diagnosed within 1 year of DM diagnosis. Age-appropriate cancer screening + CT chest/abdomen/pelvis.",
+      "whyWrong": {
+        "A": "Colorectal is one of many, not the primary.",
+        "C": "Melanoma is not the most associated.",
+        "D": "Prostate in men, but broader screen needed.",
+        "E": "DM has significant malignancy risk."
+      },
+      "clinicalPearl": "Dermatomyositis >40: Screen for malignancy (ovarian, breast, lung, GI). CT CAP + Age-appropriate screening."
+    },
+    "references": ["Dermatomyositis and Malignancy"],
+    "highYield": true,
+    "timeAllocated": 72
+  },
+  {
+    "id": "board_rheum_026",
+    "specialty": "rheumatology",
+    "topic": "Igg4-Related Disease",
+    "difficulty": "hard",
+    "vignette": "A 60-year-old male presents with bilateral submandibular gland swelling, autoimmune pancreatitis, and retroperitoneal fibrosis. Serum IgG4 is elevated. What is the diagnosis?",
+    "options": [
+      { "id": "A", "text": "Sjögren syndrome" },
+      { "id": "B", "text": "IgG4-related disease" },
+      { "id": "C", "text": "Sarcoidosis" },
+      { "id": "D", "text": "Lymphoma" },
+      { "id": "E", "text": "Amyloidosis" }
+    ],
+    "correctOptionId": "B",
+    "explanation": {
+      "whyCorrect": "IgG4-related disease: Multisystem fibroinflammatory disorder. Elevated serum IgG4 (70% of patients). Histology: Lymphoplasmacytic infiltrate, storiform fibrosis, obliterative phlebitis. Organs: Pancreas, salivary glands, lacrimal glands, retroperitoneum, kidneys. Treatment: Prednisone ± Rituximab.",
+      "whyWrong": {
+        "A": "Sjögren: Dry eyes/mouth, anti-SSA/SSB, not pancreatitis or retroperitoneal fibrosis.",
+        "C": "Sarcoidosis: Non-caseating granulomas, not storiform fibrosis.",
+        "D": "Lymphoma: Monoclonal, not polyclonal IgG4.",
+        "E": "Amyloidosis: Congo red positive, not storiform fibrosis."
+      },
+      "clinicalPearl": "IgG4 disease: Pancreatitis + Salivary swelling + Retroperitoneal fibrosis + Elevated IgG4. Prednisone responsive."
+    },
+    "references": ["IgG4-Related Disease Consensus"],
+    "highYield": true,
+    "timeAllocated": 72
+  },
+  {
+    "id": "board_rheum_027",
+    "specialty": "rheumatology",
+    "topic": "Raynaud Phenomenon",
+    "difficulty": "medium",
+    "vignette": "A 25-year-old female presents with triphasic color changes in her fingers (white → blue → red) when exposed to cold. She has no other symptoms. Nailfold capillaroscopy is normal. ANA is negative. What is the diagnosis?",
+    "options": [
+      { "id": "A", "text": "Primary Raynaud phenomenon" },
+      { "id": "B", "text": "Secondary Raynaud (scleroderma)" },
+      { "id": "C", "text": "Thromboangiitis obliterans" },
+      { "id": "D", "text": "Acrocyanosis" },
+      { "id": "E", "text": "Chilblains" }
+    ],
+    "correctOptionId": "A",
+    "explanation": {
+      "whyCorrect": "Primary Raynaud: Young female, symmetric, no underlying disease, normal capillaroscopy, negative ANA. Benign. Treatment: Avoid cold, keep warm, calcium channel blockers (nifedipine) if severe. Secondary Raynaud: Age >30, asymmetric, abnormal capillaroscopy, positive autoantibodies (scleroderma, SLE).",
+      "whyWrong": {
+        "B": "Secondary would have abnormal capillaroscopy and positive ANA.",
+        "C": "Buerger: Young male smoker, claudication, gangrene.",
+        "D": "Acrocyanosis: Persistent bluish discoloration (not triphasic).",
+        "E": "Chilblains: Itchy, painful plaques in cold (not triphasic color changes)."
+      },
+      "clinicalPearl": "Primary Raynaud: Young female + Normal capillaroscopy + Negative ANA. Secondary: Age >30 + Abnormal nails + Positive serology."
+    },
+    "references": ["Raynaud Phenomenon Management"],
+    "highYield": true,
+    "timeAllocated": 72
+  }
+]

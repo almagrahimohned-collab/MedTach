@@ -1,0 +1,16 @@
+{
+  "scripts_additions": {
+    "test": "jest --config jest.config.js",
+    "test:watch": "jest --watch",
+    "test:coverage": "jest --coverage",
+    "lint": "eslint . --ext .ts,.tsx",
+    "lint:fix": "eslint . --ext .ts,.tsx --fix",
+    "format": "prettier --write \"src/**/*.ts\" \"app/**/*.tsx\"",
+    "validate-content": "node scripts/validate-all-cases.js",
+    "build:web": "expo export --platform web",
+    "deploy:preview": "expo publish --release-channel=preview",
+    "deploy:production": "expo publish --release-channel=production",
+    "sync-content": "node scripts/sync-content.js",
+    "health-check": "node scripts/health-check.js"
+  }
+}

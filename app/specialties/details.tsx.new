@@ -1,0 +1,28 @@
+// هنضيف دالة getRandomCase ونغير confirmStart
+// السطر اللي فيه confirmStart هيبقى:
+
+const confirmStart = async () => {
+  setShowConfirm(false);
+  try {
+    const index = await contentService.getIndex();
+    const allCases = index.cases || [];
+    
+    // فلترة حسب التخصص والفرع والمستوى
+    const matching = allCases.filter((c: any) => {
+      const matchSpecialty = SPECIALTY_GROUPS[id as string]?.includes(c.specialty) || c.specialty === id;
+      const matchSub = !sub || c.specialty === sub.toLowerCase() || c.specialty.includes(sub.toLowerCase());
+      const matchLevel = !level || c.difficulty === level;
+      return matchSpecialty && matchSub && matchLevel;
+    });
+    
+    if (matching.length > 0) {
+      // اختيار حالة عشوائية
+      const randomCase = matching[Math.floor(Math.random() * matching.length)];
+      router.push(`/cases/review/${randomCase.id}`);
+    } else {
+      router.push('/cases');
+    }
+  } catch {
+    router.push('/cases');
+  }
+};

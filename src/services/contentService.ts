@@ -23,6 +23,7 @@ export interface CaseData {
   key_learning_points: string[];
   patient_responses: Record<string, string>;
   hints: Record<string, string>;
+  feedback?: any;
 }
 
 export interface IndexData {
@@ -35,6 +36,7 @@ export interface IndexData {
 
 class ContentService {
   private baseUrl: string;
+  private cachedIndex: IndexData | null = null;
 
   constructor() {
     this.baseUrl = GITHUB_RAW_BASE;
@@ -49,16 +51,66 @@ class ContentService {
 
   async fetchJson<T>(path: string): Promise<T> {
     const url = `${this.baseUrl}/${path}`;
-    const response = await fetch(url);
-    if (!response.ok) throw new Error(`Failed to fetch ${path}: ${response.status}`);
-    return await response.json();
+    console.log('Fetching:', url);
+    
+    const response = await fetch(url, {
+      headers: { 'Accept': 'application/json', 'Cache-Control': 'no-cache' }
+    });
+
+    if (!response.ok) {
+      throw new Error(`Failed to fetch ${path}: ${response.status}`);
+    }
+
+    const text = await response.text();
+    
+    if (!text || text.trim().length === 0) {
+      throw new Error('Empty response');
+    }
+
+    return JSON.parse(text);
   }
 
   async getIndex(): Promise<IndexData> {
     try {
-      return await this.fetchJson<IndexData>('index.json');
+      // إذا كان فيه cached index، استخدمه
+      if (this.cachedIndex) {
+        return this.cachedIndex;
+      }
+
+      const index = await this.fetchJson<IndexData>('index.json');
+      
+      // إذا الـ cases فاضي، معناها الملف مش متحدث
+      if (!index.cases || index.cases.length === 0) {
+        console.warn('Index has no cases, trying to rebuild...');
+        // نحاول نجيب من الكاش المحلي
+        const cached = await AsyncStorage.getItem(CONTENT_CACHE_KEY);
+        if (cached) {
+          const parsed = JSON.parse(cached);
+          if (parsed.cases && parsed.cases.length > 0) {
+            this.cachedIndex = parsed;
+            return parsed;
+          }
+        }
+      }
+
+      // نخزن في الكاش
+      await AsyncStorage.setItem(CONTENT_CACHE_KEY, JSON.stringify(index));
+      this.cachedIndex = index;
+      
+      return index;
     } catch (e) {
-      console.warn('GitHub index fetch failed, using empty index');
+      console.warn('GitHub index fetch failed:', e);
+      
+      // نحاول نرجع من الكاش المحلي
+      const cached = await AsyncStorage.getItem(CONTENT_CACHE_KEY);
+      if (cached) {
+        const parsed = JSON.parse(cached);
+        if (parsed.cases && parsed.cases.length > 0) {
+          return parsed;
+        }
+      }
+
+      // لو مفيش حاجة، نرجع empty
       return {
         version: '0.0.0',
         last_updated: '',
@@ -74,7 +126,6 @@ class ContentService {
   }
 
   getLocalCase(specialty: string, difficulty: string): CaseData | null {
-    // هذا يرجع null لأنه ما عاد نعتمد على الحالات المحلية
     return null;
   }
 
@@ -92,6 +143,10 @@ class ContentService {
     } catch {
       return '';
     }
+  }
+
+  clearCache() {
+    this.cachedIndex = null;
   }
 }
 

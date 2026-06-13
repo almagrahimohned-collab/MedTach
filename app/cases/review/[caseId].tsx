@@ -1,257 +1,120 @@
-import React, { useState, useEffect, useRef } from 'react';
-import {
-  StyleSheet,
-  Text,
-  View,
-  ScrollView,
-  Pressable,
-  Animated,
-  Dimensions,
-} from 'react-native';
+import React, { useRef, useEffect, useState } from 'react';
+import { View, ScrollView, ActivityIndicator, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { useLocalSearchParams, useRouter } from 'expo-router';
-import { useStore } from '../../../src/store';
-import { getScoreGrade, getTimeString } from '../../../src/utils/scoring';
-import { Ionicons } from '@expo/vector-icons';
+import { useDiagnosticRoom } from '../hooks/useDiagnosticRoom';
+import { VitalsMonitor, ChatBubble, ActionBar, PhaseIndicator, ResultScreen } from '../components';
 
-const { width } = Dimensions.get('window');
-
-export default function CaseReview() {
-  const { caseId } = useLocalSearchParams();
+export default function DiagnosticRoomScreen() {
+  const { caseId } = useLocalSearchParams<{ caseId: string }>();
   const router = useRouter();
-  const { completedCases, totalPoints } = useStore();
-  const fadeAnim = useRef(new Animated.Value(0)).current;
-  const slideAnim = useRef(new Animated.Value(30)).current;
+  const validCaseId = (caseId && caseId !== "undefined" && caseId !== "null" && caseId.length > 0) ? caseId : "fallback";
+  
+  const {
+    caseData, patientState, vitals, messages, phase,
+    sendMessage, loading, error, isComplete, timeElapsed, canInteract,
+    score, trace, replayData
+  } = useDiagnosticRoom(validCaseId || 'fallback');
+  
+  const scrollRef = useRef<ScrollView>(null);
+  const [showResult, setShowResult] = useState(false);
 
   useEffect(() => {
-    Animated.parallel([
-      Animated.timing(fadeAnim, { toValue: 1, duration: 500, useNativeDriver: true }),
-      Animated.timing(slideAnim, { toValue: 0, duration: 500, useNativeDriver: true }),
-    ]).start();
-  }, []);
+    scrollRef.current?.scrollToEnd({ animated: true });
+  }, [messages]);
 
-  const caseResult = completedCases.find(c => c.caseId === caseId);
-  
-  if (!caseResult) {
+  useEffect(() => {
+    if (isComplete && score) {
+      setTimeout(() => setShowResult(true), 500);
+    }
+  }, [isComplete, score]);
+
+  if (loading) {
     return (
-      <View style={styles.container}>
-        <Text style={styles.errorText}>Case not found</Text>
-        <Pressable style={styles.backBtn} onPress={() => router.back()}>
-          <Text style={styles.backBtnText}>Go Back</Text>
-        </Pressable>
+      <View style={styles.center}>
+        <ActivityIndicator size="large" color="#007AFF" />
+        <Text style={styles.statusText}>Loading case...</Text>
       </View>
     );
   }
 
-  const grade = getScoreGrade(caseResult.score);
-  const caseNumber = completedCases.findIndex(c => c.caseId === caseId) + 1;
-  const percentileScore = Math.round((caseResult.score / 150) * 100);
-
-  const strengths = [];
-  const improvements = [];
-
-  if (caseResult.score >= 100) {
-    strengths.push('Excellent diagnostic accuracy');
-    strengths.push('Efficient use of investigations');
-  } else if (caseResult.score >= 70) {
-    strengths.push('Good clinical reasoning');
-    improvements.push('Consider ordering fewer investigations');
-  } else {
-    improvements.push('Review the diagnostic process');
-    improvements.push('Order only necessary tests');
-    improvements.push('Focus on key clinical findings');
+  if (error) {
+    return (
+      <View style={styles.center}>
+        <Text style={styles.errorIcon}>⚠️</Text>
+        <Text style={styles.errorText}>{String(error)}</Text>
+        <TouchableOpacity style={styles.retryBtn} onPress={() => router.back()}>
+          <Text style={styles.retryText}>Go Back</Text>
+        </TouchableOpacity>
+      </View>
+    );
   }
 
-  if (caseResult.score >= 80) {
-    strengths.push('Strong time management');
-  } else {
-    improvements.push('Work on speed without sacrificing accuracy');
+  if (showResult && score) {
+    return (
+      <ResultScreen
+        score={score}
+        caseData={caseData}
+        trace={trace}
+        replayData={replayData}
+        onRestart={() => setShowResult(false)}
+        onHome={() => router.back()}
+      />
+    );
   }
 
   return (
-    <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
-      <Animated.View style={[styles.content, { opacity: fadeAnim, transform: [{ translateY: slideAnim }] }]}>
+    <View style={styles.container}>
+      <View style={styles.header}>
+        <Text style={styles.headerTitle} numberOfLines={1}>
+          {caseData?.title || 'Diagnostic Room'}
+        </Text>
+        <Text style={styles.headerSubtitle}>
+          {caseData?.patient?.age ? `${caseData.patient.age}yo ${caseData.patient.gender}` : ''}
+        </Text>
+      </View>
+
+      <PhaseIndicator
+        phase={String(phase)}
+        patientState={String(patientState)}
+        timeElapsed={Number(timeElapsed)}
+      />
+
+      {vitals && Object.keys(vitals).length > 0 && (
+        <VitalsMonitor vitals={vitals} />
+      )}
+
+      <ScrollView ref={scrollRef} style={styles.chatArea} contentContainerStyle={styles.chatContent}>
+        {messages.map((msg: any, index: number) => (
+          <ChatBubble key={index} role={msg.role || 'system'} content={String(msg.content || '')} />
+        ))}
         
-        <View style={styles.header}>
-          <View style={[styles.gradeCircle, { borderColor: grade.color }]}>
-            <Text style={styles.gradeEmoji}>{grade.emoji}</Text>
-            <Text style={[styles.gradeText, { color: grade.color }]}>{grade.grade}</Text>
+        {isComplete && !showResult && (
+          <View style={styles.completeBanner}>
+            <Text style={styles.completeText}>✅ Case Complete</Text>
           </View>
-          <Text style={styles.caseTitle}>Case #{caseNumber} Review</Text>
-          <Text style={styles.caseDate}>
-            {new Date(caseResult.date).toLocaleDateString('en-US', {
-              weekday: 'long',
-              month: 'long',
-              day: 'numeric',
-              hour: '2-digit',
-              minute: '2-digit',
-            })}
-          </Text>
-        </View>
+        )}
+      </ScrollView>
 
-        <View style={styles.scoreCard}>
-          <View style={styles.scoreMain}>
-            <Text style={styles.scoreValue}>{caseResult.score}</Text>
-            <Text style={styles.scoreUnit}>pts</Text>
-          </View>
-          <View style={styles.scoreDivider} />
-          <View style={styles.scoreDetails}>
-            <View style={styles.scoreRow}>
-              <Text style={styles.scoreLabel}>Percentile</Text>
-              <Text style={styles.scoreNumber}>{percentileScore}%</Text>
-            </View>
-            <View style={styles.scoreRow}>
-              <Text style={styles.scoreLabel}>Total Points</Text>
-              <Text style={styles.scoreNumber}>{totalPoints.toLocaleString()}</Text>
-            </View>
-            <View style={styles.scoreRow}>
-              <Text style={styles.scoreLabel}>Cases Solved</Text>
-              <Text style={styles.scoreNumber}>{completedCases.length}</Text>
-            </View>
-          </View>
-        </View>
-
-        <View style={styles.section}>
-          <Text style={styles.sectionTitle}>✅ Strengths</Text>
-          {strengths.map((item, index) => (
-            <View key={index} style={styles.feedbackItem}>
-              <Ionicons name="checkmark-circle" size={18} color="#10B981" />
-              <Text style={styles.feedbackText}>{item}</Text>
-            </View>
-          ))}
-        </View>
-
-        <View style={styles.section}>
-          <Text style={styles.sectionTitle}>📈 Areas for Improvement</Text>
-          {improvements.map((item, index) => (
-            <View key={index} style={styles.feedbackItem}>
-              <Ionicons name="trending-up" size={18} color="#F59E0B" />
-              <Text style={styles.feedbackText}>{item}</Text>
-            </View>
-          ))}
-        </View>
-
-        <View style={styles.tipsSection}>
-          <Text style={styles.tipsTitle}>💡 Pro Tips</Text>
-          <View style={styles.tipCard}>
-            <Ionicons name="bulb" size={20} color="#F59E0B" />
-            <Text style={styles.tipText}>
-              Start with focused history and physical exam before ordering expensive tests.
-            </Text>
-          </View>
-          <View style={styles.tipCard}>
-            <Ionicons name="speedometer" size={20} color="#38BDF8" />
-            <Text style={styles.tipText}>
-              Balance speed with accuracy. Every minute counts in clinical practice.
-            </Text>
-          </View>
-          <View style={styles.tipCard}>
-            <Ionicons name="git-network" size={20} color="#8B5CF6" />
-            <Text style={styles.tipText}>
-              Create differential diagnoses early and use tests to rule them out systematically.
-            </Text>
-          </View>
-        </View>
-
-        <View style={styles.actionSection}>
-          <Pressable style={styles.retryBtn} onPress={() => router.push('/cases')}>
-            <Ionicons name="refresh" size={18} color="#FFF" />
-            <Text style={styles.retryBtnText}>Try Another Case</Text>
-          </Pressable>
-
-          <Pressable style={styles.homeBtn} onPress={() => router.replace('/(tabs)')}>
-            <Ionicons name="home" size={18} color="#38BDF8" />
-            <Text style={styles.homeBtnText}>Back to Dashboard</Text>
-          </Pressable>
-        </View>
-
-        <View style={{ height: 40 }} />
-      </Animated.View>
-    </ScrollView>
+      {canInteract && (
+        <ActionBar phase={String(phase)} onSubmit={sendMessage} disabled={!canInteract} />
+      )}
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: '#0F172A' },
-  content: { padding: 20 },
-  errorText: { color: '#EF4444', fontSize: 16, textAlign: 'center', marginTop: 40 },
-  backBtn: { backgroundColor: '#1E293B', padding: 12, borderRadius: 10, alignItems: 'center', marginTop: 20, marginHorizontal: 40 },
-  backBtnText: { color: '#38BDF8', fontWeight: '600' },
-
-  header: { alignItems: 'center', marginBottom: 28, marginTop: 10 },
-  gradeCircle: {
-    width: 100,
-    height: 100,
-    borderRadius: 50,
-    borderWidth: 3,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#1E293B',
-    marginBottom: 16,
-  },
-  gradeEmoji: { fontSize: 36 },
-  gradeText: { fontSize: 13, fontWeight: '700', marginTop: 2 },
-  caseTitle: { color: '#F8FAFC', fontSize: 22, fontWeight: '700', marginBottom: 4 },
-  caseDate: { color: '#94A3B8', fontSize: 13 },
-
-  scoreCard: {
-    backgroundColor: '#1E293B',
-    borderRadius: 20,
-    padding: 20,
-    flexDirection: 'row',
-    marginBottom: 24,
-    borderWidth: 1,
-    borderColor: '#334155',
-  },
-  scoreMain: { alignItems: 'center', justifyContent: 'center', paddingRight: 20 },
-  scoreValue: { color: '#38BDF8', fontSize: 40, fontWeight: '800' },
-  scoreUnit: { color: '#94A3B8', fontSize: 14, marginTop: -4 },
-  scoreDivider: { width: 1, backgroundColor: '#334155' },
-  scoreDetails: { flex: 1, paddingLeft: 20, gap: 10, justifyContent: 'center' },
-  scoreRow: { flexDirection: 'row', justifyContent: 'space-between' },
-  scoreLabel: { color: '#94A3B8', fontSize: 12 },
-  scoreNumber: { color: '#E2E8F0', fontSize: 14, fontWeight: '600' },
-
-  section: { marginBottom: 24 },
-  sectionTitle: { color: '#F8FAFC', fontSize: 16, fontWeight: '700', marginBottom: 12 },
-  feedbackItem: { flexDirection: 'row', alignItems: 'flex-start', gap: 10, marginBottom: 10 },
-  feedbackText: { color: '#E2E8F0', fontSize: 14, flex: 1, lineHeight: 20 },
-
-  tipsSection: { marginBottom: 24 },
-  tipsTitle: { color: '#F8FAFC', fontSize: 16, fontWeight: '700', marginBottom: 12 },
-  tipCard: {
-    flexDirection: 'row',
-    alignItems: 'flex-start',
-    backgroundColor: '#1E293B',
-    padding: 14,
-    borderRadius: 12,
-    gap: 10,
-    marginBottom: 8,
-    borderWidth: 1,
-    borderColor: '#334155',
-  },
-  tipText: { color: '#CBD5E1', fontSize: 13, flex: 1, lineHeight: 19 },
-
-  actionSection: { gap: 10 },
-  retryBtn: {
-    backgroundColor: '#10B981',
-    padding: 16,
-    borderRadius: 14,
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-    gap: 8,
-  },
-  retryBtnText: { color: '#FFF', fontSize: 16, fontWeight: '700' },
-  homeBtn: {
-    backgroundColor: '#1E293B',
-    padding: 16,
-    borderRadius: 14,
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-    gap: 8,
-    borderWidth: 1,
-    borderColor: '#334155',
-  },
-  homeBtnText: { color: '#38BDF8', fontSize: 16, fontWeight: '600' },
+  container: { flex: 1, backgroundColor: '#f5f5f5' },
+  center: { flex: 1, justifyContent: 'center', alignItems: 'center', padding: 20 },
+  header: { padding: 16, backgroundColor: '#007AFF' },
+  headerTitle: { color: '#fff', fontSize: 18, fontWeight: 'bold' },
+  headerSubtitle: { color: 'rgba(255,255,255,0.8)', fontSize: 13, marginTop: 2 },
+  chatArea: { flex: 1 },
+  chatContent: { padding: 16, paddingBottom: 20 },
+  completeBanner: { padding: 20, backgroundColor: '#E8F5E9', borderRadius: 12, alignItems: 'center', marginTop: 20 },
+  completeText: { fontSize: 18, fontWeight: 'bold', color: '#2E7D32' },
+  statusText: { marginTop: 10, color: '#666' },
+  errorIcon: { fontSize: 40, marginBottom: 10 },
+  errorText: { color: '#e74c3c', fontSize: 16, textAlign: 'center', marginBottom: 16 },
+  retryBtn: { padding: 12, backgroundColor: '#007AFF', borderRadius: 8 },
+  retryText: { color: '#fff', fontWeight: '600' }
 });

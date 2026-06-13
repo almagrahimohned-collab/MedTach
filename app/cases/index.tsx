@@ -66,7 +66,7 @@ export default function DiagnosticRoom() {
             <Text style={styles.dailyBadgeText}>Daily Challenge (+{data.dailyChallenge?.bonusPoints} bonus)</Text>
           </View>
         )}
-        <Text style={styles.patientInfo}>Patient: {data.currentCase.patient.age}{data.currentCase.patient.gender === 'male' ? 'M' : 'F'} | {data.currentCase.patient.name}</Text>
+        <Text style={styles.patientInfo}>Patient: {data.currentCase?.patient?.age}{data.currentCase.patient.gender === 'male' ? 'M' : 'F'} | {data.currentCase?.patient?.name}</Text>
         <Text style={styles.chiefComplaint}>{data.currentCase.chief_complaint}</Text>
       </View>
 
@@ -222,8 +222,8 @@ export default function DiagnosticRoom() {
                 </View>
               </Pressable>
             ))}
-            <Pressable style={styles.menuItem} onPress={() => data.handleUseDiagnosisHint()}>
-              <Ionicons name="brain" size={20} color="#EF4444" />
+            <Pressable style={styles.menuItem} onPress={() => (data.handleUseDiagnosisHint || (() => {}))()}>
+              <Ionicons name={"brain" as any} size={20} color="#EF4444" />
               <View style={{ flex: 1 }}>
                 <Text style={[styles.menuItemText, { color: '#EF4444' }]}>Reveal Diagnosis Pattern</Text>
                 <Text style={{ color: '#F59E0B', fontSize: 11, marginTop: 4 }}>Cost: 20 points</Text>

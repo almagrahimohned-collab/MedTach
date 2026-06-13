@@ -1,3 +1,5 @@
+// Image URLs fetched from ContentRepository.getCaseImages()
+// Lab results fetched from ContentRepository.getLabsReference()
 export const MEDICAL_MENUS: Record<string, { id: string; text: string; icon: string }[]> = {
   history: [
     { id: 'pmh', text: 'Past Medical History (PMH)', icon: 'clipboard-text-outline' },

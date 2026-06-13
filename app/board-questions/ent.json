@@ -1,0 +1,602 @@
+[
+  {
+    "id": "board_ent_001",
+    "specialty": "ent",
+    "topic": "Epistaxis",
+    "difficulty": "medium",
+    "vignette": "A 60-year-old male on warfarin presents with profuse epistaxis for 1 hour. He is hemodynamically stable. Direct pressure and topical oxymetazoline have not stopped the bleeding. What is the BEST next step?",
+    "options": [
+      { "id": "A", "text": "Anterior nasal packing" },
+      { "id": "B", "text": "Posterior nasal packing" },
+      { "id": "C", "text": "Endoscopic cauterization or ligation" },
+      { "id": "D", "text": "IV vitamin K and FFP" },
+      { "id": "E", "text": "Nasal balloon (Foley/Rapid Rhino)" }
+    ],
+    "correctOptionId": "A",
+    "explanation": {
+      "whyCorrect": "Anterior epistaxis (Kiesselbach plexus - most common): Initial management: Direct pressure (lean forward) + Topical vasoconstrictors. If persistent: Anterior nasal packing (Merocel, Rapid Rhino) or chemical cauterization (silver nitrate). Posterior packing if anterior fails or bleeding is posterior.",
+      "whyWrong": {
+        "B": "Posterior packing for posterior bleeds (not first-line for anterior).",
+        "C": "Endoscopic ligation is for refractory bleeding after packing fails.",
+        "D": "Reversing anticoagulation if life-threatening or packing fails. Not first step.",
+        "E": "Nasal balloon is alternative packing (similar to anterior packing)."
+      },
+      "clinicalPearl": "Epistaxis: Direct pressure + Topical vasoconstrictors → Anterior packing → Posterior packing → Surgical/IR intervention."
+    },
+    "references": ["AAO-HNS Epistaxis Guidelines"],
+    "highYield": true,
+    "timeAllocated": 72
+  },
+  {
+    "id": "board_ent_002",
+    "specialty": "ent",
+    "topic": "Hearing Loss",
+    "difficulty": "hard",
+    "vignette": "A 45-year-old male presents with gradual hearing loss in his left ear. Tuning fork: Rinne test positive in both ears (AC > BC), Weber test localizes to the RIGHT ear. What type of hearing loss is in the left ear?",
+    "options": [
+      { "id": "A", "text": "Conductive hearing loss - left ear" },
+      { "id": "B", "text": "Sensorineural hearing loss - left ear" },
+      { "id": "C", "text": "Mixed hearing loss - left ear" },
+      { "id": "D", "text": "Normal hearing - both ears" },
+      { "id": "E", "text": "Conductive hearing loss - right ear" }
+    ],
+    "correctOptionId": "B",
+    "explanation": {
+      "whyCorrect": "Sensorineural hearing loss (SNHL): Rinne positive (AC > BC) in both ears, Weber localizes to the BETTER ear (right). Left ear has SNHL. Left cochlear nerve or inner ear problem. Causes: Acoustic neuroma, Meniere disease, noise-induced, presbycusis, ototoxic drugs.",
+      "whyWrong": {
+        "A": "Conductive loss: Rinne negative (BC > AC) on affected side, Weber to affected ear.",
+        "C": "Mixed: Rinne negative on affected side, Weber variable.",
+        "D": "Abnormal tuning fork = not normal.",
+        "E": "Weber to right (better ear) indicates LEFT ear problem, not right."
+      },
+      "clinicalPearl": "SNHL: Rinne positive bilaterally + Weber to BETTER ear. Conductive loss: Rinne negative on affected side + Weber to AFFECTED ear."
+    },
+    "references": ["Tuning Fork Tests for Hearing Loss"],
+    "highYield": true,
+    "timeAllocated": 72
+  },
+  {
+    "id": "board_ent_003",
+    "specialty": "ent",
+    "topic": "Sinusitis",
+    "difficulty": "medium",
+    "vignette": "A 30-year-old female presents with facial pain, purulent nasal discharge, and fever for 10 days. She had a cold that 'got worse' after 5 days. CT shows air-fluid levels in the maxillary sinuses. What is the BEST treatment?",
+    "options": [
+      { "id": "A", "text": "Amoxicillin 500mg TID x10 days" },
+      { "id": "B", "text": "Amoxicillin-clavulanate 875/125mg BID x5-7 days" },
+      { "id": "C", "text": "Azithromycin 500mg daily x3 days" },
+      { "id": "D", "text": "Nasal saline irrigation only" },
+      { "id": "E", "text": "Immediate ENT referral for surgery" }
+    ],
+    "correctOptionId": "B",
+    "explanation": {
+      "whyCorrect": "Acute bacterial rhinosinusitis: Symptoms >10 days OR 'double worsening' (worse after initial improvement). First-line: Amoxicillin-clavulanate 875/125mg BID x5-7 days. Amoxicillin alone is not recommended (H. influenzae and M. catarrhalis produce beta-lactamase).",
+      "whyWrong": {
+        "A": "Amoxicillin alone is ineffective due to beta-lactamase-producing organisms.",
+        "C": "Azithromycin has high resistance rates (not recommended for sinusitis).",
+        "D": "Saline irrigation is adjunctive, not sole treatment for bacterial sinusitis.",
+        "E": "Surgery is for chronic sinusitis (>12 weeks) refractory to medical therapy."
+      },
+      "clinicalPearl": "Bacterial sinusitis: Symptoms >10 days or 'double worsening.' Amoxicillin-clavulanate first-line. CT only if complicated or recurrent."
+    },
+    "references": ["IDSA Sinusitis Guidelines"],
+    "highYield": true,
+    "timeAllocated": 72
+  }
+]
+[
+  {
+    "id": "board_ent_004",
+    "specialty": "ent",
+    "topic": "Otitis Media",
+    "difficulty": "easy",
+    "vignette": "A 2-year-old male presents with fever, ear pain, and irritability. He is pulling at his right ear. Otoscopy shows a bulging, erythematous, opaque tympanic membrane with loss of landmarks. What is the BEST treatment?",
+    "options": [
+      { "id": "A", "text": "Amoxicillin 80-90mg/kg/day x10 days" },
+      { "id": "B", "text": "Observation for 48-72h with pain control" },
+      { "id": "C", "text": "Azithromycin x5 days" },
+      { "id": "D", "text": "Tympanostomy tube placement" },
+      { "id": "E", "text": "Ceftriaxone IM" }
+    ],
+    "correctOptionId": "A",
+    "explanation": {
+      "whyCorrect": "Acute otitis media (AOM) with severe symptoms (fever >39°C, moderate-severe otalgia): Antibiotics indicated. Amoxicillin 80-90mg/kg/day x10 days (first-line). Observation for 48-72h only for: Age >6mo, non-severe, unilateral, reliable follow-up.",
+      "whyWrong": {
+        "B": "Observation only for non-severe AOM with reliable follow-up. This is severe.",
+        "C": "Azithromycin has high S. pneumoniae resistance (not first-line).",
+        "D": "Tubes for recurrent AOM (>3 in 6mo or >4 in 1yr) or chronic OME >3mo.",
+        "E": "Ceftriaxone is for treatment failure or severe penicillin allergy."
+      },
+      "clinicalPearl": "AOM: Amoxicillin 80-90mg/kg/day x10 days. Observation ONLY for non-severe >6mo with reliable follow-up."
+    },
+    "references": ["AAP AOM Guidelines"],
+    "highYield": true,
+    "timeAllocated": 72
+  },
+  {
+    "id": "board_ent_005",
+    "specialty": "ent",
+    "topic": "Vertigo",
+    "difficulty": "hard",
+    "vignette": "A 50-year-old female presents with acute onset severe vertigo, nausea, and vomiting for 6 hours. She cannot walk and prefers to lie still. She has no hearing loss or tinnitus. Dix-Hallpike maneuver is negative. Head impulse test (HIT) shows a corrective saccade on leftward head turn. What is the diagnosis?",
+    "options": [
+      { "id": "A", "text": "BPPV" },
+      { "id": "B", "text": "Vestibular neuritis" },
+      { "id": "C", "text": "Meniere disease" },
+      { "id": "D", "text": "Acoustic neuroma" },
+      { "id": "E", "text": "Central vertigo (stroke)" }
+    ],
+    "correctOptionId": "B",
+    "explanation": {
+      "whyCorrect": "Vestibular neuritis: Acute severe vertigo (hours-days) + Nausea/vomiting + Abnormal HIT (corrective saccade) + No hearing loss/tinnitus + Negative Dix-Hallpike. Peripheral etiology (vestibular nerve inflammation). Treatment: Steroids (prednisone taper), vestibular suppressants (meclizine) for first 1-3 days only.",
+      "whyWrong": {
+        "A": "BPPV: Brief (<1 min) episodes with position changes, positive Dix-Hallpike, normal HIT.",
+        "C": "Meniere: Episodic vertigo + Hearing loss + Tinnitus + Aural fullness (hours).",
+        "D": "Acoustic neuroma: Gradual hearing loss, tinnitus, no acute vertigo.",
+        "E": "Central vertigo: HINTS exam abnormal (normal HIT, skew deviation, direction-changing nystagmus)."
+      },
+      "clinicalPearl": "Vestibular neuritis: Acute prolonged vertigo + Abnormal HIT + No hearing loss. Steroids within 72h improve recovery."
+    },
+    "references": ["HINTS Exam for Vertigo", "Vestibular Neuritis Management"],
+    "highYield": true,
+    "timeAllocated": 72
+  },
+  {
+    "id": "board_ent_006",
+    "specialty": "ent",
+    "topic": "Peritonsillar Abscess",
+    "difficulty": "medium",
+    "vignette": "A 20-year-old male presents with severe sore throat (worse on right), fever, 'hot potato' voice, trismus, and uvular deviation to the left. What is the BEST management?",
+    "options": [
+      { "id": "A", "text": "Oral antibiotics and discharge" },
+      { "id": "B", "text": "Needle aspiration or incision and drainage + IV antibiotics" },
+      { "id": "C", "text": "Emergency tonsillectomy" },
+      { "id": "D", "text": "IV steroids alone" },
+      { "id": "E", "text": "Throat culture and observation" }
+    ],
+    "correctOptionId": "B",
+    "explanation": {
+      "whyCorrect": "Peritonsillar abscess: Trismus + Uvular deviation + Hot potato voice + Severe unilateral sore throat. Treatment: Drainage (needle aspiration, I&D) + IV antibiotics (ampicillin-sulbactam or clindamycin) + Steroids (reduce inflammation). Most common deep neck infection.",
+      "whyWrong": {
+        "A": "Oral antibiotics alone are insufficient for abscess.",
+        "C": "Tonsillectomy is for recurrent PTA or if drainage fails.",
+        "D": "Steroids are adjunctive, not sole treatment.",
+        "E": "Abscess requires drainage, not observation."
+      },
+      "clinicalPearl": "Peritonsillar abscess: Trismus + Uvular deviation + Hot potato voice. Drainage + Antibiotics + Steroids."
+    },
+    "references": ["AAO-HNS Peritonsillar Abscess Guidelines"],
+    "highYield": true,
+    "timeAllocated": 72
+  }
+]
+[
+  {
+    "id": "board_ent_007",
+    "specialty": "ent",
+    "topic": "Allergic Rhinitis",
+    "difficulty": "easy",
+    "vignette": "A 25-year-old male presents with seasonal sneezing, rhinorrhea, nasal congestion, and itchy eyes every spring. What is the BEST first-line treatment?",
+    "options": [
+      { "id": "A", "text": "First-generation antihistamine (diphenhydramine)" },
+      { "id": "B", "text": "Intranasal corticosteroid (fluticasone) + Second-generation antihistamine (cetirizine)" },
+      { "id": "C", "text": "Oral decongestant (pseudoephedrine) alone" },
+      { "id": "D", "text": "Oral prednisone" },
+      { "id": "E", "text": "Immunotherapy only" }
+    ],
+    "correctOptionId": "B",
+    "explanation": {
+      "whyCorrect": "Moderate-severe allergic rhinitis: Intranasal corticosteroids (fluticasone, mometasone) are the MOST effective single therapy. Add second-generation antihistamine (cetirizine, loratadine, fexofenadine) for breakthrough symptoms. Avoid first-generation antihistamines (sedation).",
+      "whyWrong": {
+        "A": "First-generation antihistamines cause sedation and cognitive impairment.",
+        "C": "Decongestants alone are less effective and cause rhinitis medicamentosa if used >3 days.",
+        "D": "Oral steroids for severe refractory cases only (short course).",
+        "E": "Immunotherapy is for severe/recalcitrant after pharmacotherapy fails."
+      },
+      "clinicalPearl": "Allergic rhinitis: Intranasal steroids > Antihistamines. Avoid first-gen antihistamines (sedation). Immunotherapy for refractory."
+    },
+    "references": ["AAAAI Allergic Rhinitis Guidelines"],
+    "highYield": true,
+    "timeAllocated": 72
+  },
+  {
+    "id": "board_ent_008",
+    "specialty": "ent",
+    "topic": "Sudden Hearing Loss",
+    "difficulty": "hard",
+    "vignette": "A 40-year-old male wakes up with complete hearing loss in his left ear. He has no pain, tinnitus, or vertigo. Tuning fork: Rinne positive bilaterally, Weber localizes to right ear. What is the diagnosis and treatment?",
+    "options": [
+      { "id": "A", "text": "Meniere disease - Low-salt diet and diuretics" },
+      { "id": "B", "text": "Sudden sensorineural hearing loss (SSNHL) - High-dose prednisone" },
+      { "id": "C", "text": "Acoustic neuroma - Surgical resection" },
+      { "id": "D", "text": "Eustachian tube dysfunction - Decongestants" },
+      { "id": "E", "text": "Noise-induced hearing loss - Hearing aids" }
+    ],
+    "correctOptionId": "B",
+    "explanation": {
+      "whyCorrect": "SSNHL: Sudden (<72h) sensorineural hearing loss (≥30dB over 3 frequencies). EMERGENCY! High-dose prednisone (60mg/day x7-14 days) within 2 weeks improves recovery. Intratympanic steroids if refractory. MRI to rule out acoustic neuroma (retrocochlear).",
+      "whyWrong": {
+        "A": "Meniere: Episodic vertigo + Hearing loss + Tinnitus (not sudden complete loss).",
+        "C": "Acoustic neuroma: Gradual progressive, not sudden.",
+        "D": "Eustachian tube: Conductive hearing loss (Rinne negative), not sensorineural.",
+        "E": "Noise-induced: Gradual, bilateral, history of noise exposure."
+      },
+      "clinicalPearl": "SSNHL: Sudden sensorineural loss = EMERGENCY! High-dose prednisone within 2 weeks. MRI to rule out acoustic neuroma."
+    },
+    "references": ["AAO-HNS SSNHL Guidelines"],
+    "highYield": true,
+    "timeAllocated": 72
+  },
+  {
+    "id": "board_ent_009",
+    "specialty": "ent",
+    "topic": "Tonsillitis",
+    "difficulty": "easy",
+    "vignette": "A 15-year-old male presents with sore throat, fever 38.5°C, and tender anterior cervical lymphadenopathy. Throat exam shows tonsillar exudates and palatal petechiae. Rapid strep test is positive. What is the BEST treatment?",
+    "options": [
+      { "id": "A", "text": "Amoxicillin 500mg BID x10 days" },
+      { "id": "B", "text": "Azithromycin 500mg daily x5 days" },
+      { "id": "C", "text": "Cephalexin 500mg QID x10 days" },
+      { "id": "D", "text": "TMP-SMX DS BID x10 days" },
+      { "id": "E", "text": "Symptomatic treatment only" }
+    ],
+    "correctOptionId": "A",
+    "explanation": {
+      "whyCorrect": "Group A Strep pharyngitis: Centor criteria (fever, exudates, lymphadenopathy, no cough) + Positive rapid strep. Amoxicillin or Penicillin V x10 days (first-line). Goal: Prevent rheumatic fever (not for symptom relief). Azithromycin for penicillin-allergic patients.",
+      "whyWrong": {
+        "B": "Macrolides have increasing resistance (use only if penicillin-allergic).",
+        "C": "Cephalosporins are alternative but penicillin is first-line.",
+        "D": "TMP-SMX does NOT cover GAS.",
+        "E": "Positive rapid strep requires antibiotics to prevent rheumatic fever."
+      },
+      "clinicalPearl": "GAS pharyngitis: Penicillin/Amoxicillin x10 days. Prevents rheumatic fever (not just symptom relief)."
+    },
+    "references": ["IDSA GAS Pharyngitis Guidelines"],
+    "highYield": true,
+    "timeAllocated": 72
+  }
+]
+[
+  {
+    "id": "board_ent_010",
+    "specialty": "ent",
+    "topic": "Laryngeal Cancer",
+    "difficulty": "medium",
+    "vignette": "A 60-year-old male with 50 pack-year smoking history and heavy alcohol use presents with hoarseness for 3 months. He has no pain. What is the BEST next step?",
+    "options": [
+      { "id": "A", "text": "Chest X-ray" },
+      { "id": "B", "text": "Laryngoscopy with biopsy of any suspicious lesions" },
+      { "id": "C", "text": "Trial of proton pump inhibitor" },
+      { "id": "D", "text": "Voice rest and follow-up in 3 months" },
+      { "id": "E", "text": "CT neck with contrast" }
+    ],
+    "correctOptionId": "B",
+    "explanation": {
+      "whyCorrect": "Hoarseness >3 weeks in smoker/drinker = RED FLAG for laryngeal cancer. Laryngoscopy (flexible or direct) with biopsy is mandatory. 95% are squamous cell carcinoma. Early stage: Radiation or laser excision. Advanced: Chemoradiation or total laryngectomy.",
+      "whyWrong": {
+        "A": "CXR does not evaluate laryngeal pathology.",
+        "C": "PPI trial for reflux (max 4-8 weeks). Persistent hoarseness >2-3 weeks = scope.",
+        "D": "Hoarseness >3 weeks requires laryngoscopy, not observation.",
+        "E": "CT is for staging after diagnosis, not initial evaluation."
+      },
+      "clinicalPearl": "Hoarseness >3 weeks + Smoking/Alcohol = Laryngoscopy to rule out cancer. 95% are SCC."
+    },
+    "references": ["AAO-HNS Laryngeal Cancer Guidelines"],
+    "highYield": true,
+    "timeAllocated": 72
+  },
+  {
+    "id": "board_ent_011",
+    "specialty": "ent",
+    "topic": "Foreign Body Aspiration",
+    "difficulty": "medium",
+    "vignette": "A 2-year-old boy is brought in with sudden onset coughing, stridor, and wheezing after eating peanuts. He is in mild respiratory distress. CXR shows hyperinflation of the right lung. What is the BEST management?",
+    "options": [
+      { "id": "A", "text": "Bronchodilators and observation" },
+      { "id": "B", "text": "Rigid bronchoscopy for foreign body removal" },
+      { "id": "C", "text": "Heimlich maneuver" },
+      { "id": "D", "text": "Chest physiotherapy" },
+      { "id": "E", "text": "Oral steroids" }
+    ],
+    "correctOptionId": "B",
+    "explanation": {
+      "whyCorrect": "Foreign body aspiration: Ball-valve effect → Hyperinflation (air enters, cannot exit). Rigid bronchoscopy = Gold standard for diagnosis AND treatment. Flexible bronchoscopy for distal foreign bodies. If complete obstruction (no breath sounds, severe distress) → Back blows/chest thrusts in infants.",
+      "whyWrong": {
+        "A": "Bronchodilators do not relieve mechanical obstruction.",
+        "C": "Heimlich for complete obstruction, not partial with stridor.",
+        "D": "Chest PT may dislodge FB and worsen obstruction.",
+        "E": "Steroids may reduce edema but do not remove FB."
+      },
+      "clinicalPearl": "Foreign body aspiration: Hyperinflation on CXR + Stridor/Cough. Rigid bronchoscopy = Diagnostic + Therapeutic."
+    },
+    "references": ["AAP Foreign Body Aspiration Guidelines"],
+    "highYield": true,
+    "timeAllocated": 72
+  },
+  {
+    "id": "board_ent_012",
+    "specialty": "ent",
+    "topic": "Bell's Palsy",
+    "difficulty": "medium",
+    "vignette": "A 35-year-old female presents with sudden onset right-sided facial weakness involving the forehead, inability to close her right eye, and loss of the nasolabial fold. She has no other neurological symptoms. What is the BEST treatment?",
+    "options": [
+      { "id": "A", "text": "Prednisone 60mg daily x7 days + Valacyclovir" },
+      { "id": "B", "text": "Observation only" },
+      { "id": "C", "text": "Prednisone alone" },
+      { "id": "D", "text": "Surgical decompression" },
+      { "id": "E", "text": "Acyclovir alone" }
+    ],
+    "correctOptionId": "A",
+    "explanation": {
+      "whyCorrect": "Bell's palsy (LMN facial nerve palsy): Forehead INVOLVED (differentiates from UMN stroke). Treatment: Prednisone within 72h (improves recovery) + Valacyclovir (if severe, may improve outcomes). Eye protection (artificial tears, taping eye at night). Most recover completely in 3-6 months.",
+      "whyWrong": {
+        "B": "Steroids improve recovery (should not observe).",
+        "C": "Antivirals may provide additional benefit (controversial but commonly given).",
+        "D": "Surgery is last resort for severe persistent cases.",
+        "E": "Antivirals alone are insufficient (steroids are the mainstay)."
+      },
+      "clinicalPearl": "Bell's palsy: Forehead INVOLVED = LMN. Forehead spared = UMN (stroke). Prednisone within 72h improves recovery."
+    },
+    "references": ["AAN Bell's Palsy Guidelines"],
+    "highYield": true,
+    "timeAllocated": 72
+  }
+]
+[
+  {
+    "id": "board_ent_013",
+    "specialty": "ent",
+    "topic": "Thyroid Nodule",
+    "difficulty": "medium",
+    "vignette": "A 40-year-old female is found to have a 2cm solitary thyroid nodule on physical exam. She has no compressive symptoms. TSH is normal. What is the BEST next step?",
+    "options": [
+      { "id": "A", "text": "Fine needle aspiration (FNA) biopsy" },
+      { "id": "B", "text": "Thyroid ultrasound" },
+      { "id": "C", "text": "Total thyroidectomy" },
+      { "id": "D", "text": "Thyroid scan (scintigraphy)" },
+      { "id": "E", "text": "Observation only" }
+    ],
+    "correctOptionId": "B",
+    "explanation": {
+      "whyCorrect": "Thyroid nodule >1cm + Normal TSH: ULTRASOUND first to risk-stratify (TI-RADS). FNA decision based on US features: TI-RADS 1-2: No FNA. TI-RADS 3: FNA if >2.5cm. TI-RADS 4: FNA if >1.5cm. TI-RADS 5: FNA if >1cm. Thyroid scan only if LOW TSH (hyperthyroidism).",
+      "whyWrong": {
+        "A": "FNA is based on ultrasound risk stratification, not automatic.",
+        "C": "Surgery without FNA is inappropriate.",
+        "D": "Thyroid scan is for low TSH (evaluate for hyperfunctioning nodule).",
+        "E": "Nodule >1cm needs ultrasound evaluation."
+      },
+      "clinicalPearl": "Thyroid nodule: US first (TI-RADS). FNA based on US features. Thyroid scan only if TSH low."
+    },
+    "references": ["ATA Thyroid Nodule Guidelines"],
+    "highYield": true,
+    "timeAllocated": 72
+  },
+  {
+    "id": "board_ent_014",
+    "specialty": "ent",
+    "topic": "Deep Neck Infection",
+    "difficulty": "hard",
+    "vignette": "A 35-year-old male with dental infection presents with trismus, difficulty swallowing, and swelling in the submandibular space extending to the floor of mouth. He is drooling and his voice is muffled. What is this life-threatening condition?",
+    "options": [
+      { "id": "A", "text": "Peritonsillar abscess" },
+      { "id": "B", "text": "Ludwig angina" },
+      { "id": "C", "text": "Epiglottitis" },
+      { "id": "D", "text": "Retropharyngeal abscess" },
+      { "id": "E", "text": "Croup" }
+    ],
+    "correctOptionId": "B",
+    "explanation": {
+      "whyCorrect": "Ludwig angina: Bilateral submandibular/sublingual space infection (dental source). Woody edema of floor of mouth + Trismus + Drooling + Airway compromise. EMERGENCY! Secure airway (awake fiberoptic intubation or surgical airway). IV antibiotics (Pip-Tazo or Clindamycin). Surgical drainage.",
+      "whyWrong": {
+        "A": "PTA: Unilateral, uvular deviation, not submandibular.",
+        "C": "Epiglottitis: Stridor, drooling, thumb sign on X-ray.",
+        "D": "Retropharyngeal: Posterior pharyngeal swelling, neck stiffness.",
+        "E": "Croup: Pediatric, barking cough, subglottic narrowing (steeple sign)."
+      },
+      "clinicalPearl": "Ludwig angina: Submandibular swelling + Trismus + Drooling = Airway emergency! Awake fiberoptic intubation."
+    },
+    "references": ["AAO-HNS Deep Neck Infection Guidelines"],
+    "highYield": true,
+    "timeAllocated": 72
+  },
+  {
+    "id": "board_ent_015",
+    "specialty": "ent",
+    "topic": "Salivary Gland Tumors",
+    "difficulty": "medium",
+    "vignette": "A 50-year-old male presents with a painless, slow-growing mass in the tail of the parotid gland for 1 year. He has no facial weakness. What is the MOST likely diagnosis?",
+    "options": [
+      { "id": "A", "text": "Pleomorphic adenoma" },
+      { "id": "B", "text": "Warthin tumor" },
+      { "id": "C", "text": "Mucoepidermoid carcinoma" },
+      { "id": "D", "text": "Adenoid cystic carcinoma" },
+      { "id": "E", "text": "Sialadenitis" }
+    ],
+    "correctOptionId": "A",
+    "explanation": {
+      "whyCorrect": "Pleomorphic adenoma: Most common salivary gland tumor (80% of parotid tumors). Painless, slow-growing, mobile. Treatment: Superficial parotidectomy with facial nerve preservation. Incomplete excision → Recurrence risk. Malignant transformation in 2-12% (carcinoma ex-pleomorphic adenoma).",
+      "whyWrong": {
+        "B": "Warthin: Older males, smokers, bilateral, tail of parotid (2nd most common).",
+        "C": "Mucoepidermoid: Most common MALIGNANT salivary tumor.",
+        "D": "Adenoid cystic: Perineural invasion, facial nerve involvement.",
+        "E": "Sialadenitis: Painful, acute, associated with stones or dehydration."
+      },
+      "clinicalPearl": "Parotid mass: Pleomorphic adenoma most common (80%). Painless, slow-growing. Superficial parotidectomy."
+    },
+    "references": ["AAO-HNS Salivary Gland Guidelines"],
+    "highYield": true,
+    "timeAllocated": 72
+  }
+]
+[
+  {
+    "id": "board_ent_016",
+    "specialty": "ent",
+    "topic": "Nasal Polyps",
+    "difficulty": "medium",
+    "vignette": "A 35-year-old asthmatic male presents with chronic nasal congestion, anosmia, and recurrent sinusitis. Nasal endoscopy shows bilateral, pale, grape-like masses in the middle meatus. What is the BEST initial treatment?",
+    "options": [
+      { "id": "A", "text": "Surgical polypectomy" },
+      { "id": "B", "text": "Intranasal corticosteroids + Saline irrigation" },
+      { "id": "C", "text": "Oral antibiotics" },
+      { "id": "D", "text": "Oral steroids alone" },
+      { "id": "E", "text": "Observation" }
+    ],
+    "correctOptionId": "B",
+    "explanation": {
+      "whyCorrect": "Nasal polyps (CRSwNP): Bilateral pale grape-like masses. Associated with asthma, aspirin sensitivity (Samter triad). First-line: Intranasal corticosteroids + Saline irrigation. If severe: Short course of oral steroids. Refractory: Surgery (FESS) or Biologics (dupilumab - anti-IL4/IL13).",
+      "whyWrong": {
+        "A": "Surgery is for refractory cases after medical therapy fails.",
+        "C": "Antibiotics are for acute bacterial sinusitis, not primary polyp treatment.",
+        "D": "Oral steroids are for severe or acute exacerbations, not maintenance.",
+        "E": "Polyps require treatment (progressive symptoms)."
+      },
+      "clinicalPearl": "Nasal polyps: Bilateral pale masses + Asthma + Anosmia. Intranasal steroids first-line. Dupilumab for refractory."
+    },
+    "references": ["AAO-HNS Nasal Polyp Guidelines"],
+    "highYield": true,
+    "timeAllocated": 72
+  },
+  {
+    "id": "board_ent_017",
+    "specialty": "ent",
+    "topic": "Laryngomalacia",
+    "difficulty": "medium",
+    "vignette": "A 2-month-old infant presents with inspiratory stridor that worsens with feeding and crying and improves when prone. The stridor has been present since birth. What is the MOST likely diagnosis?",
+    "options": [
+      { "id": "A", "text": "Croup" },
+      { "id": "B", "text": "Laryngomalacia" },
+      { "id": "C", "text": "Epiglottitis" },
+      { "id": "D", "text": "Foreign body aspiration" },
+      { "id": "E", "text": "Subglottic stenosis" }
+    ],
+    "correctOptionId": "B",
+    "explanation": {
+      "whyCorrect": "Laryngomalacia: Most common cause of congenital stridor. Inspiratory stridor, worsens with feeding/crying, improves prone. Supraglottic collapse on inspiration. Usually self-limited (resolves by 12-18 months). Severe cases: Stridor with feeding difficulty, failure to thrive, apnea → Supraglottoplasty.",
+      "whyWrong": {
+        "A": "Croup: Barking cough, older infants (6mo-3yr), viral prodrome.",
+        "C": "Epiglottitis: Rapid onset, toxic appearance, drooling, thumb sign.",
+        "D": "Foreign body: Sudden onset, unilateral wheeze, air trapping.",
+        "E": "Subglottic stenosis: Post-intubation, biphasic stridor."
+      },
+      "clinicalPearl": "Laryngomalacia: Congenital inspiratory stridor, worse feeding, better prone. Self-limited. Severe = Supraglottoplasty."
+    },
+    "references": ["AAO-HNS Pediatric Stridor Guidelines"],
+    "highYield": true,
+    "timeAllocated": 72
+  },
+  {
+    "id": "board_ent_018",
+    "specialty": "ent",
+    "topic": "Zenker Diverticulum",
+    "difficulty": "hard",
+    "vignette": "A 70-year-old male presents with dysphagia, regurgitation of undigested food hours after eating, halitosis, and a gurgling sound in his neck. Barium swallow shows a posterior pharyngeal outpouching. What is the diagnosis?",
+    "options": [
+      { "id": "A", "text": "Achalasia" },
+      { "id": "B", "text": "Zenker diverticulum" },
+      { "id": "C", "text": "Esophageal cancer" },
+      { "id": "D", "text": "Hiatal hernia" },
+      { "id": "E", "text": "Plummer-Vinson syndrome" }
+    ],
+    "correctOptionId": "B",
+    "explanation": {
+      "whyCorrect": "Zenker diverticulum: Pharyngoesophageal (Killian dehiscence). Regurgitation of undigested food hours after meals + Halitosis + Gurgling. Barium swallow shows posterior outpouching. Treatment: Endoscopic stapling or open diverticulectomy + Cricopharyngeal myotomy.",
+      "whyWrong": {
+        "A": "Achalasia: Dysphagia to solids/liquids, bird's beak on barium.",
+        "C": "Esophageal cancer: Progressive dysphagia, weight loss, mass on EGD.",
+        "D": "Hiatal hernia: Heartburn, regurgitation, not gurgling.",
+        "E": "Plummer-Vinson: Dysphagia + Iron deficiency anemia + Esophageal web."
+      },
+      "clinicalPearl": "Zenker: Regurgitation of undigested food + Halitosis + Gurgling. Posterior pharyngeal pouch. Endoscopic treatment."
+    },
+    "references": ["AAO-HNS Zenker Diverticulum"],
+    "highYield": true,
+    "timeAllocated": 72
+  }
+]
+[
+  {
+    "id": "board_ent_019",
+    "specialty": "ent",
+    "topic": "Cholesteatoma",
+    "difficulty": "medium",
+    "vignette": "A 30-year-old male with history of recurrent ear infections presents with chronic ear drainage, hearing loss, and a pearly white mass behind the tympanic membrane. What is the diagnosis?",
+    "options": [
+      { "id": "A", "text": "Acute otitis media" },
+      { "id": "B", "text": "Cholesteatoma" },
+      { "id": "C", "text": "Otosclerosis" },
+      { "id": "D", "text": "Tympanosclerosis" },
+      { "id": "E", "text": "Glomus tumor" }
+    ],
+    "correctOptionId": "B",
+    "explanation": {
+      "whyCorrect": "Cholesteatoma: Keratinized squamous epithelium in middle ear. Pearly white mass behind TM + Chronic drainage + Conductive hearing loss. Can erode ossicles and temporal bone (facial nerve, labyrinth, tegmen). Treatment: Surgical excision (tympanomastoidectomy).",
+      "whyWrong": {
+        "A": "AOM: Acute infection, bulging TM, not pearly mass.",
+        "C": "Otosclerosis: Conductive hearing loss, normal TM, Schwartz sign.",
+        "D": "Tympanosclerosis: White plaques on TM (not a mass), post-OM/tubes.",
+        "E": "Glomus tumor: Pulsatile tinnitus, reddish mass behind TM."
+      },
+      "clinicalPearl": "Cholesteatoma: Pearly white mass + Chronic drainage + Hearing loss. Requires surgical excision."
+    },
+    "references": ["AAO-HNS Cholesteatoma Guidelines"],
+    "highYield": true,
+    "timeAllocated": 72
+  },
+  {
+    "id": "board_ent_020",
+    "specialty": "ent",
+    "topic": "Vocal Cord Paralysis",
+    "difficulty": "hard",
+    "vignette": "A 55-year-old male develops hoarseness and aspiration after thyroidectomy. Laryngoscopy shows a paralyzed right vocal cord in the paramedian position. What nerve was injured?",
+    "options": [
+      { "id": "A", "text": "Superior laryngeal nerve" },
+      { "id": "B", "text": "Recurrent laryngeal nerve" },
+      { "id": "C", "text": "Hypoglossal nerve" },
+      { "id": "D", "text": "Glossopharyngeal nerve" },
+      { "id": "E", "text": "Vagus nerve" }
+    ],
+    "correctOptionId": "B",
+    "explanation": {
+      "whyCorrect": "Recurrent laryngeal nerve (RLN): Most commonly injured during thyroidectomy. Unilateral = Hoarseness + Aspiration (cord in paramedian position). Bilateral = Stridor, airway emergency (cords adducted). RLN innervates all intrinsic laryngeal muscles EXCEPT cricothyroid (superior laryngeal nerve).",
+      "whyWrong": {
+        "A": "SLN injury: Cannot pitch voice high, subtle, cricothyroid muscle paralysis.",
+        "C": "Hypoglossal: Tongue deviation, not vocal cord.",
+        "D": "Glossopharyngeal: Swallowing, taste, not vocal cord.",
+        "E": "Vagus: Above RLN branch would cause multiple cranial nerve deficits."
+      },
+      "clinicalPearl": "RLN injury post-thyroidectomy: Hoarseness + Aspiration. Unilateral = Paramedian cord. Bilateral = Airway emergency."
+    },
+    "references": ["AAO-HNS Vocal Cord Paralysis"],
+    "highYield": true,
+    "timeAllocated": 72
+  },
+  {
+    "id": "board_ent_021",
+    "specialty": "ent",
+    "topic": "Acoustic Neuroma",
+    "difficulty": "medium",
+    "vignette": "A 50-year-old female presents with gradual, unilateral sensorineural hearing loss, tinnitus, and balance problems. MRI shows a cerebellopontine angle mass. What is the diagnosis?",
+    "options": [
+      { "id": "A", "text": "Meningioma" },
+      { "id": "B", "text": "Vestibular schwannoma (acoustic neuroma)" },
+      { "id": "C", "text": "Epidermoid cyst" },
+      { "id": "D", "text": "Trigeminal schwannoma" },
+      { "id": "E", "text": "Cerebellar hemangioblastoma" }
+    ],
+    "correctOptionId": "B",
+    "explanation": {
+      "whyCorrect": "Vestibular schwannoma (acoustic neuroma): Benign tumor of CN VIII (Schwann cells). Unilateral SNHL + Tinnitus + Balance issues. MRI: Enhancing CPA mass. Associated with NF2 (bilateral). Treatment: Observation (<1.5cm), Stereotactic radiosurgery, Microsurgical resection.",
+      "whyWrong": {
+        "A": "Meningioma: Dural tail on MRI, not primarily from CN VIII.",
+        "C": "Epidermoid: Congenital, diffusion restriction on MRI.",
+        "D": "Trigeminal schwannoma: From CN V, not CN VIII.",
+        "E": "Hemangioblastoma: Cerebellar, associated with VHL."
+      },
+      "clinicalPearl": "Acoustic neuroma: Unilateral SNHL + Tinnitus + CPA mass on MRI. NF2 = Bilateral. Observation, SRS, or surgery."
+    },
+    "references": ["AAO-HNS Acoustic Neuroma Guidelines"],
+    "highYield": true,
+    "timeAllocated": 72
+  }
+]

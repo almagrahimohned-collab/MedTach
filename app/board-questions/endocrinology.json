@@ -1,0 +1,458 @@
+[
+  {
+    "id": "board_endo_001",
+    "specialty": "endocrinology",
+    "topic": "Diabetes",
+    "difficulty": "hard",
+    "vignette": "A 25-year-old male with Type 1 DM presents with nausea, vomiting, and abdominal pain for 24 hours. He ran out of insulin 2 days ago. Vitals: BP 90/60, HR 120, RR 30. Labs: Glucose 480 mg/dL, pH 7.1, HCO3 8 mEq/L, Anion gap 24, K+ 5.8 mEq/L. Urine ketones positive. What is the FIRST step in management?",
+    "options": [
+      { "id": "A", "text": "IV insulin bolus 0.1 units/kg" },
+      { "id": "B", "text": "IV normal saline 1-2 liters bolus" },
+      { "id": "C", "text": "IV sodium bicarbonate" },
+      { "id": "D", "text": "IV calcium gluconate for hyperkalemia" },
+      { "id": "E", "text": "IV insulin infusion 0.1 units/kg/hr" }
+    ],
+    "correctOptionId": "B",
+    "explanation": {
+      "whyCorrect": "DKA management: 1st = IV FLUIDS (NS 1-2L bolus). Insulin started AFTER K+ checked (>3.3) and fluids begun.",
+      "whyWrong": {
+        "A": "Insulin bolus is NOT recommended.",
+        "C": "Bicarbonate is controversial, reserved for pH <6.9.",
+        "D": "K+ 5.8 does not require calcium (reserved for >6.5 or ECG changes).",
+        "E": "Insulin infusion is step 2."
+      },
+      "clinicalPearl": "DKA: 1) Fluids 2) Check K+ (>3.3 before insulin!) 3) Insulin infusion 4) D5 when glucose <200."
+    },
+    "references": ["ADA DKA Guidelines 2024"],
+    "highYield": true,
+    "timeAllocated": 72
+  },
+  {
+    "id": "board_endo_002",
+    "specialty": "endocrinology",
+    "topic": "Thyroid",
+    "difficulty": "medium",
+    "vignette": "A 32-year-old female presents with weight loss, heat intolerance, palpitations, and tremor for 2 months. She has a diffuse, non-tender goiter. Labs: TSH <0.01, Free T4 elevated. TSI positive. What is the BEST initial treatment?",
+    "options": [
+      { "id": "A", "text": "Radioactive iodine ablation" },
+      { "id": "B", "text": "Total thyroidectomy" },
+      { "id": "C", "text": "Methimazole + Propranolol" },
+      { "id": "D", "text": "Propylthiouracil (PTU)" },
+      { "id": "E", "text": "Levothyroxine" }
+    ],
+    "correctOptionId": "C",
+    "explanation": {
+      "whyCorrect": "Graves disease. First-line: Methimazole + Propranolol. PTU is reserved for 1st trimester pregnancy.",
+      "whyWrong": {
+        "A": "RAI is second-line if methimazole fails.",
+        "B": "Surgery is third-line.",
+        "D": "PTU is second-line (hepatotoxicity risk).",
+        "E": "Levothyroxine treats HYPOthyroidism."
+      },
+      "clinicalPearl": "Graves: Methimazole (NOT PTU) + Propranolol. PTU only in 1st trimester."
+    },
+    "references": ["ATA Hyperthyroidism Guidelines 2016"],
+    "highYield": true,
+    "timeAllocated": 72
+  },
+  {
+    "id": "board_endo_003",
+    "specialty": "endocrinology",
+    "topic": "Adrenal",
+    "difficulty": "hard",
+    "vignette": "A 50-year-old male with rheumatoid arthritis on chronic prednisone (10mg daily for 2 years) undergoes emergency surgery. Post-operatively, he develops hypotension refractory to fluids, hyponatremia (Na 128), and hyperkalemia (K+ 5.9). What is the MOST likely cause?",
+    "options": [
+      { "id": "A", "text": "Septic shock" },
+      { "id": "B", "text": "Adrenal crisis due to secondary adrenal insufficiency" },
+      { "id": "C", "text": "Acute kidney injury" },
+      { "id": "D", "text": "SIADH from surgical stress" },
+      { "id": "E", "text": "Primary adrenal insufficiency (Addison disease)" }
+    ],
+    "correctOptionId": "B",
+    "explanation": {
+      "whyCorrect": "Chronic steroids suppress HPA axis → adrenal atrophy → adrenal crisis during stress. Treatment: IV hydrocortisone 100mg STAT.",
+      "whyWrong": {
+        "A": "Sepsis would not explain the classic electrolyte pattern.",
+        "C": "AKI alone would not cause this pattern.",
+        "D": "SIADH causes euvolemic hyponatremia without hyperkalemia.",
+        "E": "Primary AI would have hyperpigmentation."
+      },
+      "clinicalPearl": "Chronic steroids = Stress-dose steroids before surgery! Hydrocortisone 50mg q8h or 100mg IV STAT."
+    },
+    "references": ["Endocrine Society Adrenal Crisis Guidelines"],
+    "highYield": true,
+    "timeAllocated": 72
+  },
+  {
+    "id": "board_endo_004",
+    "specialty": "endocrinology",
+    "topic": "Calcium",
+    "difficulty": "easy",
+    "vignette": "A 55-year-old female has hypercalcemia on routine labs (Ca 11.2 mg/dL). She is asymptomatic. PTH is elevated (120 pg/mL). 24-hour urinary calcium is elevated. What is the MOST likely diagnosis?",
+    "options": [
+      { "id": "A", "text": "Primary hyperparathyroidism" },
+      { "id": "B", "text": "Secondary hyperparathyroidism" },
+      { "id": "C", "text": "Familial hypocalciuric hypercalcemia (FHH)" },
+      { "id": "D", "text": "Malignancy-related hypercalcemia" },
+      { "id": "E", "text": "Vitamin D toxicity" }
+    ],
+    "correctOptionId": "A",
+    "explanation": {
+      "whyCorrect": "Hypercalcemia + elevated PTH = Primary hyperparathyroidism. Elevated urinary calcium rules out FHH.",
+      "whyWrong": {
+        "B": "Secondary hyperparathyroidism has LOW or normal calcium.",
+        "C": "FHH has low 24h urinary calcium.",
+        "D": "Malignancy causes PTH-independent hypercalcemia (low PTH).",
+        "E": "Vitamin D toxicity causes hypercalcemia with LOW PTH."
+      },
+      "clinicalPearl": "Hypercalcemia: High PTH = Primary hyperparathyroidism. Low PTH = Malignancy, Vitamin D toxicity."
+    },
+    "references": ["AAES Parathyroid Guidelines"],
+    "highYield": true,
+    "timeAllocated": 72
+  },
+  {
+    "id": "board_endo_005",
+    "specialty": "endocrinology",
+    "topic": "Pituitary",
+    "difficulty": "hard",
+    "vignette": "A 40-year-old female presents with amenorrhea, galactorrhea, and headaches for 6 months. Prolactin is 250 ng/mL. MRI shows 1.2cm pituitary adenoma compressing the optic chiasm. Visual field testing shows bitemporal hemianopsia. What is the BEST treatment?",
+    "options": [
+      { "id": "A", "text": "Cabergoline 0.5mg twice weekly" },
+      { "id": "B", "text": "Transsphenoidal adenomectomy" },
+      { "id": "C", "text": "Bromocriptine 2.5mg daily" },
+      { "id": "D", "text": "Radiation therapy" },
+      { "id": "E", "text": "Observe with serial MRI" }
+    ],
+    "correctOptionId": "B",
+    "explanation": {
+      "whyCorrect": "Macroprolactinoma + visual field deficit = surgical emergency. Transsphenoidal surgery first.",
+      "whyWrong": {
+        "A": "Cabergoline is first-line for MOST prolactinomas, but visual deficits require urgent surgery.",
+        "C": "Bromocriptine is less effective than cabergoline.",
+        "D": "Radiation is adjunctive.",
+        "E": "Macroprolactinoma + visual symptoms requires treatment."
+      },
+      "clinicalPearl": "Prolactinoma + Visual deficit = Surgery first. Without visual deficit = Cabergoline."
+    },
+    "references": ["Endocrine Society Prolactinoma Guidelines"],
+    "highYield": true,
+    "timeAllocated": 72
+  },
+  {
+    "id": "board_endo_006",
+    "specialty": "endocrinology",
+    "topic": "Osteoporosis",
+    "difficulty": "medium",
+    "vignette": "A 70-year-old female with osteoporosis (T-score -3.2 at hip) is started on alendronate 70mg weekly. After 1 year, she fractures her wrist after a fall. DEXA shows T-score -3.3 (stable). What is the BEST next step?",
+    "options": [
+      { "id": "A", "text": "Continue alendronate for another year" },
+      { "id": "B", "text": "Switch to denosumab 60mg SC every 6 months" },
+      { "id": "C", "text": "Switch to teriparatide 20mcg daily" },
+      { "id": "D", "text": "Add raloxifene to alendronate" },
+      { "id": "E", "text": "Switch to IV zoledronic acid 5mg annually" }
+    ],
+    "correctOptionId": "C",
+    "explanation": {
+      "whyCorrect": "Fracture on bisphosphonate = Treatment failure. Anabolic therapy (teriparatide, romosozumab) is indicated.",
+      "whyWrong": {
+        "A": "Fracture on therapy = do not continue same drug.",
+        "B": "Denosumab is antiresorptive (same class).",
+        "D": "Raloxifene is weaker antiresorptive.",
+        "E": "Zoledronic acid is same class (bisphosphonate)."
+      },
+      "clinicalPearl": "Fracture on bisphosphonate = Anabolic therapy. Do NOT switch between antiresorptives."
+    },
+    "references": ["AACE Osteoporosis Guidelines"],
+    "highYield": true,
+    "timeAllocated": 72
+  },
+  {
+    "id": "board_endo_007",
+    "specialty": "endocrinology",
+    "topic": "Thyroid Nodule",
+    "difficulty": "medium",
+    "vignette": "A 35-year-old female is found to have a 2.5cm solitary thyroid nodule. She has no compressive symptoms. TSH is normal. What is the BEST next step?",
+    "options": [
+      { "id": "A", "text": "Thyroid ultrasound with Doppler" },
+      { "id": "B", "text": "Fine needle aspiration (FNA) biopsy" },
+      { "id": "C", "text": "Total thyroidectomy" },
+      { "id": "D", "text": "CT neck with contrast" },
+      { "id": "E", "text": "Thyroid scan (scintigraphy)" }
+    ],
+    "correctOptionId": "A",
+    "explanation": {
+      "whyCorrect": "Thyroid nodule >1cm + normal TSH: First step = ultrasound to risk-stratify (TI-RADS). FNA based on US findings.",
+      "whyWrong": {
+        "B": "FNA is based on ultrasound risk stratification.",
+        "C": "Surgery without prior FNA is inappropriate.",
+        "D": "CT is not the imaging of choice.",
+        "E": "Thyroid scan is for LOW TSH (hyperthyroidism)."
+      },
+      "clinicalPearl": "Thyroid nodule + normal/high TSH → US first → FNA based on TI-RADS."
+    },
+    "references": ["ATA Thyroid Nodule Guidelines 2015"],
+    "highYield": true,
+    "timeAllocated": 72
+  }
+]
+[
+  {
+    "id": "board_endo_008",
+    "specialty": "endocrinology",
+    "topic": "Diabetes Insipidus",
+    "difficulty": "hard",
+    "vignette": "A 30-year-old male presents with polyuria (8L/day), polydipsia, and nocturia. Serum Na 150, serum osmolality 310, urine osmolality 150. After water deprivation test, urine osmolality increases to 750 after desmopressin. What type of DI?",
+    "options": [
+      { "id": "A", "text": "Central diabetes insipidus" },
+      { "id": "B", "text": "Nephrogenic diabetes insipidus" },
+      { "id": "C", "text": "Primary polydipsia" },
+      { "id": "D", "text": "Gestational diabetes insipidus" },
+      { "id": "E", "text": "SIADH" }
+    ],
+    "correctOptionId": "A",
+    "explanation": {
+      "whyCorrect": "Central DI: Hypernatremia + dilute urine (low urine osmolality despite high serum osmolality). Responds to desmopressin (urine osmolality increases >50% or >750). Caused by ADH deficiency. Treatment: Desmopressin (DDAVP).",
+      "whyWrong": {
+        "B": "Nephrogenic DI: No response to desmopressin (kidneys resistant to ADH).",
+        "C": "Primary polydipsia: Low-normal serum Na, low serum osmolality, urine concentrates appropriately.",
+        "D": "Gestational DI: Rare, due to increased vasopressinase from placenta.",
+        "E": "SIADH: Hyponatremia (Na 150 is hypernatremia)."
+      },
+      "clinicalPearl": "Central DI: Responds to desmopressin. Nephrogenic DI: No response. Water deprivation test + desmopressin = Gold standard."
+    },
+    "references": ["Endocrine Society DI Guidelines"],
+    "highYield": true,
+    "timeAllocated": 72
+  },
+  {
+    "id": "board_endo_009",
+    "specialty": "endocrinology",
+    "topic": "Obesity Management",
+    "difficulty": "medium",
+    "vignette": "A 42-year-old female with BMI 38 and type 2 diabetes (HbA1c 8.5%) has failed lifestyle modifications and metformin. She wants to lose weight and improve glycemic control. Which medication would BEST address both goals?",
+    "options": [
+      { "id": "A", "text": "Insulin glargine" },
+      { "id": "B", "text": "Semaglutide 2.4mg weekly" },
+      { "id": "C", "text": "Sitagliptin" },
+      { "id": "D", "text": "Pioglitazone" },
+      { "id": "E", "text": "Glimepiride" }
+    ],
+    "correctOptionId": "B",
+    "explanation": {
+      "whyCorrect": "Semaglutide (GLP-1 RA) at 2.4mg weekly: Approved for obesity (BMI ≥30 or ≥27 with comorbidities). Provides significant weight loss (15% body weight) + excellent glycemic control. Liraglutide 3mg is alternative.",
+      "whyWrong": {
+        "A": "Insulin causes weight GAIN, not weight loss.",
+        "C": "DPP4 inhibitors are weight-neutral, minimal A1c reduction.",
+        "D": "Pioglitazone causes weight gain and fluid retention.",
+        "E": "Sulfonylureas cause weight gain and hypoglycemia."
+      },
+      "clinicalPearl": "Obesity + DM: GLP-1 RAs (semaglutide, liraglutide) or Tirzepatide (GIP/GLP-1). Weight loss + Glycemic control."
+    },
+    "references": ["ADA Diabetes Guidelines 2024", "STEP Trials"],
+    "highYield": true,
+    "timeAllocated": 72
+  }
+]
+[
+  {
+    "id": "board_endo_010",
+    "specialty": "endocrinology",
+    "topic": "Hypoglycemia",
+    "difficulty": "hard",
+    "vignette": "A 50-year-old female without diabetes presents with episodes of confusion, sweating, and palpitations that resolve with eating. Fasting glucose during an episode is 40 mg/dL, insulin level is 10 μU/mL (inappropriately elevated), C-peptide is elevated. What is the MOST likely diagnosis?",
+    "options": [
+      { "id": "A", "text": "Insulinoma" },
+      { "id": "B", "text": "Exogenous insulin use" },
+      { "id": "C", "text": "Adrenal insufficiency" },
+      { "id": "D", "text": "Non-islet cell tumor hypoglycemia" },
+      { "id": "E", "text": "Dumping syndrome" }
+    ],
+    "correctOptionId": "A",
+    "explanation": {
+      "whyCorrect": "Insulinoma: Fasting hypoglycemia + Inappropriately elevated insulin + Elevated C-peptide (endogenous insulin). Whipple triad: Symptoms of hypoglycemia + Low glucose + Relief with glucose. Treatment: Surgical resection.",
+      "whyWrong": {
+        "B": "Exogenous insulin: Elevated insulin but LOW C-peptide (exogenous insulin suppresses endogenous production).",
+        "C": "Adrenal insufficiency causes hypoglycemia with LOW insulin (not elevated).",
+        "D": "NICTH: Low glucose + Low insulin + High IGF-2 (from large tumors).",
+        "E": "Dumping syndrome: Postprandial hypoglycemia (reactive), not fasting."
+      },
+      "clinicalPearl": "Insulinoma: Fasting hypoglycemia + High insulin + High C-peptide. Exogenous insulin: High insulin + LOW C-peptide."
+    },
+    "references": ["Endocrine Society Hypoglycemia Guidelines"],
+    "highYield": true,
+    "timeAllocated": 72
+  },
+  {
+    "id": "board_endo_011",
+    "specialty": "endocrinology",
+    "topic": "Lipid Disorders",
+    "difficulty": "medium",
+    "vignette": "A 40-year-old male has eruptive xanthomas on his back, TG 2500 mg/dL, total cholesterol 400. He has no history of diabetes. What is the MOST serious immediate risk?",
+    "options": [
+      { "id": "A", "text": "Coronary artery disease" },
+      { "id": "B", "text": "Acute pancreatitis" },
+      { "id": "C", "text": "Stroke" },
+      { "id": "D", "text": "Peripheral arterial disease" },
+      { "id": "E", "text": "Aortic stenosis" }
+    ],
+    "correctOptionId": "B",
+    "explanation": {
+      "whyCorrect": "Severe hypertriglyceridemia (TG >1000, especially >2000): Acute pancreatitis is the most immediate life-threatening risk. TG >2000 increases risk dramatically. Treatment: Fibrates, high-dose omega-3 fatty acids, strict diet, avoid alcohol, control diabetes if present.",
+      "whyWrong": {
+        "A": "CAD is a long-term risk but pancreatitis is the immediate concern.",
+        "C": "Stroke risk is elevated but not as immediately life-threatening as pancreatitis.",
+        "D": "PAD is a chronic complication of atherosclerosis.",
+        "E": "Aortic stenosis is unrelated to hypertriglyceridemia."
+      },
+      "clinicalPearl": "TG >1000 = Pancreatitis risk. TG >2000 = Emergency! Treat with fibrates, omega-3, and strict dietary fat restriction."
+    },
+    "references": ["AHA/ACC Cholesterol Guidelines", "NLA Hypertriglyceridemia"],
+    "highYield": true,
+    "timeAllocated": 72
+  }
+]
+[
+  {
+    "id": "board_endo_012",
+    "specialty": "endocrinology",
+    "topic": "PCOS",
+    "difficulty": "medium",
+    "vignette": "A 24-year-old female presents with irregular periods, hirsutism, and acne for 2 years. She has been trying to conceive for 12 months without success. BMI is 32. Labs: LH/FSH ratio 3:1, total testosterone elevated, fasting glucose 102. Pelvic US shows multiple ovarian follicles. What is the BEST initial treatment for infertility?",
+    "options": [
+      { "id": "A", "text": "Clomiphene citrate" },
+      { "id": "B", "text": "Metformin" },
+      { "id": "C", "text": "Letrozole" },
+      { "id": "D", "text": "Weight loss and lifestyle modification" },
+      { "id": "E", "text": "In vitro fertilization (IVF)" }
+    ],
+    "correctOptionId": "C",
+    "explanation": {
+      "whyCorrect": "PCOS with infertility: Letrozole (aromatase inhibitor) is NOW FIRST-LINE for ovulation induction. Superior to clomiphene with higher live birth rates and fewer multiple gestations. Metformin alone is less effective. Weight loss improves all outcomes but letrozole is pharmacologic first-line.",
+      "whyWrong": {
+        "A": "Clomiphene was previously first-line but letrozole is superior (PCOSMIC trial).",
+        "B": "Metformin alone has lower ovulation and live birth rates.",
+        "D": "Weight loss is recommended but as adjunct, not sole treatment for infertility.",
+        "E": "IVF is second-line if ovulation induction fails."
+      },
+      "clinicalPearl": "PCOS infertility: Letrozole > Clomiphene. Letrozole = Higher live birth, fewer multiples. Metformin as adjunct for metabolic features."
+    },
+    "references": ["PCOSMIC Trial", "ASRM PCOS Guidelines"],
+    "highYield": true,
+    "timeAllocated": 72
+  },
+  {
+    "id": "board_endo_013",
+    "specialty": "endocrinology",
+    "topic": "Hypopituitarism",
+    "difficulty": "hard",
+    "vignette": "A 50-year-old female presents with fatigue, weight loss, and inability to lactate after postpartum hemorrhage requiring transfusion 2 years ago. She has not had menstrual periods since delivery. Labs: Low ACTH, low cortisol, low FSH, low LH, low TSH, low free T4. What is the MOST likely diagnosis?",
+    "options": [
+      { "id": "A", "text": "Primary adrenal insufficiency" },
+      { "id": "B", "text": "Sheehan syndrome" },
+      { "id": "C", "text": "Lymphocytic hypophysitis" },
+      { "id": "D", "text": "Pituitary adenoma" },
+      { "id": "E", "text": "Empty sella syndrome" }
+    ],
+    "correctOptionId": "B",
+    "explanation": {
+      "whyCorrect": "Sheehan syndrome: Postpartum pituitary necrosis due to severe hemorrhage → Hypotension → Ischemic necrosis of enlarged pituitary. Features: Agalactia (failed lactation) + Amenorrhea + Panhypopituitarism. Most common cause of hypopituitarism worldwide.",
+      "whyWrong": {
+        "A": "Primary AI would have HIGH ACTH (not low).",
+        "C": "Lymphocytic hypophysitis occurs during pregnancy or postpartum but not necessarily with hemorrhage.",
+        "D": "Adenoma would cause mass effect (headaches, visual field defects).",
+        "E": "Empty sella is often incidental or causes mild hypopituitarism."
+      },
+      "clinicalPearl": "Sheehan syndrome: Postpartum hemorrhage → Panhypopituitarism. Agalactia is earliest sign. Treatment: Hormone replacement (steroids first, then thyroid, then gonadal)."
+    },
+    "references": ["Endocrine Society Hypopituitarism Guidelines"],
+    "highYield": true,
+    "timeAllocated": 72
+  },
+  {
+    "id": "board_endo_014",
+    "specialty": "endocrinology",
+    "topic": "Androgen Disorders",
+    "difficulty": "medium",
+    "vignette": "A 30-year-old male presents with infertility. Exam: Tall stature, gynecomastia, small firm testes. Labs: Elevated FSH, elevated LH, low testosterone. Karyotype is 47,XXY. What is the diagnosis?",
+    "options": [
+      { "id": "A", "text": "Kallmann syndrome" },
+      { "id": "B", "text": "Klinefelter syndrome" },
+      { "id": "C", "text": "Androgen insensitivity syndrome" },
+      { "id": "D", "text": "5-alpha reductase deficiency" },
+      { "id": "E", "text": "Congenital adrenal hyperplasia" }
+    ],
+    "correctOptionId": "B",
+    "explanation": {
+      "whyCorrect": "Klinefelter syndrome (47,XXY): Most common chromosomal disorder in males (1:600). Features: Tall, gynecomastia, small firm testes (hyalinization), infertility, learning disabilities. Labs: Hypergonadotropic hypogonadism (high FSH/LH, low testosterone). Treatment: Testosterone replacement.",
+      "whyWrong": {
+        "A": "Kallmann: Anosmia + Hypogonadotropic hypogonadism (low FSH/LH).",
+        "C": "AIS: 46,XY, female phenotype or ambiguous, resistant to androgens.",
+        "D": "5-ARD: 46,XY, ambiguous genitalia, virilization at puberty.",
+        "E": "CAH: 21-hydroxylase deficiency, virilization, salt-wasting, high 17-OHP."
+      },
+      "clinicalPearl": "Klinefelter: 47,XXY + Small firm testes + High FSH/LH + Low testosterone. Most common cause of primary hypogonadism in males."
+    },
+    "references": ["Endocrine Society Testosterone Guidelines"],
+    "highYield": true,
+    "timeAllocated": 72
+  }
+]
+[
+  {
+    "id": "board_endo_015",
+    "specialty": "endocrinology",
+    "topic": "MEN Syndromes",
+    "difficulty": "hard",
+    "vignette": "A 40-year-old male presents with kidney stones (calcium oxalate), peptic ulcer disease refractory to PPI, and hypercalcemia. PTH is elevated. His father had similar symptoms and died of a 'stomach tumor.' What is the MOST likely diagnosis?",
+    "options": [
+      { "id": "A", "text": "MEN1" },
+      { "id": "B", "text": "MEN2A" },
+      { "id": "C", "text": "MEN2B" },
+      { "id": "D", "text": "Familial hypocalciuric hypercalcemia" },
+      { "id": "E", "text": "Sarcoidosis" }
+    ],
+    "correctOptionId": "A",
+    "explanation": {
+      "whyCorrect": "MEN1 (3 Ps): Parathyroid hyperplasia (hypercalcemia, stones) + Pituitary adenoma + Pancreatic NET (gastrinoma = Zollinger-Ellison syndrome causing refractory PUD). Autosomal dominant. MEN1 gene (menin) on chromosome 11. Treatment: Parathyroidectomy + PPI for gastrinoma ± resection.",
+      "whyWrong": {
+        "B": "MEN2A: Medullary thyroid CA + Pheochromocytoma + Parathyroid hyperplasia.",
+        "C": "MEN2B: Medullary thyroid CA + Pheochromocytoma + Marfanoid + Mucosal neuromas.",
+        "D": "FHH: Hypercalcemia but LOW urinary calcium, no other tumors.",
+        "E": "Sarcoidosis: Hypercalcemia due to increased 1,25(OH)2D, not PTH-driven."
+      },
+      "clinicalPearl": "MEN1: Hyperparathyroidism + Pituitary + Pancreas (gastrinoma). Refractory PUD + Hypercalcemia = Think MEN1!"
+    },
+    "references": ["MEN1 Clinical Practice Guidelines"],
+    "highYield": true,
+    "timeAllocated": 72
+  },
+  {
+    "id": "board_endo_016",
+    "specialty": "endocrinology",
+    "topic": "Reproductive Endocrinology",
+    "difficulty": "medium",
+    "vignette": "A 16-year-old female presents with primary amenorrhea. She has normal breast development but no uterus on pelvic US. Karyotype is 46,XY. What is the diagnosis?",
+    "options": [
+      { "id": "A", "text": "Turner syndrome" },
+      { "id": "B", "text": "Androgen insensitivity syndrome" },
+      { "id": "C", "text": "Mullerian agenesis (MRKH)" },
+      { "id": "D", "text": "5-alpha reductase deficiency" },
+      { "id": "E", "text": "Congenital adrenal hyperplasia" }
+    ],
+    "correctOptionId": "B",
+    "explanation": {
+      "whyCorrect": "Complete androgen insensitivity syndrome (CAIS): 46,XY + Female phenotype + Breast development (androgens aromatized to estrogen) + Absent uterus (anti-Müllerian hormone from testes works) + Short/blind vagina + Absent pubic hair + Elevated testosterone. Androgen receptor mutation.",
+      "whyWrong": {
+        "A": "Turner: 45,X, short stature, webbed neck, streak ovaries.",
+        "C": "MRKH: 46,XX, absent uterus, normal ovaries and external genitalia.",
+        "D": "5-ARD: 46,XY, ambiguous genitalia, virilization at puberty.",
+        "E": "CAH: 46,XX, virilization, ambiguous genitalia, elevated 17-OHP."
+      },
+      "clinicalPearl": "CAIS: 46,XY female + Breast development + No uterus + No pubic hair + High testosterone. Androgen receptor mutation."
+    },
+    "references": ["Androgen Insensitivity Syndrome"],
+    "highYield": true,
+    "timeAllocated": 72
+  }
+]

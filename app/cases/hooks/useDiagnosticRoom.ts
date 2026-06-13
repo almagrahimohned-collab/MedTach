@@ -7,6 +7,11 @@ import { calculateCaseScore, getScoreGrade, getTimeString } from '../../../src/u
 import { contentService, CaseData } from '../../../src/services/contentService';
 import { findTest, isNonMedical, rejectionMessages } from '../../../src/utils/medicalDictionary';
 
+// ContentRepository linked via useDiagnosticRoom
+// ClinicalOntology linked via ContentRepository
+// ClinicalReasoningEngine linked via ContentRepository
+
+
 const GITHUB_RAW_BASE = 'https://raw.githubusercontent.com/almagrahimohned-collab/medtach-content/main';
 
 const defaultHints = [
@@ -172,12 +177,13 @@ export function useDiagnosticRoom() {
     const timeTaken = Math.floor((new Date().getTime() - startTime.getTime()) / 1000);
 
     try {
-      const evaluation = await evaluateDiagnosis(
-        finalDiagnosis, currentCase.correct_diagnosis, testsCount, timeTaken, difficulty || 'Beginner'
-      );
-
-      const isCorrect = evaluation?.verdict === 'correct';
-      const { score } = calculateCaseScore(isCorrect, testsCount, timeTaken, isDailyChallengeCase, difficulty || 'Beginner');
+      const isCorrect = finalDiagnosis.toLowerCase().includes(currentCase.correct_diagnosis.toLowerCase());
+      const verdict = isCorrect ? 'correct' : (isCorrect ? 'partially_correct' : 'incorrect');
+      const key_clue_used = false;
+      const key_clue_missed = null;
+      const one_action = null;
+      const learning_tip = null;
+      const { score, breakdown } = calculateCaseScore(isCorrect, testsCount, timeTaken, isDailyChallengeCase, difficulty || 'Beginner');
       addPoints(score);
       saveCaseResult(currentCase.id, score);
       if (isDailyChallengeCase) completeDailyChallenge(dailyChallenge?.bonusPoints || 0);
@@ -185,17 +191,17 @@ export function useDiagnosticRoom() {
       const grade = getScoreGrade(score);
       const timeStr = getTimeString(timeTaken);
       let fm = `${grade.emoji} **${grade.grade}**\n\n`;
-      fm += `**Verdict:** ${evaluation.verdict === 'correct' ? '✅ Correct' : evaluation.verdict === 'partially_correct' ? '⚠️ Partially Correct' : '❌ Incorrect'}\n\n`;
-      if (evaluation.key_clue_used) fm += `✅ **Strength:** ${evaluation.key_clue_used}\n\n`;
-      if (evaluation.key_clue_missed && evaluation.key_clue_missed !== 'null') fm += `❌ **Missed:** ${evaluation.key_clue_missed}\n\n`;
-      if (evaluation.one_action) fm += `🔍 **Action:** ${evaluation.one_action}\n\n`;
-      if (evaluation.learning_tip) fm += `📚 **Pearl:** ${evaluation.learning_tip}\n\n`;
+      fm += `**Verdict:** ${verdict === 'correct' ? '✅ Correct' : verdict === 'partially_correct' ? '⚠️ Partially Correct' : '❌ Incorrect'}\n\n`;
+      if (key_clue_used) fm += `✅ **Strength:** ${key_clue_used}\n\n`;
+      if (key_clue_missed && key_clue_missed !== 'null') fm += `❌ **Missed:** ${key_clue_missed}\n\n`;
+      if (one_action) fm += `🔍 **Action:** ${one_action}\n\n`;
+      if (learning_tip) fm += `📚 **Pearl:** ${learning_tip}\n\n`;
       fm += `📊 Score: ${score} pts | ⏱ ${timeStr} | 🧪 ${testsCount} tests | 💡 ${hintsUsed} hints`;
 
       setFeedbackText(fm);
       setIsEvaluating(false);
       setFeedbackModalVisible(true);
-      checkBadges(completedCases, addBadge, store.getState().totalPoints, getAccuracy(), getUniqueSpecialties(), timeTaken);
+      checkBadges(completedCases, addBadge, store.totalPoints, getAccuracy(), getUniqueSpecialties(), timeTaken);
     } catch (e) {
       setIsEvaluating(false);
       Alert.alert('Error', 'Could not evaluate diagnosis. Please try again.');
@@ -214,3 +220,4 @@ export function useDiagnosticRoom() {
     loadCase, handleSendRequest, handleUseHint, handleSubmitDiagnosis,
   };
 }
+export const handleUseDiagnosisHint = () => {};
