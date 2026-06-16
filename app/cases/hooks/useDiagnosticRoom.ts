@@ -7,6 +7,7 @@ import { calculateCaseScore, getScoreGrade, getTimeString } from '../../../src/u
 import { contentService, CaseData } from '../../../src/services/contentService';
 import { caseRepository } from '../../../src/services/CaseRepository';
 import { competencyEngine } from '../../../src/engines/competencyEngine';
+import { clinicalReasoningEngine } from '../../../src/engines/clinicalReasoningEngine';
 import { labLibrary } from '../../../src/services/LabLibrary';
 import { findTest, isNonMedical, rejectionMessages } from '../../../src/utils/medicalDictionary';
 
@@ -68,6 +69,10 @@ export function useDiagnosticRoom() {
           setTestsCount(0);
           setHintsUsed(0);
           setCaseLoaded(true);
+      // Start clinical reasoning tracking
+      if (unifiedCases.length > 0 && unifiedCases[0]) {
+        clinicalReasoningEngine.startCase(unifiedCases[0].id);
+      }
           return;
         }
       }
@@ -91,6 +96,10 @@ export function useDiagnosticRoom() {
       setTestsCount(0);
       setHintsUsed(0);
       setCaseLoaded(true);
+      // Start clinical reasoning tracking
+      if (unifiedCases.length > 0 && unifiedCases[0]) {
+        clinicalReasoningEngine.startCase(unifiedCases[0].id);
+      }
     }
   };
 
@@ -151,6 +160,8 @@ export function useDiagnosticRoom() {
       }
 
       setTestsCount(prev => prev + 1);
+        // Track investigation
+        clinicalReasoningEngine.recordInvestigation(matched.name, true);
       const msgs: any[] = [
         { id: Date.now().toString(), type: 'request', text, timestamp: new Date(), menuType: matched.category },
         { id: (Date.now() + 1).toString(), type: 'response', text: `📋 **${matched.name}:**\n${result}`, role: 'technician', timestamp: new Date() },
@@ -168,6 +179,8 @@ export function useDiagnosticRoom() {
 
     if (activeMenu) {
       setTestsCount(prev => prev + 1);
+        // Track investigation
+        clinicalReasoningEngine.recordInvestigation(matched.name, true);
       Animated.sequence([
         Animated.timing(pulseAnim, { toValue: 1.2, duration: 200, useNativeDriver: true }),
         Animated.timing(pulseAnim, { toValue: 1, duration: 200, useNativeDriver: true }),
@@ -175,6 +188,10 @@ export function useDiagnosticRoom() {
     }
 
     setIsLoading(true);
+    // Track reasoning: asking about history/exam = hypothesis generation
+    if (!activeMenu || activeMenu === 'history' || activeMenu === 'examination') {
+      clinicalReasoningEngine.recordHypothesis(text);
+    }
     const req = { id: Date.now().toString(), type: 'request', text, timestamp: new Date(), menuType: activeMenu };
     setInteractions(prev => [...prev, req]);
     setInputText('');
@@ -241,6 +258,10 @@ export function useDiagnosticRoom() {
       const { score, breakdown } = calculateCaseScore(isCorrect, testsCount, timeTaken, isDailyChallengeCase, difficulty || 'Beginner');
       addPoints(score);
       saveCaseResult(currentCase.id, score);
+      
+      // Record diagnosis in reasoning engine
+      clinicalReasoningEngine.recordDiagnosis(finalDiagnosis, isCorrect);
+      clinicalReasoningEngine.completeCase(score);
       
       // Track competencies
       const unifiedData = (currentCase as any)?._unified;

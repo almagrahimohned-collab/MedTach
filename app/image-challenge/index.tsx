@@ -4,6 +4,7 @@ import {
 } from 'react-native';
 import { useRouter } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
+import AnnotatedImage, { ANNOTATION_SETS } from '../../components/AnnotatedImage';
 import { useStore } from '../../src/store';
 import { competencyEngine } from '../../src/engines/competencyEngine';
 import { fetchQuestions, ImageQuestion } from './data';
@@ -24,6 +25,7 @@ export default function ImageChallenge() {
   const [category, setCategory] = useState<string | null>(null);
   const [imageLoaded, setImageLoaded] = useState(false);
   const [imageError, setImageError] = useState(false);
+  const [showAnnotation, setShowAnnotation] = useState(false);
   const timerRef = useRef<NodeJS.Timeout | null>(null);
   const fadeAnim = useRef(new Animated.Value(1)).current;
 
@@ -47,7 +49,8 @@ export default function ImageChallenge() {
     setCorrectCount(0);
     setImageLoaded(false);
     setImageError(false);
-    setPhase('playing');
+    setShowAnnotation(false);
+      setPhase('playing');
   };
 
   useEffect(() => {
@@ -78,6 +81,7 @@ export default function ImageChallenge() {
 
   const handleAnswer = (index: number) => {
     if (selectedAnswer !== null) return;
+    if (!showAnnotation) setShowAnnotation(true);
     if (timerRef.current) clearInterval(timerRef.current);
     setSelectedAnswer(index);
     setPhase('answer');
@@ -125,6 +129,7 @@ export default function ImageChallenge() {
       setTimeLeft(15);
       setImageLoaded(false);
       setImageError(false);
+      setShowAnnotation(false);
       setPhase('playing');
     } else {
       setPhase('done');
@@ -221,13 +226,21 @@ export default function ImageChallenge() {
               <Text style={styles.loadingText}>Image unavailable</Text>
             </View>
           )}
-          <Image
-            source={{ uri: q.imageUrl }}
-            style={[styles.challengeImage, imageLoaded ? {} : { width: 0, height: 0 }]}
-            resizeMode="contain"
-            onLoad={() => setImageLoaded(true)}
-            onError={() => setImageError(true)}
-          />
+          {phase === 'answer' && showAnnotation ? (
+            <AnnotatedImage
+              imageUrl={q.imageUrl}
+              annotations={ANNOTATION_SETS[q.category] || []}
+              showAnnotations={true}
+            />
+          ) : (
+            <Image
+              source={{ uri: q.imageUrl }}
+              style={[styles.challengeImage, imageLoaded ? {} : { width: 0, height: 0 }]}
+              resizeMode="contain"
+              onLoad={() => setImageLoaded(true)}
+              onError={() => setImageError(true)}
+            />
+          )}
           <Text style={styles.descText}>{q.description}</Text>
         </Animated.View>
 
