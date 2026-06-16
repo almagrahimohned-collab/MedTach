@@ -5,12 +5,9 @@ import { chatWithCase, evaluateDiagnosis } from '../../../src/services/aiService
 import { checkBadges } from '../../../src/utils/badges';
 import { calculateCaseScore, getScoreGrade, getTimeString } from '../../../src/utils/scoring';
 import { contentService, CaseData } from '../../../src/services/contentService';
+import { caseRepository } from '../../../src/services/CaseRepository';
+import { labLibrary } from '../../../src/services/LabLibrary';
 import { findTest, isNonMedical, rejectionMessages } from '../../../src/utils/medicalDictionary';
-
-// ContentRepository linked via useDiagnosticRoom
-// ClinicalOntology linked via ContentRepository
-// ClinicalReasoningEngine linked via ContentRepository
-
 
 const GITHUB_RAW_BASE = 'https://raw.githubusercontent.com/almagrahimohned-collab/medtach-content/main';
 
@@ -55,6 +52,26 @@ export function useDiagnosticRoom() {
 
   const loadCase = async () => {
     try {
+      // ========== NEW: Try unified case first ==========
+      const unifiedCases = await contentService.getCasesForMode('clinical');
+      if (unifiedCases.length > 0) {
+        const randomUnified = unifiedCases[Math.floor(Math.random() * unifiedCases.length)];
+        const unifiedCase = await contentService.getUnifiedCase(randomUnified.id);
+        if (unifiedCase) {
+          const legacyCase = contentService.unifiedToLegacy(unifiedCase);
+          // Store unified data for later use
+          (legacyCase as any)._unified = unifiedCase;
+          setCurrentCase(legacyCase);
+          setConversationHistory([]);
+          setInteractions([]);
+          setTestsCount(0);
+          setHintsUsed(0);
+          setCaseLoaded(true);
+          return;
+        }
+      }
+
+      // ========== OLD: Fallback to GitHub ==========
       const index = await contentService.getIndex();
       const spec = (subCategory || 'cardiology').toLowerCase();
       const level = (difficulty || 'beginner').toLowerCase();
@@ -103,26 +120,49 @@ export function useDiagnosticRoom() {
     }
 
     const matched = findTest(text);
-    if (matched && currentCase?.hidden_data) {
-      const result = currentCase.hidden_data[matched.id];
-      if (result) {
-        setTestsCount(prev => prev + 1);
-        const imgPath = currentCase.media?.[matched.id] || '';
-        const imgUrl = imgPath ? `${GITHUB_RAW_BASE}/${imgPath}` : '';
-        const msgs: any[] = [
-          { id: Date.now().toString(), type: 'request', text, timestamp: new Date(), menuType: matched.category },
-          { id: (Date.now() + 1).toString(), type: 'response', text: `📋 **${matched.name}:**\n${result}`, role: 'technician', timestamp: new Date() },
-        ];
-        if (imgUrl) {
-          msgs.push({
-            id: (Date.now() + 2).toString(), type: 'image', text: `🖼️ ${matched.name}`, imageUrl: imgUrl, role: 'technician', timestamp: new Date(),
-          });
+
+    // ========== NEW: Check unified case first ==========
+    const unifiedData = (currentCase as any)?._unified;
+    
+    if (matched) {
+      let result: string | null = null;
+      let imgUrl = '';
+
+      // Check unified case data
+      if (unifiedData) {
+        result = extractFromUnifiedCase(unifiedData, matched.id);
+        if (matched.id === 'ecg' && unifiedData.imaging?.ecg) {
+          imgUrl = unifiedData.imaging.ecg.file;
+        } else if (matched.id === 'cxr' && unifiedData.imaging?.cxr) {
+          imgUrl = unifiedData.imaging.cxr.file;
         }
-        setInteractions(prev => [...prev, ...msgs]);
-        setInputText('');
-        setActiveMenu(null);
-        return;
       }
+
+      // Fallback to old hidden_data
+      if (!result && currentCase?.hidden_data) {
+        result = currentCase.hidden_data[matched.id];
+      }
+
+      // If still no result, get normal from lab library
+      if (!result) {
+        result = labLibrary.generateNormalResult(matched.id);
+        if (!result) result = 'Normal';
+      }
+
+      setTestsCount(prev => prev + 1);
+      const msgs: any[] = [
+        { id: Date.now().toString(), type: 'request', text, timestamp: new Date(), menuType: matched.category },
+        { id: (Date.now() + 1).toString(), type: 'response', text: `📋 **${matched.name}:**\n${result}`, role: 'technician', timestamp: new Date() },
+      ];
+      if (imgUrl) {
+        msgs.push({
+          id: (Date.now() + 2).toString(), type: 'image', text: `🖼️ ${matched.name}`, imageUrl: imgUrl, role: 'technician', timestamp: new Date(),
+        });
+      }
+      setInteractions(prev => [...prev, ...msgs]);
+      setInputText('');
+      setActiveMenu(null);
+      return;
     }
 
     if (activeMenu) {
@@ -158,6 +198,24 @@ export function useDiagnosticRoom() {
     } finally { setIsLoading(false); }
   };
 
+  // ========== Helper: Extract data from unified case ==========
+  const extractFromUnifiedCase = (unified: any, testId: string): string | null => {
+    switch (testId) {
+      case 'cbc':
+        return unified.labs?.cbc ? `WBC: ${unified.labs.cbc.wbc}, Hb: ${unified.labs.cbc.hb}, PLT: ${unified.labs.cbc.plt}` : null;
+      case 'crp':
+        return unified.labs?.crp !== undefined ? `CRP: ${unified.labs.crp} mg/L` : null;
+      case 'abg':
+        return unified.labs?.abg ? `pH: ${unified.labs.abg.ph}, PaO2: ${unified.labs.abg.pao2}, PaCO2: ${unified.labs.abg.paco2}, HCO3: ${unified.labs.abg.hco3}, Lactate: ${unified.labs.abg.lactate}` : null;
+      case 'cxr':
+        return unified.imaging?.cxr?.findings || null;
+      case 'ecg':
+        return unified.imaging?.ecg?.findings || null;
+      default:
+        return null;
+    }
+  };
+
   const handleUseHint = (hint: any) => {
     if (!hint) return;
     setHintsUsed(prev => prev + 1);
@@ -178,11 +236,7 @@ export function useDiagnosticRoom() {
 
     try {
       const isCorrect = finalDiagnosis.toLowerCase().includes(currentCase.correct_diagnosis.toLowerCase());
-      const verdict = isCorrect ? 'correct' : (isCorrect ? 'partially_correct' : 'incorrect');
-      const key_clue_used = false;
-      const key_clue_missed = null;
-      const one_action = null;
-      const learning_tip = null;
+      const verdict = isCorrect ? 'correct' : 'incorrect';
       const { score, breakdown } = calculateCaseScore(isCorrect, testsCount, timeTaken, isDailyChallengeCase, difficulty || 'Beginner');
       addPoints(score);
       saveCaseResult(currentCase.id, score);
@@ -191,13 +245,8 @@ export function useDiagnosticRoom() {
       const grade = getScoreGrade(score);
       const timeStr = getTimeString(timeTaken);
       let fm = `${grade.emoji} **${grade.grade}**\n\n`;
-      fm += `**Verdict:** ${verdict === 'correct' ? '✅ Correct' : verdict === 'partially_correct' ? '⚠️ Partially Correct' : '❌ Incorrect'}\n\n`;
-      if (key_clue_used) fm += `✅ **Strength:** ${key_clue_used}\n\n`;
-      if (key_clue_missed && key_clue_missed !== 'null') fm += `❌ **Missed:** ${key_clue_missed}\n\n`;
-      if (one_action) fm += `🔍 **Action:** ${one_action}\n\n`;
-      if (learning_tip) fm += `📚 **Pearl:** ${learning_tip}\n\n`;
+      fm += `**Verdict:** ${verdict === 'correct' ? '✅ Correct' : '❌ Incorrect'}\n\n`;
       fm += `📊 Score: ${score} pts | ⏱ ${timeStr} | 🧪 ${testsCount} tests | 💡 ${hintsUsed} hints`;
-
       setFeedbackText(fm);
       setIsEvaluating(false);
       setFeedbackModalVisible(true);
@@ -220,4 +269,5 @@ export function useDiagnosticRoom() {
     loadCase, handleSendRequest, handleUseHint, handleSubmitDiagnosis,
   };
 }
+
 export const handleUseDiagnosisHint = () => {};
