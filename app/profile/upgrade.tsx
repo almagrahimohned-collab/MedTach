@@ -37,7 +37,10 @@ export default function UpgradeScreen() {
         <Pressable onPress={() => router.back()}>
           <Ionicons name="arrow-back" size={22} color="#94A3B8" />
         </Pressable>
-        <Text style={styles.headerTitle}>Upgrade Plan</Text>
+        <Text style={styles.headerTitle}>Profile</Text>
+        <Pressable onPress={() => router.push('/profile/analytics')} style={{ marginRight: 8 }}>
+          <Ionicons name="stats-chart" size={22} color="#38BDF8" />
+        </Pressable>
       </View>
 
       <ScrollView style={styles.content} showsVerticalScrollIndicator={false}>

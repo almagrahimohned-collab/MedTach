@@ -108,7 +108,23 @@ export default function QuestsScreen() {
       <Animated.View style={[styles.content, { opacity: fadeAnim, transform: [{ translateY: slideAnim }] }]}>
         
         <View style={styles.header}>
-          <Pressable style={styles.backBtn} onPress={() => router.back()}>
+          <Pressable style={styles.backBtn} onPress={() => router.back()
+        }}
+        />
+        <View>
+          <Text style={styles.title}>Daily Quests</Text>
+          <Pressable onPress={() => router.push('/quests/daily-loop')} style={{ marginTop: 6 }}>
+            <View style={{ flexDirection: 'row', alignItems: 'center', gap: 4 }}>
+              <Ionicons name="flame" size={14} color="#F59E0B" />
+              <Text style={{ color: '#F59E0B', fontSize: 12, fontWeight: '600' }}>Daily Loop</Text>
+            </View>
+          </Pressable>
+        </View>
+      </View>
+      
+      <Animated.View style={[styles.content, { opacity: fadeAnim, transform: [{ translateY: slideAnim }] }]}>
+        <View style={styles.header}>
+          <Pressable style={styles.backBtn} onPress={() => router.back(}>
             <Ionicons name="arrow-back" size={22} color="#94A3B8" />
           </Pressable>
           <View>

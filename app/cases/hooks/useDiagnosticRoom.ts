@@ -6,6 +6,7 @@ import { checkBadges } from '../../../src/utils/badges';
 import { calculateCaseScore, getScoreGrade, getTimeString } from '../../../src/utils/scoring';
 import { contentService, CaseData } from '../../../src/services/contentService';
 import { caseRepository } from '../../../src/services/CaseRepository';
+import { competencyEngine } from '../../../src/engines/competencyEngine';
 import { labLibrary } from '../../../src/services/LabLibrary';
 import { findTest, isNonMedical, rejectionMessages } from '../../../src/utils/medicalDictionary';
 
@@ -240,6 +241,18 @@ export function useDiagnosticRoom() {
       const { score, breakdown } = calculateCaseScore(isCorrect, testsCount, timeTaken, isDailyChallengeCase, difficulty || 'Beginner');
       addPoints(score);
       saveCaseResult(currentCase.id, score);
+      
+      // Track competencies
+      const unifiedData = (currentCase as any)?._unified;
+      if (unifiedData?.competencies) {
+        competencyEngine.recordAttempt(
+          unifiedData.competencies,
+          isCorrect,
+          currentCase.id,
+          'clinical',
+          score
+        );
+      }
       if (isDailyChallengeCase) completeDailyChallenge(dailyChallenge?.bonusPoints || 0);
 
       const grade = getScoreGrade(score);

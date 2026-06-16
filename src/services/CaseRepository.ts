@@ -155,7 +155,12 @@ class CaseRepository {
   }
 
   private transformForBoard(caseData: UnifiedCase) {
-    return caseData.board_question ? {
+    if (!caseData.board_question) return null;
+    
+    // Merge board_question.explanation with explanation_quality
+    const eq = caseData.explanation_quality;
+    
+    return {
       id: caseData.id,
       specialty: caseData.specialty,
       topic: caseData.specialty,
@@ -164,13 +169,15 @@ class CaseRepository {
       options: caseData.board_question.options,
       correctOptionId: caseData.board_question.correct_option,
       explanation: {
-        whyCorrect: caseData.board_question.explanation.why_correct,
-        whyWrong: caseData.board_question.explanation.why_wrong,
-        clinicalPearl: caseData.board_question.explanation.clinical_pearl,
+        whyCorrect: eq?.why_correct || caseData.board_question.explanation.why_correct,
+        whyWrong: eq?.why_wrong || caseData.board_question.explanation.why_wrong,
+        clinicalPearl: eq?.clinical_pearl || caseData.board_question.explanation.clinical_pearl,
+        pitfalls: eq?.pitfalls || caseData.pitfalls || [],
+        guidelineReferences: eq?.guideline_references || [],
       },
-      references: [],
+      references: caseData.references?.map(r => r.source) || [],
       highYield: true,
-    } : null;
+    };
   }
 
   private transformForICU(caseData: UnifiedCase) {
@@ -389,6 +396,29 @@ class CaseRepository {
 
     // Level 3: Not in case → not indicated
     return { level: 'not_indicated', result: null };
+  }
+
+
+  // ========== 11. Daily Loop ==========
+  async getCaseOfDay(weakCompetencies: string[]): Promise<UnifiedCase | null> {
+    // Try to find a case matching weak competencies
+    const allCases = await this.getAllCases();
+    const matching = allCases.filter(c => 
+      c.competencies?.some(comp => weakCompetencies.includes(comp))
+    );
+    
+    if (matching.length > 0) {
+      return matching[Math.floor(Math.random() * matching.length)];
+    }
+    
+    // Fallback: random case
+    return allCases.length > 0 ? allCases[Math.floor(Math.random() * allCases.length)] : null;
+  }
+
+  async getImageOfDay(): Promise<{ file: string; findings: string; modality: string } | null> {
+    const modalities = ['xray', 'ct', 'ultrasound', 'ecg'];
+    const modality = modalities[new Date().getDay() % modalities.length];
+    return await this.getNormalImage(modality);
   }
 
   clearCache() {

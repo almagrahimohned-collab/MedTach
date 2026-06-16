@@ -1,12 +1,12 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { getRoutineTestResult } from "../../src/utils/normalLabResults";
 import {
   StyleSheet, Text, View, Pressable, ScrollView, Animated, Image, ActivityIndicator,
 } from 'react-native';
 import { useRouter } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 import { useStore } from '../../src/store';
-import { fetchQuestions, ImageQuestion, clearCache } from './data';
+import { competencyEngine } from '../../src/engines/competencyEngine';
+import { fetchQuestions, ImageQuestion } from './data';
 
 export default function ImageChallenge() {
   const router = useRouter();
@@ -27,18 +27,17 @@ export default function ImageChallenge() {
   const timerRef = useRef<NodeJS.Timeout | null>(null);
   const fadeAnim = useRef(new Animated.Value(1)).current;
 
-  // تحميل البيانات من GitHub Raw
-  const loadQuestions = async () => {
-    setPhase('loading');
-    const qs = await fetchQuestions();
-    setAllQuestions(qs);
-    setPhase('menu');
-  };
+  useEffect(() => {
+    fetchQuestions().then(qs => setAllQuestions(qs));
+  }, []);
 
   const startGame = () => {
+    if (allQuestions.length === 0) return;
     let pool = allQuestions;
-    if (category) pool = pool.filter(q => q.category === category || q.modality === category);
+    if (category) pool = pool.filter(q => q.category === category);
+    if (pool.length === 0) pool = allQuestions;
     const shuffled = [...pool].sort(() => Math.random() - 0.5).slice(0, 10);
+    if (shuffled.length === 0) return;
     setQuestions(shuffled);
     setCurrentIndex(0);
     setSelectedAnswer(null);
@@ -82,10 +81,10 @@ export default function ImageChallenge() {
     if (timerRef.current) clearInterval(timerRef.current);
     setSelectedAnswer(index);
     setPhase('answer');
-
-    const isCorrect = index === questions[currentIndex].correctIndex;
+    const q = questions[currentIndex];
+    if (!q) return;
+    const isCorrect = index === q.correctIndex;
     const timeBonus = timeLeft > 10 ? 30 : timeLeft > 5 ? 20 : 10;
-
     if (isCorrect) {
       const newStreak = streak + 1;
       setStreak(newStreak);
@@ -97,6 +96,19 @@ export default function ImageChallenge() {
       else if (newStreak >= 3) pts += 15;
       setScore(prev => prev + pts);
       addPoints(pts);
+        // Track competency
+        if (q.category) {
+          const compMap: Record<string, string> = {
+            'pneumonia': 'chest_xray_interpretation',
+            'pneumothorax': 'chest_xray_interpretation',
+            'cardiomegaly': 'chest_xray_interpretation',
+            'pleural_effusion': 'chest_xray_interpretation',
+            'atelectasis': 'chest_xray_interpretation',
+            'normal_chest': 'chest_xray_interpretation',
+          };
+          const comp = compMap[q.category] || 'chest_xray_interpretation';
+          competencyEngine.recordAttempt([comp], true, q.id, 'image', pts);
+        }
     } else {
       setStreak(0);
     }
@@ -121,18 +133,6 @@ export default function ImageChallenge() {
 
   const formatTime = (s: number) => `${s}s`;
 
-  // Loading
-  if (phase === 'loading') {
-    return (
-      <View style={styles.container}>
-        <View style={styles.menuCard}>
-          <ActivityIndicator size="large" color="#38BDF8" />
-          <Text style={styles.menuSub}>Loading image library...</Text>
-        </View>
-      </View>
-    );
-  }
-
   if (phase === 'menu') {
     return (
       <View style={styles.container}>
@@ -140,31 +140,11 @@ export default function ImageChallenge() {
           <Ionicons name="image" size={60} color="#38BDF8" />
           <Text style={styles.menuTitle}>Image Challenge</Text>
           <Text style={styles.menuSub}>Diagnose real medical images in 15 seconds</Text>
-
-          <View style={styles.categoryRow}>
-            {[
-              { id: null, name: 'All', icon: 'layers' },
-              { id: 'xray', name: 'X-Ray', icon: 'image' },
-              { id: 'ecg', name: 'ECG', icon: 'pulse' },
-              { id: 'ct', name: 'CT/MRI', icon: 'scan' },
-              { id: 'skin', name: 'Skin', icon: 'body' },
-              { id: 'histology', name: 'Histology', icon: 'flask' },
-            ].map(cat => (
-              <Pressable
-                key={cat.id || 'all'}
-                style={[styles.catChip, category === cat.id && styles.catChipActive]}
-                onPress={() => setCategory(cat.id)}
-              >
-                <Ionicons name={cat.icon as any} size={14} color={category === cat.id ? '#FFF' : '#94A3B8'} />
-                <Text style={[styles.catChipText, category === cat.id && styles.catChipActiveText]}>{cat.name}</Text>
-              </Pressable>
-            ))}
-          </View>
-
+          <Text style={styles.menuSub}>{allQuestions.length} images loaded</Text>
           <Pressable style={styles.startBtn} onPress={startGame}>
             <Text style={styles.startBtnText}>Start Challenge</Text>
           </Pressable>
-          <Pressable style={styles.backBtn} onPress={() => { clearCache(); router.back(); }}>
+          <Pressable style={styles.backBtn} onPress={() => router.back()}>
             <Text style={styles.backBtnText}>Back</Text>
           </Pressable>
         </View>
@@ -193,17 +173,22 @@ export default function ImageChallenge() {
   }
 
   const q = questions[currentIndex];
-  const isCorrect = selectedAnswer === q.correctIndex;
+  if (!q) {
+    return (
+      <View style={styles.container}>
+        <Text style={{color:'white',textAlign:'center',marginTop:100}}>Loading...</Text>
+      </View>
+    );
+  }
 
   return (
     <View style={styles.container}>
-      {/* Header */}
       <View style={styles.header}>
         <Pressable onPress={() => { if (timerRef.current) clearInterval(timerRef.current); setPhase('menu'); }}>
           <Ionicons name="close" size={22} color="#94A3B8" />
         </Pressable>
         <View style={styles.headerInfo}>
-          <Text style={styles.headerTitle}>{q.category.toUpperCase()}</Text>
+          <Text style={styles.headerTitle}>{q.category?.toUpperCase() || 'UNKNOWN'}</Text>
           <Text style={styles.headerSub}>Q {currentIndex + 1}/{questions.length}</Text>
         </View>
         <View style={styles.scoreBadge}>
@@ -216,7 +201,6 @@ export default function ImageChallenge() {
         )}
       </View>
 
-      {/* Timer */}
       <View style={styles.timerBar}>
         <View style={[styles.timerFill, { width: `${(timeLeft / 15) * 100}%`, backgroundColor: timeLeft < 5 ? '#EF4444' : timeLeft < 10 ? '#F59E0B' : '#38BDF8' }]} />
       </View>
@@ -224,23 +208,19 @@ export default function ImageChallenge() {
 
       <ScrollView style={styles.content} showsVerticalScrollIndicator={false}>
         <Animated.View style={[styles.imageCard, { opacity: fadeAnim }]}>
-          <Text style={styles.categoryTag}>{q.category.toUpperCase()}</Text>
-
+          <Text style={styles.categoryTag}>{q.category?.toUpperCase() || 'XRAY'}</Text>
           {!imageLoaded && !imageError && (
             <View style={styles.loadingBox}>
               <ActivityIndicator size="large" color="#38BDF8" />
               <Text style={styles.loadingText}>Loading image...</Text>
             </View>
           )}
-
           {imageError && (
             <View style={styles.loadingBox}>
               <Ionicons name="alert-circle" size={40} color="#F59E0B" />
               <Text style={styles.loadingText}>Image unavailable</Text>
-              <Text style={styles.descText}>{q.description}</Text>
             </View>
           )}
-
           <Image
             source={{ uri: q.imageUrl }}
             style={[styles.challengeImage, imageLoaded ? {} : { width: 0, height: 0 }]}
@@ -248,7 +228,6 @@ export default function ImageChallenge() {
             onLoad={() => setImageLoaded(true)}
             onError={() => setImageError(true)}
           />
-
           <Text style={styles.descText}>{q.description}</Text>
         </Animated.View>
 
@@ -256,23 +235,14 @@ export default function ImageChallenge() {
 
         <View style={styles.optionsContainer}>
           {q.options.map((opt, i) => {
-            let bg = '#1E293B';
-            let border = '#334155';
-            let txt = '#E2E8F0';
-
+            let bg = '#1E293B', border = '#334155', txt = '#E2E8F0';
             if (selectedAnswer !== null) {
               if (i === q.correctIndex) { bg = '#10B98115'; border = '#10B981'; txt = '#10B981'; }
               else if (i === selectedAnswer && selectedAnswer !== q.correctIndex) { bg = '#EF444415'; border = '#EF4444'; txt = '#EF4444'; }
             }
-
             return (
-              <Pressable
-                key={i}
-                style={[styles.optionBtn, { backgroundColor: bg, borderColor: border }]}
-                onPress={() => handleAnswer(i)}
-                disabled={selectedAnswer !== null}
-              >
-                <Text style={[styles.optionLetter, { color: txt }]}>{['A', 'B', 'C', 'D', 'E'][i]}</Text>
+              <Pressable key={i} style={[styles.optionBtn, { backgroundColor: bg, borderColor: border }]} onPress={() => handleAnswer(i)} disabled={selectedAnswer !== null}>
+                <Text style={[styles.optionLetter, { color: txt }]}>{['A', 'B', 'C', 'D'][i]}</Text>
                 <Text style={[styles.optionText, { color: txt }]}>{opt}</Text>
                 {selectedAnswer !== null && i === q.correctIndex && <Ionicons name="checkmark-circle" size={20} color="#10B981" />}
                 {selectedAnswer !== null && i === selectedAnswer && i !== q.correctIndex && <Ionicons name="close-circle" size={20} color="#EF4444" />}
@@ -286,14 +256,7 @@ export default function ImageChallenge() {
             <Text style={[styles.explanationTitle, { color: selectedAnswer === q.correctIndex ? '#10B981' : '#EF4444' }]}>
               {selectedAnswer === q.correctIndex ? '✅ Correct!' : selectedAnswer === -1 ? '⏰ Time Up!' : '❌ Incorrect'}
             </Text>
-            {selectedAnswer !== q.correctIndex && (
-              <Text style={styles.correctAnswer}>Correct: {q.options[q.correctIndex]}</Text>
-            )}
             <Text style={styles.explanationText}>{q.explanation}</Text>
-            <View style={styles.pearlCard}>
-              <Ionicons name="bulb" size={16} color="#F59E0B" />
-              <Text style={styles.pearlText}>{q.pearl}</Text>
-            </View>
             <Pressable style={styles.nextBtn} onPress={nextQuestion}>
               <Text style={styles.nextBtnText}>{currentIndex < questions.length - 1 ? 'Next →' : 'See Results'}</Text>
             </Pressable>
@@ -309,11 +272,6 @@ const styles = StyleSheet.create({
   menuCard: { flex: 1, justifyContent: 'center', alignItems: 'center', padding: 30, gap: 16 },
   menuTitle: { color: '#F8FAFC', fontSize: 28, fontWeight: '800' },
   menuSub: { color: '#94A3B8', fontSize: 14, textAlign: 'center' },
-  categoryRow: { flexDirection: 'row', flexWrap: 'wrap', gap: 8, justifyContent: 'center', marginVertical: 10 },
-  catChip: { flexDirection: 'row', alignItems: 'center', paddingHorizontal: 12, paddingVertical: 8, borderRadius: 20, backgroundColor: '#1E293B', borderWidth: 1, borderColor: '#334155', gap: 6 },
-  catChipActive: { backgroundColor: '#38BDF8', borderColor: '#38BDF8' },
-  catChipText: { color: '#94A3B8', fontSize: 12 },
-  catChipActiveText: { color: '#FFF' },
   startBtn: { backgroundColor: '#38BDF8', paddingHorizontal: 40, paddingVertical: 16, borderRadius: 16 },
   startBtnText: { color: '#0F172A', fontSize: 17, fontWeight: '700' },
   backBtn: { marginTop: 4 },
@@ -343,10 +301,7 @@ const styles = StyleSheet.create({
   optionText: { flex: 1, fontSize: 14 },
   explanationCard: { backgroundColor: '#1E293B', padding: 20, borderRadius: 16, borderWidth: 1, borderColor: '#334155', gap: 12 },
   explanationTitle: { fontSize: 18, fontWeight: '800', textAlign: 'center' },
-  correctAnswer: { color: '#10B981', fontSize: 14, fontWeight: '600', textAlign: 'center' },
   explanationText: { color: '#E2E8F0', fontSize: 14, lineHeight: 22 },
-  pearlCard: { flexDirection: 'row', alignItems: 'flex-start', gap: 8, backgroundColor: '#F59E0B10', padding: 12, borderRadius: 10 },
-  pearlText: { color: '#F59E0B', fontSize: 13, flex: 1 },
   nextBtn: { backgroundColor: '#38BDF8', padding: 14, borderRadius: 14, alignItems: 'center', marginTop: 8 },
   nextBtnText: { color: '#0F172A', fontSize: 15, fontWeight: '700' },
   endCard: { flex: 1, justifyContent: 'center', alignItems: 'center', padding: 40, gap: 14 },

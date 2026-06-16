@@ -166,6 +166,19 @@ export interface UnifiedCase {
     diagrams?: string[];
   };
 
+
+  explanation_quality?: {
+    why_correct: string;
+    why_wrong: Record<string, string>;
+    clinical_pearl: string;
+    pitfalls: string[];
+    guideline_references: Array<{
+      guideline: string;
+      recommendation: string;
+      year: number;
+    }>;
+  };
+
   related_content?: {
     board_questions?: string[];
     osce_stations?: string[];

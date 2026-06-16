@@ -3,7 +3,13 @@ import { contentService } from '../../src/services/contentService';
 export interface BoardQuestion {
   id: string; specialty: string; topic: string; difficulty: 'easy' | 'medium' | 'hard';
   vignette: string; options: { id: string; text: string }[]; correctOptionId: string;
-  explanation: { whyCorrect: string; whyWrong: Record<string, string>; clinicalPearl: string; };
+  explanation: {
+    whyCorrect: string;
+    whyWrong: Record<string, string>;
+    clinicalPearl: string;
+    pitfalls?: string[];
+    guidelineReferences?: Array<{ guideline: string; recommendation: string; year: number }>;
+  };
   references: string[]; highYield: boolean; imageUrl?: string; timeAllocated: number;
 }
 
@@ -33,11 +39,13 @@ async function loadFromUnifiedCases(): Promise<BoardQuestion[]> {
         options: bq.options,
         correctOptionId: bq.correct_option,
         explanation: {
-          whyCorrect: bq.explanation.why_correct,
-          whyWrong: bq.explanation.why_wrong,
-          clinicalPearl: bq.explanation.clinical_pearl,
+          whyCorrect: fullCase.explanation_quality?.why_correct || bq.explanation.why_correct,
+          whyWrong: fullCase.explanation_quality?.why_wrong || bq.explanation.why_wrong,
+          clinicalPearl: fullCase.explanation_quality?.clinical_pearl || bq.explanation.clinical_pearl,
+          pitfalls: fullCase.explanation_quality?.pitfalls || fullCase.pitfalls || [],
+          guidelineReferences: fullCase.explanation_quality?.guideline_references || [],
         },
-        references: [],
+        references: fullCase.references?.map(r => r.source) || [],
         highYield: true,
         timeAllocated: 90,
       });

@@ -1,8 +1,18 @@
 import { create } from 'zustand';
+import { competencyEngine, CompetencyState, UserCompetencyProfile } from '../engines/competencyEngine';
 import { persist, createJSONStorage } from 'zustand/middleware';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 interface CaseResult { caseId: string; score: number; date: string; }
+
+interface DailyLoop {
+  date: string;
+  caseOfDay: string | null;
+  imageOfDay: string | null;
+  ecgOfDay: string | null;
+  boardQuestionOfDay: string | null;
+  completed: string[]; // Which ones are done
+}
 
 interface DailyChallenge {
   date: string; specialty: string; level: string;
@@ -51,6 +61,9 @@ interface AppStore {
   difficulty: string | null;
   specialtyId: string | null;
   dailyChallenge: DailyChallenge | null;
+  dailyLoop: DailyLoop | null;
+  generateDailyLoop: () => void;
+  completeDailyLoopItem: (item: string) => void;
   lastChallengeDate: string | null;
   badges: string[];
   user: { id: string; email: string; name: string } | null;
@@ -93,6 +106,13 @@ interface AppStore {
   isBossUnlocked: (deckId: string) => boolean;
   defeatBoss: (deckId: string, score: number, total: number, flawless: boolean) => void;
   getBossProgress: (deckId: string) => BossProgress | null;
+
+  // Competency Engine
+  competencyState: CompetencyState;
+  updateCompetency: (competencyIds: string[], isCorrect: boolean, caseId: string, mode: string, score: number) => void;
+  getCompetencyProfile: () => UserCompetencyProfile;
+  getWeakCompetencies: (limit?: number) => string[];
+  loadCompetencyState: (state: CompetencyState) => void;
 }
 
 export const BOSS_DECKS: BossDeck[] = [
@@ -160,6 +180,40 @@ export const useStore = create<AppStore>()(
       difficulty: null,
       specialtyId: null,
       dailyChallenge: null,
+      dailyLoop: null,
+      generateDailyLoop: () => {
+        const today = new Date().toISOString().split('T')[0];
+        const state = get();
+        if (state.dailyLoop?.date === today) return; // Already generated
+        
+        // Get weak competencies
+        const weak = competencyEngine.getWeakCompetencies(3);
+        
+        set({
+          dailyLoop: {
+            date: today,
+            caseOfDay: null, // Will be filled by CaseRepository
+            imageOfDay: null,
+            ecgOfDay: null,
+            boardQuestionOfDay: null,
+            completed: [],
+          }
+        });
+      },
+      completeDailyLoopItem: (item) => {
+        const state = get();
+        if (!state.dailyLoop) return;
+        const completed = [...state.dailyLoop.completed, item];
+        set({
+          dailyLoop: { ...state.dailyLoop, completed }
+        });
+        
+        // Bonus for completing all 4
+        if (completed.length >= 4) {
+          const bonus = 50;
+          set(s => ({ totalPoints: s.totalPoints + bonus }));
+        }
+      },
       lastChallengeDate: null,
       badges: [],
       user: null,
@@ -175,6 +229,23 @@ export const useStore = create<AppStore>()(
 
       // 🎮 Boss data
       bossProgress: [],
+      
+      // Competency
+      competencyState: {},
+      updateCompetency: (competencyIds, isCorrect, caseId, mode, score) => {
+        competencyEngine.recordAttempt(competencyIds, isCorrect, caseId, mode, score);
+        set({ competencyState: competencyEngine.getState() });
+      },
+      getCompetencyProfile: () => {
+        return competencyEngine.getProfile();
+      },
+      getWeakCompetencies: (limit = 3) => {
+        return competencyEngine.getWeakCompetencies(limit);
+      },
+      loadCompetencyState: (state) => {
+        competencyEngine.loadState(state);
+        set({ competencyState: state });
+      },
       activeBoss: null,
       activeBossDeck: null,
 
